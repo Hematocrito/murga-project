@@ -43,7 +43,7 @@ export default function Features() {
               <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-600 to-blue-600 rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200" />
               <div className="relative px-6 py-8 bg-white ring-1 ring-gray-900/5 rounded-lg leading-none flex items-top justify-start space-x-6">
                 <div className="space-y-6">
-                  <feature.icon className="h-8 w-8 text-indigo-600" />
+                  <feature.icon className="h-8 w-8 text-sky-800" />
                   <h3 className="text-lg font-semibold text-gray-900">{feature.name}</h3>
                   <p className="text-gray-600">{feature.description}</p>
                 </div>

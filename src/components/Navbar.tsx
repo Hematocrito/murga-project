@@ -15,7 +15,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <div className="flex items-center">
-              <Scale className="h-8 w-8 text-indigo-600" />
+              <Scale className="h-8 w-8 text-sky-800" />
               <span className="ml-2 text-xl font-semibold text-gray-900">Lexium & Asociados</span>
             </div>
             
@@ -26,7 +26,7 @@ export default function Navbar() {
               
               <Link
                 to="/login"
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-blue-900 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 <LogIn className="h-4 w-4 mr-2" />
                 Iniciar Sesión
@@ -34,7 +34,7 @@ export default function Navbar() {
               
               <button 
                 onClick={() => setIsRegisterOpen(true)}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-900 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 <UserPlus className="h-4 w-4 mr-2" />
                 Registrarse

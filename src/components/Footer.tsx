@@ -8,7 +8,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center">
-              <Scale className="h-8 w-8 text-indigo-500" />
+              <Scale className="h-8 w-8 text-sky-500" />
               <span className="ml-2 text-xl font-semibold text-white">Lexium & Asociados</span>
             </div>
             <p className="mt-4 text-gray-400">
@@ -20,15 +20,15 @@ export default function Footer() {
             <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase">Contacto</h3>
             <div className="mt-4 space-y-4">
               <div className="flex items-center">
-                <Mail className="h-5 w-5 text-indigo-500" />
+                <Mail className="h-5 w-5 text-sky-500" />
                 <span className="ml-3 text-gray-300">contacto@lexium.com</span>
               </div>
               <div className="flex items-center">
-                <Phone className="h-5 w-5 text-indigo-500" />
+                <Phone className="h-5 w-5 text-sky-500" />
                 <span className="ml-3 text-gray-300">+54 11 4444-5555</span>
               </div>
               <div className="flex items-center">
-                <MapPin className="h-5 w-5 text-indigo-500" />
+                <MapPin className="h-5 w-5 text-sky-500" />
                 <span className="ml-3 text-gray-300">Av. Libertador 1234, CABA</span>
               </div>
             </div>

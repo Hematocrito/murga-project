@@ -22,10 +22,10 @@ const Clientes = () => {
     <div>
       <div className="flex justify-between items-center mb-6">
       <div className="flex items-center">
-          <Users className="w-8 h-8 text-indigo-600 mr-3" />
+          <Users className="w-8 h-8 text-sky-800 mr-3" />
           <h1 className="text-2xl font-bold text-gray-900">Clientes</h1>
         </div>
-        <button className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+        <button className="flex items-center space-x-2 bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
           <UserPlus size={20} />
           <span>Nuevo Cliente</span>
         </button>
