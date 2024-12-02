@@ -16,29 +16,34 @@ export default function Navbar() {
           <div className="flex justify-between h-16 items-center">
             <div className="flex items-center">
               <Scale className="h-8 w-8 text-sky-800" />
-              <span className="ml-2 text-xl font-semibold text-gray-900">Lexium & Asociados</span>
+              <span className="ml-2 text-sm md:text-xl font-semibold text-gray-900">Lexium & Asociados</span>
             </div>
             
-            <div className="hidden md:flex items-center space-x-4">
-              <a href="#servicios" className="text-gray-700 hover:text-indigo-600 px-3 py-2">Servicios</a>
-              <a href="#equipo" className="text-gray-700 hover:text-indigo-600 px-3 py-2">Equipo</a>
-              <a href="#contacto" className="text-gray-700 hover:text-indigo-600 px-3 py-2">Contacto</a>
-              
-              <Link
-                to="/login"
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-blue-900 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                <LogIn className="h-4 w-4 mr-2" />
-                Iniciar Sesión
-              </Link>
-              
-              <button 
-                onClick={() => setIsRegisterOpen(true)}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-900 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                <UserPlus className="h-4 w-4 mr-2" />
-                Registrarse
-              </button>
+            <div className="inline-flex">
+              <div className='hidden md:flex'>
+                <a href="#servicios" className="text-gray-700 hover:text-indigo-600 px-3 py-2">Servicios</a>
+                <a href="#equipo" className="text-gray-700 hover:text-indigo-600 px-3 py-2">Equipo</a>
+                <a href="#contacto" className="text-gray-700 hover:text-indigo-600 px-3 py-2">Contacto</a>
+              </div>
+              <div className='flex items-stretch'>
+                <Link
+                  to="/login"
+                  //className="inline-flex px-4 py-2 border border-transparent text-xs md:text-sm font-medium rounded-md text-blue-900 bg-white hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  className='w-28 md:w-32 text-xs md:text-base inline mt-3 md:mt-2 mx-0 md:mx-3 font-medium'
+                >
+                  <LogIn className="h-4 w-4 mr-2 inline" />
+                  Iniciar Sesión
+                </Link>
+                
+                <button 
+                  onClick={() => setIsRegisterOpen(true)}
+                  //className="inline-flex items-center px-2 py-2 border border-transparent text-xs md:text-sm font-medium rounded-md text-white bg-blue-900 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:h-1"
+                  className='text-xs md:text-base inline-flex text-white bg-blue-900 h-8 items-center mt-1 py-1 md:py-2 px-3 rounded-md hover:bg-blue-700 text-xs md:text-sm font-medium'
+                >
+                  <UserPlus className="h-4 w-4 mr-2" />
+                  Registrarse
+                </button>
+              </div>              
             </div>
           </div>
         </div>

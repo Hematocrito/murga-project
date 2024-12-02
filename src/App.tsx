@@ -12,7 +12,7 @@ import { ClientDetail } from './components/ClientDetail';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAuth();
-  return isAuthenticated ? <>{children}</> : <Navigate to="/landing" />;
+  return isAuthenticated ? <>{children}</> : <Navigate to="/home" />;
 };
 
 function App() {
@@ -21,7 +21,7 @@ function App() {
       <BrowserRouter>
         <Routes>          
           <Route path="/login" element={<LoginPage />} />
-          <Route path='/landing' element={<LandingPage />} />
+          <Route path='/home' element={<LandingPage />} />
           <Route
             path="/"
             element={
