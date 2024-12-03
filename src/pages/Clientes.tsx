@@ -4,7 +4,11 @@ import { ClientCard } from '../components/ClientCard';
 import { Pagination } from '../components/Pagination';
 import { clients } from '../data/clients';
 import { Users } from 'lucide-react';
+import { SearchBar } from '../components/SearchBar';
+
+
 const Clientes = () => {
+  const [searchTerm, setSearchTerm] = useState('');
   
   const [currentPage, setCurrentPage] = useState(1);
   const clientsPerPage = 6;
@@ -29,6 +33,12 @@ const Clientes = () => {
           <UserPlus size={20} />
           <span>Nuevo Cliente</span>
         </button>
+      </div>
+      <div className="w-full md:w-96 mb-2">
+        <SearchBar
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+        />
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">

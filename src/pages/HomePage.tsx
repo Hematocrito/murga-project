@@ -7,7 +7,7 @@ import Footer from '../components/Footer';
 //import { Navigate } from 'react-router-dom';
 //import { useAuth } from '../contexts/AuthContext';
 
-export const LandingPage: React.FC = () => {
+export const HomePage: React.FC = () => {
   
 
   return (

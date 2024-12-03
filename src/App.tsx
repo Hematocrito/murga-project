@@ -7,7 +7,7 @@ import { LoginPage } from './pages/LoginPage';
 import Dashboard from './pages/Dashboard';
 import Clientes from './pages/Clientes';
 import Expedientes from './pages/Expedientes';
-import { LandingPage } from './pages/LandingPage';
+import { HomePage } from './pages/HomePage';
 import { ClientDetail } from './components/ClientDetail';
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -21,7 +21,7 @@ function App() {
       <BrowserRouter>
         <Routes>          
           <Route path="/login" element={<LoginPage />} />
-          <Route path='/home' element={<LandingPage />} />
+          <Route path='/home' element={<HomePage />} />
           <Route
             path="/"
             element={
