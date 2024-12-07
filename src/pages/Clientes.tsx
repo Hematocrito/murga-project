@@ -1,26 +1,58 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UserPlus } from 'lucide-react';
 import { ClientCard } from '../components/ClientCard';
 import { Pagination } from '../components/Pagination';
-import { clients } from '../data/clients';
+//import { clients } from '../data/clients';
 import { Users } from 'lucide-react';
 import { SearchBar } from '../components/SearchBar';
+import { gql, useQuery } from "@apollo/client";
+import { Cliente } from '../types/Cliente';
+import { useClientSearch } from '../hooks/useClientSearch';
 
+
+const OBTENER_CLIENTES_USUARIO = gql`
+  query obtenerClientesVendedor {
+    obtenerClientesVendedor {
+      id
+      nombre
+      apellido
+      avatar
+      empresa
+      email
+      telefono
+      estado
+    }
+  }
+`;
 
 const Clientes = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  
-  const [currentPage, setCurrentPage] = useState(1);
-  const clientsPerPage = 6;
-  const totalPages = Math.ceil(clients.length / clientsPerPage);
+  //Consulta de Apollo
+  const { data, loading, error } = useQuery(OBTENER_CLIENTES_USUARIO);
+  const [clients, setClients] = useState<Cliente[]>([]);
 
-  const indexOfLastClient = currentPage * clientsPerPage;
-  const indexOfFirstClient = indexOfLastClient - clientsPerPage;
-  const currentClients = clients.slice(indexOfFirstClient, indexOfLastClient);
+  console.log('DATA ', data);
+  console.log(loading);
+  console.log(error);
 
-  const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
+  useEffect(() => {
+    if (data) {
+      setClients(data.obtenerClientesVendedor);
+    }
+  }, [data]);
+
+  const {
+    searchTerm,
+    currentPage,
+    totalPages,
+    paginatedClients,
+    handleSearchChange,
+    handlePageChange,
+  } = useClientSearch(clients);
+  console.log('MOKA ', clients);
+
+
+  if (loading) return <p>Cargando...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div>
@@ -37,12 +69,12 @@ const Clientes = () => {
       <div className="w-full md:w-96 mb-2">
         <SearchBar
           searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
+          onSearchChange={handleSearchChange}
         />
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        {currentClients.map((client) => (
+        {paginatedClients.map((client) => (
           <ClientCard key={client.id} client={client} />
         ))}
       </div>

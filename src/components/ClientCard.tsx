@@ -2,10 +2,10 @@ import React from 'react';
 //import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Building2, Mail, Phone } from 'lucide-react';
-import { Client } from '../types/Client';
+import { Cliente } from '../types/Cliente';
 
 interface ClientCardProps {
-  client: Client;
+  client: Cliente;
 }
 
 export const ClientCard: React.FC<ClientCardProps> = ({ client }) => {
@@ -19,26 +19,26 @@ export const ClientCard: React.FC<ClientCardProps> = ({ client }) => {
         <div className="flex items-center space-x-4">
           <img
             src={client.avatar}
-            alt={client.name}
+            alt={client.nombre}
             className="w-16 h-16 rounded-full object-cover"
           />
           <div className="flex-1">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-gray-900">{client.name}</h3>
+              <h3 className="text-lg font-semibold text-gray-900">{client.nombre} {client.apellido}</h3>
               <span
                 className={`px-3 py-1 rounded-full text-sm font-medium ${
-                  client.status === 'active'
+                  client.estado === 'activo'
                     ? 'bg-green-100 text-green-800'
                     : 'bg-gray-100 text-gray-800'
                 }`}
               >
-                {client.status}
+                {client.estado}
               </span>
             </div>
             <div className="mt-2 space-y-2">
               <div className="flex items-center text-gray-600">
                 <Building2 className="w-4 h-4 mr-2" />
-                {client.company}
+                {client.empresa}
               </div>
               <div className="flex items-center text-gray-600">
                 <Mail className="w-4 h-4 mr-2" />
@@ -46,7 +46,7 @@ export const ClientCard: React.FC<ClientCardProps> = ({ client }) => {
               </div>
               <div className="flex items-center text-gray-600">
                 <Phone className="w-4 h-4 mr-2" />
-                {client.phone}
+                {client.telefono}
               </div>
             </div>
           </div>
