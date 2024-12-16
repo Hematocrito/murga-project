@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { Cliente } from '../types/Cliente';
 
 export function useClientSearch(clients: Cliente[], itemsPerPage: number = 6) {
+  console.log('LISTA ', clients);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 

@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState } from 'react';
-import { Scale, LogIn, UserPlus } from 'lucide-react';
-import { Link, Navigate } from 'react-router-dom';
+import { LogIn, UserPlus } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import RegisterModal from './RegisterModal';
 
 
@@ -12,11 +11,11 @@ export default function Navbar() {
   return (
     <>
       <nav className="bg-white shadow-md fixed w-full z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto mb- px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <div className="flex items-center">
-              <Scale className="h-8 w-8 text-sky-800" />
-              <span className="ml-2 text-sm md:text-xl font-semibold text-gray-900">Lexium & Asociados</span>
+              <img src='/img/logo.jpg' className="h-12 w-14" />
+              <span className="ml-2 text-sm md:text-xl font-semibold text-gray-900">Murga & Asociados</span>
             </div>
             
             <div className="inline-flex">
@@ -47,6 +46,7 @@ export default function Navbar() {
             </div>
           </div>
         </div>
+        <p className='text-xs md:text-sm italic ml-4 mb-2 -mt-1 md:ml-16'>Especialistas en defender tus derechos</p> 
       </nav>
 
       <RegisterModal

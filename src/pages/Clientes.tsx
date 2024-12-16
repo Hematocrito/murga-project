@@ -48,8 +48,7 @@ const Clientes = () => {
     handleSearchChange,
     handlePageChange,
   } = useClientSearch(clients);
-  console.log('MOKA ', clients);
-
+  //console.log('Paginated ', paginatedClients);
 
   if (loading) return <p>Cargando...</p>;
   if (error) return <p>Error: {error.message}</p>;

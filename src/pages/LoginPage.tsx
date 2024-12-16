@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Scale } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export const LoginPage = () => {
@@ -26,7 +25,7 @@ export const LoginPage = () => {
     <div className="min-h-screen bg-blue-950 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
         <div className="flex flex-col items-center mb-8">
-          <Scale size={48} className="text-sky-800 mb-2" />
+          <img src='/img/logo.jpg' className="h-12 w-14" />
           <h1 className="text-2xl font-bold text-gray-900">Estudio Jurídico</h1>
           <p className="text-gray-600">Acceso al Sistema</p>
         </div>

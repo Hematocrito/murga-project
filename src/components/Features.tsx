@@ -1,17 +1,17 @@
 //import React from 'react';
-import { Scale, Shield, Users, Building2 } from 'lucide-react';
+import { Gavel, Shield, Users, Home } from 'lucide-react';
 
 export default function Features() {
   const features = [
     {
-      name: 'Derecho Corporativo',
-      description: 'Asesoramiento integral para empresas y startups en todas las etapas de su desarrollo.',
-      icon: Building2,
+      name: 'Derecho de Familia',
+      description: 'Asesoramiento y representación en asuntos relacionados con las relaciones familiares y los derechos de sus miembros.',
+      icon: Home,
     },
     {
-      name: 'Derecho Civil',
-      description: 'Representación experta en casos civiles, contratos y resolución de conflictos.',
-      icon: Scale,
+      name: 'Derecho Penal',
+      description: 'Representación experta en la defensa de personas acusadas de delitos y de víctimas de crímenes.',
+      icon: Gavel,
     },
     {
       name: 'Derecho Laboral',
