@@ -25,7 +25,7 @@ export const LoginPage = () => {
     <div className="min-h-screen bg-blue-950 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
         <div className="flex flex-col items-center mb-8">
-          <img src='/img/logo.jpg' className="h-12 w-14" />
+          <img src='/images/logo.jpg' className="h-12 w-14" />
           <h1 className="text-2xl font-bold text-gray-900">Estudio Jurídico</h1>
           <p className="text-gray-600">Acceso al Sistema</p>
         </div>
