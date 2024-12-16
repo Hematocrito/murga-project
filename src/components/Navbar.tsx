@@ -14,7 +14,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto mb- px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <div className="flex items-center">
-              <img src='/img/logo.jpg' className="h-12 w-14" />
+              <img src='/images/logo.jpg' className="h-12 w-14" />
               <span className="ml-2 text-sm md:text-xl font-semibold text-gray-900">Murga & Asociados</span>
             </div>
             
