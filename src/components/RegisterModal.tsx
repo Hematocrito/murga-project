@@ -1,5 +1,17 @@
-import React from 'react';
-import { X, Mail, Lock, User, Phone } from 'lucide-react';
+import React, { useState } from 'react';
+import { X, Mail, Lock, User } from 'lucide-react';
+import { gql, useMutation } from "@apollo/client";
+
+const NUEVA_CUENTA = gql`
+    mutation nuevoUsuario($input: UsuarioInput) {
+        nuevoUsuario(input: $input) {
+            id
+            nombre
+            apellido
+            email
+        }
+    }
+`;
 
 interface RegisterModalProps {
   isOpen: boolean;
@@ -7,12 +19,58 @@ interface RegisterModalProps {
 }
 
 export default function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  //State para el mensaje
+  const [mensaje, guardarMensaje] = useState('');
+  
+  // Mutation para crear nuevos usuarios
+  const [ nuevoUsuario ] = useMutation(NUEVA_CUENTA);
+
   if (!isOpen) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Handle registration logic here
+    console.log('Evento ', e.target);
+
+    try {
+      const { data } = await nuevoUsuario({
+        variables : {
+            input: {
+                nombre: firstName,
+                apellido: lastName,
+                email,
+                password
+            }
+        }
+    });
+    console.log(data);
+
+    //Usuario creado correctamente
+    guardarMensaje(`Se creó correctamente el Usuario: ${data.nuevoUsuario.nombre}`);
+
+    setTimeout(() => {
+      guardarMensaje('');
+      onClose();
+    }, 3000);
+
+
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const mostrarMensaje = () => {
+    return(
+      <div className="bg-cyan-100 rounded py-2 px-3 w-full my-3 max-w-sm text-center mx-auto">
+            <p>{mensaje}</p>
+        </div>
+    )
+  }
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
@@ -37,7 +95,7 @@ export default function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
               Complete sus datos para registrarse
             </p>
           </div>
-
+          {mensaje && mostrarMensaje() }
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -54,6 +112,7 @@ export default function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
                     required
                     className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                     placeholder="Juan"
+                    onChange={(e) => setFirstName(e.target.value)}
                   />
                 </div>
               </div>
@@ -72,6 +131,7 @@ export default function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
                     required
                     className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                     placeholder="Pérez"
+                    onChange={(e) => setLastName(e.target.value)}
                   />
                 </div>
               </div>
@@ -91,24 +151,7 @@ export default function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
                   required
                   className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                   placeholder="ejemplo@correo.com"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
-                Teléfono
-              </label>
-              <div className="mt-1 relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Phone className="h-5 w-5 text-gray-400" />
-                </div>
-                <input
-                  type="tel"
-                  id="phone"
-                  required
-                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                  placeholder="+54 11 1234-5678"
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
             </div>
@@ -127,6 +170,7 @@ export default function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
                   required
                   className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                   placeholder="••••••••"
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
             </div>
@@ -163,7 +207,7 @@ export default function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
 
             <button
               type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-900 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
               Registrarse
             </button>

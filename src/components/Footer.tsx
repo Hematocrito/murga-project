@@ -9,7 +9,7 @@ export default function Footer() {
           <div className="col-span-1 md:col-span-2">
             <div className="flex items-center">
               <Scale className="h-8 w-8 text-sky-500" />
-              <span className="ml-2 text-xl font-semibold text-white">Lexium & Asociados</span>
+              <span className="ml-2 text-xl font-semibold text-white">Murga & Asociados</span>
             </div>
             <p className="mt-4 text-gray-400">
               Comprometidos con la excelencia legal y la satisfacción de nuestros clientes desde 1995.
@@ -21,15 +21,15 @@ export default function Footer() {
             <div className="mt-4 space-y-4">
               <div className="flex items-center">
                 <Mail className="h-5 w-5 text-sky-500" />
-                <span className="ml-3 text-gray-300">contacto@lexium.com</span>
+                <span className="ml-3 text-gray-300">murgayasoc@gmail.com</span>
               </div>
               <div className="flex items-center">
                 <Phone className="h-5 w-5 text-sky-500" />
-                <span className="ml-3 text-gray-300">+54 11 4444-5555</span>
+                <span className="ml-3 text-gray-300">+54 351 754-7452</span>
               </div>
               <div className="flex items-center">
                 <MapPin className="h-5 w-5 text-sky-500" />
-                <span className="ml-3 text-gray-300">Av. Libertador 1234, CABA</span>
+                <span className="ml-3 text-gray-300">Urquiza 174, Cba</span>
               </div>
             </div>
           </div>
@@ -45,7 +45,7 @@ export default function Footer() {
         
         <div className="mt-8 border-t border-gray-800 pt-8">
           <p className="text-center text-gray-400">
-            © {new Date().getFullYear()} Lexium & Asociados. Todos los derechos reservados.
+            © {new Date().getFullYear()} Murga & Asociados. Todos los derechos reservados.
           </p>
         </div>
       </div>
