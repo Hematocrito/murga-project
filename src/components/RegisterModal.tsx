@@ -60,7 +60,13 @@ export default function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
 
 
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) {
+        guardarMensaje(error.message);
+      }      
+                
+      setTimeout(() => {
+          guardarMensaje('');
+      }, 3000);
     }
   };
 
