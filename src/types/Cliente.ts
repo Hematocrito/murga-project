@@ -5,6 +5,7 @@ export interface Cliente {
   empresa: string;
   email: string;
   telefono: string;
-  estado: 'activo' | 'inactivo';
-  avatar: string;
+  estado: string;
+  notas: string;
+  avatar: File | null;
 }

@@ -15,7 +15,7 @@ export const LoginPage = () => {
     
     const success = await login(username, password);
     if (success) {
-      navigate('/');
+      navigate('/clientes');
     } else {
       setError('Credenciales inválidas');
     }

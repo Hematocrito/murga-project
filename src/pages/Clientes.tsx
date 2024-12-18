@@ -8,7 +8,7 @@ import { SearchBar } from '../components/SearchBar';
 import { gql, useQuery } from "@apollo/client";
 import { Cliente } from '../types/Cliente';
 import { useClientSearch } from '../hooks/useClientSearch';
-
+import { Link } from 'react-router-dom';
 
 const OBTENER_CLIENTES_USUARIO = gql`
   query obtenerClientesVendedor {
@@ -60,10 +60,14 @@ const Clientes = () => {
           <Users className="w-8 h-8 text-sky-800 mr-3" />
           <h1 className="text-2xl font-bold text-gray-900">Clientes</h1>
         </div>
-        <button className="flex items-center space-x-2 bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
-          <UserPlus size={20} />
-          <span>Nuevo Cliente</span>
-        </button>
+        
+        <Link
+          to="/clientes/nuevo"
+          className="flex items-center space-x-2 bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+        >
+          <UserPlus className="w-5 h-5 mr-2" />
+          Nuevo Cliente
+        </Link>
       </div>
       <div className="w-full md:w-96 mb-2">
         <SearchBar
