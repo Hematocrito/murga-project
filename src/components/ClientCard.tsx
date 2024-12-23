@@ -15,12 +15,12 @@ export const ClientCard: React.FC<ClientCardProps> = ({ client }) => {
       to={`/client/${client.id}`}
       className="block bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
     >
-      <div className="p-6">
-        <div className="flex items-center space-x-4">
+      <div className="p-4 md:p-6">
+        <div className="flex items-center space-x-2 md:space-x-4">
           <img
-            src={client.avatar}
+            src={client.avatar?.toString()}
             alt={client.nombre}
-            className="w-16 h-16 rounded-full object-cover"
+            className="w-14 h-14 rounded-full object-cover"
           />
           <div className="flex-1">
             <div className="flex items-center justify-between">
@@ -36,15 +36,15 @@ export const ClientCard: React.FC<ClientCardProps> = ({ client }) => {
               </span>
             </div>
             <div className="mt-2 space-y-2">
-              <div className="flex items-center text-gray-600">
+              <div className="flex items-center text-gray-600 text-sm md:text-base">
                 <Building2 className="w-4 h-4 mr-2" />
                 {client.empresa}
               </div>
-              <div className="flex items-center text-gray-600">
+              <div className="flex items-center text-gray-600 text-sm md:text-base">
                 <Mail className="w-4 h-4 mr-2" />
                 {client.email}
               </div>
-              <div className="flex items-center text-gray-600">
+              <div className="flex items-center text-gray-600 text-sm md:text-base">
                 <Phone className="w-4 h-4 mr-2" />
                 {client.telefono}
               </div>

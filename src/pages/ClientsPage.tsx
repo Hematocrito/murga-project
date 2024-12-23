@@ -25,7 +25,7 @@ const OBTENER_CLIENTES_USUARIO = gql`
   }
 `;
 
-const Clientes = () => {
+const ClientsPage = () => {
   //Consulta de Apollo
   const { data, loading, error } = useQuery(OBTENER_CLIENTES_USUARIO);
   const [clients, setClients] = useState<Cliente[]>([]);
@@ -90,4 +90,4 @@ const Clientes = () => {
   );
 };
 
-export default Clientes;
+export default ClientsPage;

@@ -69,7 +69,7 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({ onChange }) => {
           htmlFor="avatar-upload"
           className="mt-2 cursor-pointer text-sm text-blue-600 hover:text-blue-700"
         >
-          Upload Photo
+          Subir Foto
         </label>
       )}
     </div>

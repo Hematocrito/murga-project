@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import FormField from '../components/forms/FormField';
@@ -21,7 +20,7 @@ const NewClientPage = () => {
       </button>
 
       <div className="bg-white rounded-lg shadow p-6">
-        <h2 className="text-2xl font-bold mb-6">New Client</h2>
+        <h2 className="text-2xl font-bold mb-6">Nuevo Cliente</h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           <AvatarUpload onChange={handleAvatarChange} />
           
@@ -30,7 +29,7 @@ const NewClientPage = () => {
             {/* Left Column */}
             <div className="space-y-4">
               <FormField
-                label="First Name"
+                label="Nombre"
                 required
               >
                 <input
@@ -58,7 +57,7 @@ const NewClientPage = () => {
               </FormField>
 
               <FormField
-                label="Company"
+                label="Empresa"
                 required
               >
                 <input
@@ -72,7 +71,7 @@ const NewClientPage = () => {
               </FormField>
 
               <FormField
-                label="State"
+                label="Estado"
                 required
               >
                 <select
@@ -82,7 +81,7 @@ const NewClientPage = () => {
                   required
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
-                  <option value="">Select a state</option>
+                  <option value="">Seleccionar un estado</option>
                   <option value="active">Active</option>
                   <option value="inactive">Inactive</option>
                   <option value="pending">Pending</option>
@@ -93,7 +92,7 @@ const NewClientPage = () => {
             {/* Right Column */}
             <div className="space-y-4">
               <FormField
-                label="Last Name"
+                label="Apellido"
                 required
               >
                 <input
@@ -107,7 +106,7 @@ const NewClientPage = () => {
               </FormField>
 
               <FormField
-                label="Phone"
+                label="Teléfono"
               >
                 <input
                   type="tel"
@@ -118,11 +117,23 @@ const NewClientPage = () => {
                 />
               </FormField>
 
+              <FormField
+                label="DNI"
+              >
+                <input
+                  type="text"
+                  name="dni"
+                  value={formData.dni}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </FormField>
+
             </div>
           </div>
 
           {/* Notes field spans full width */}
-          <FormField label="Notes">
+          <FormField label="Notas">
             <textarea
               name="notes"
               value={formData.notas}
@@ -133,8 +144,8 @@ const NewClientPage = () => {
           </FormField>
 
           <FormActions
-            cancelPath="/clients"
-            submitText="Create Client"
+            cancelPath="/clientes"
+            submitText="Crear Cliente"
           />
         </form>
       </div>
