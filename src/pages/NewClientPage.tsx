@@ -7,7 +7,7 @@ import useClientForm from '../hooks/useClientForm';
 
 const NewClientPage = () => {
   const navigate = useNavigate();
-  const { formData, handleChange, handleAvatarChange, handleSubmit } = useClientForm();
+  const { formData, errors, handleChange, handleAvatarChange, handleSubmit } = useClientForm();
 
   return (
     <div>
@@ -82,9 +82,9 @@ const NewClientPage = () => {
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
                   <option value="">Seleccionar un estado</option>
-                  <option value="active">Active</option>
-                  <option value="inactive">Inactive</option>
-                  <option value="pending">Pending</option>
+                  <option value="active">Activo</option>
+                  <option value="inactive">Inactivo</option>
+                  <option value="pending">Pendiente</option>
                 </select>
               </FormField>
             </div>
@@ -119,16 +119,23 @@ const NewClientPage = () => {
 
               <FormField
                 label="DNI"
+                required
               >
                 <input
                   type="text"
                   name="dni"
                   value={formData.dni}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  required
+                  maxLength={8}
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                    errors.dni ? 'border-red-500' : ''
+                  }`}
                 />
+                {errors.dni && (
+                  <p className="mt-1 text-sm text-red-500">{errors.dni}</p>
+                )}
               </FormField>
-
             </div>
           </div>
 

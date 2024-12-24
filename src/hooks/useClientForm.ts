@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Cliente } from '../types/Cliente';
+import { formatDNI, isValidDNI } from '../utils/validation';
 
 const initialFormData: Cliente = {
   id: 0,
@@ -10,18 +11,28 @@ const initialFormData: Cliente = {
   empresa: '',
   estado: '',
   avatar: null,
-  notas: ''
+  notas: '',
+  dni: ''
 };
 
 export const useClientForm = () => {
   const [formData, setFormData] = useState<Cliente>(initialFormData);
+  const [errors, setErrors] = useState<Partial<Record<keyof Cliente, string>>>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value,
-    }));
+    if (name === 'dni') {
+      const formattedDNI = formatDNI(value);
+      setFormData(prev => ({ ...prev, [name]: formattedDNI }));
+      
+      if (formattedDNI && !isValidDNI(formattedDNI)) {
+        setErrors(prev => ({ ...prev, dni: 'DNI debe tener 8 digitos' }));
+      } else {
+        setErrors(prev => ({ ...prev, dni: undefined }));
+      }
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleAvatarChange = (file: File | null) => {
@@ -50,6 +61,7 @@ export const useClientForm = () => {
 
   return {
     formData,
+    errors,
     handleChange,
     handleAvatarChange,
     handleSubmit,
