@@ -1,7 +1,7 @@
 {
     "version": 2,
     "routes": [ 
-        { "src": "/(.*)", "dest": "/index.html" },
+        { "src": "/(.*)", "dest": "/pages/HomePage.tsx" },
         { "src": "/clientes", "dest": "/pages/ClientsPage.tsx" }
     ]
   }
