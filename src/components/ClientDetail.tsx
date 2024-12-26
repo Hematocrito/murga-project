@@ -7,9 +7,11 @@ import {
 } from 'lucide-react';
 import { clients } from '../data/clients';
 
+
 export const ClientDetail: React.FC = () => {
   const { id } = useParams();
   const client = clients.find(c => c.id === Number(id));
+
 
   if (!client) {
     return (
@@ -39,20 +41,20 @@ export const ClientDetail: React.FC = () => {
           <div className="flex items-center space-x-6 mb-8">
             <img
               src={client.avatar}
-              alt={client.name}
+              alt={client.nombre}
               className="w-24 h-24 rounded-full object-cover"
             />
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">{client.name}</h1>
+              <h1 className="text-3xl font-bold text-gray-900">{client.nombre} {client.apellido}</h1>
               <div className="mt-2 flex items-center">
                 <span
                   className={`px-3 py-1 rounded-full text-sm font-medium ${
-                    client.status === 'active'
+                    client.estado === 'activo'
                       ? 'bg-green-100 text-green-800'
                       : 'bg-gray-100 text-gray-800'
                   }`}
                 >
-                  {client.status}
+                  {client.estado}
                 </span>
               </div>
             </div>
@@ -67,7 +69,7 @@ export const ClientDetail: React.FC = () => {
                 <div className="space-y-3">
                   <div className="flex items-center text-gray-600">
                     <Building2 className="w-5 h-5 mr-3" />
-                    <span>{client.company}</span>
+                    <span>{client.empresa}</span>
                   </div>
                   <div className="flex items-center text-gray-600">
                     <Mail className="w-5 h-5 mr-3" />
@@ -75,7 +77,7 @@ export const ClientDetail: React.FC = () => {
                   </div>
                   <div className="flex items-center text-gray-600">
                     <Phone className="w-5 h-5 mr-3" />
-                    <span>{client.phone}</span>
+                    <span>{client.telefono}</span>
                   </div>
                   <div className="flex items-center text-gray-600">
                     <MapPin className="w-5 h-5 mr-3" />
@@ -116,7 +118,7 @@ export const ClientDetail: React.FC = () => {
                   </div>
                   <div className="flex items-start text-gray-600">
                     <ClipboardList className="w-5 h-5 mr-3 mt-1" />
-                    <span>{client.notes}</span>
+                    <span>{client.notas}</span>
                   </div>
                 </div>
               </div>

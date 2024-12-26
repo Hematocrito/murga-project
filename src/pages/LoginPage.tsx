@@ -1,6 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { gql, useMutation } from "@apollo/client";
+
+const AUTENTICAR_USUARIO = gql`
+    mutation AutenticarUsuario($input: AutenticarInput) {
+        autenticarUsuario(input: $input) {
+            token
+        }
+    }
+`;
 
 export const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -8,17 +17,34 @@ export const LoginPage = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { login } = useAuth();
+  //Mutation para crear nuevos usuarios en apollo
+  const [ autenticarUsuario ] = useMutation(AUTENTICAR_USUARIO);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    
-    const success = await login(username, password);
-    if (success) {
-      navigate('/clientes');
-    } else {
+
+    try {
+      const { data } = await autenticarUsuario({
+        variables: {
+            input:{
+                email: username,
+                password                            
+            }
+        }
+      });
+      console.log(data);
+
+      const { token } = data.autenticarUsuario;
+      await login(username, password, token);
+      navigate('/clientes', { replace: true });
+      
+    } catch (error) {
+      console.log(error);
       setError('Credenciales inválidas');
-    }
+    }    
+    
   };
 
   return (

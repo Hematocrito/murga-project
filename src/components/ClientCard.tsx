@@ -12,7 +12,7 @@ export const ClientCard: React.FC<ClientCardProps> = ({ client }) => {
 
   return (
     <Link
-      to={`/client/${client.id}`}
+      to={`/clientes/${client.id}`}
       className="block bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
     >
       <div className="p-4 md:p-6">

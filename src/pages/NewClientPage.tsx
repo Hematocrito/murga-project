@@ -16,7 +16,7 @@ const NewClientPage = () => {
         className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-6"
       >
         <ArrowLeft className="w-5 h-5 mr-2" />
-        Volver a Clientes
+        Volver a la lista
       </button>
 
       <div className="bg-white rounded-lg shadow p-6">
@@ -38,7 +38,7 @@ const NewClientPage = () => {
                   value={formData.nombre}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300"
                 />
               </FormField>
 
@@ -52,7 +52,7 @@ const NewClientPage = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300"
                 />
               </FormField>
 
@@ -66,7 +66,7 @@ const NewClientPage = () => {
                   value={formData.empresa}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300"
                 />
               </FormField>
 
@@ -79,7 +79,7 @@ const NewClientPage = () => {
                   value={formData.estado}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300"
                 >
                   <option value="">Seleccionar un estado</option>
                   <option value="active">Activo</option>
@@ -101,7 +101,7 @@ const NewClientPage = () => {
                   value={formData.apellido}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300"
                 />
               </FormField>
 
@@ -113,7 +113,7 @@ const NewClientPage = () => {
                   name="phone"
                   value={formData.telefono}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300"
                 />
               </FormField>
 
@@ -128,7 +128,7 @@ const NewClientPage = () => {
                   onChange={handleChange}
                   required
                   maxLength={8}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300 ${
                     errors.dni ? 'border-red-500' : ''
                   }`}
                 />
@@ -145,7 +145,7 @@ const NewClientPage = () => {
               name="notes"
               value={formData.notas}
               onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300"
               rows={4}
             />
           </FormField>

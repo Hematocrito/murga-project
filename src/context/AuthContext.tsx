@@ -1,78 +1,63 @@
-import React, { createContext, useContext, useState } from 'react';
-import { gql, useMutation } from "@apollo/client";
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
-interface AuthContextType {
-  isAuthenticated: boolean;
-  login: (username: string, password: string) => Promise<boolean>;
-  logout: () => void;
+interface User {
+  id: string;
+  email: string;
+  name: string;
 }
 
-const AUTENTICAR_USUARIO = gql`
-    mutation AutenticarUsuario($input: AutenticarInput) {
-        autenticarUsuario(input: $input) {
-            token
-        }
+interface AuthContextType {
+  user: User | null;
+  login: (email: string, password: string, token: string) => void;
+  logout: () => void;
+  isAuthenticated: boolean;
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<User | null>(() => {
+    const savedUser = localStorage.getItem('user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
+
+  const isAuthenticated = !!user;
+
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem('user', JSON.stringify(user));
+    } else {
+      localStorage.removeItem('user');
     }
-`;
+  }, [user]);
 
-const AuthContext = createContext<AuthContextType | null>(null);
-
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  //Mutation para crear nuevos usuarios en apollo
-  const [ autenticarUsuario ] = useMutation(AUTENTICAR_USUARIO);
-
-  const login = async (username: string, password: string) => {
-    // Simulated authentication - In production, replace with real API call
-
-    try {
-      const { data } = await autenticarUsuario({
-        variables: {
-            input:{
-                email: username,
-                password                            
-            }
-        }
-      });
-      console.log(data);
-
-      //Guardar el token en local storage
-      const { token } = data.autenticarUsuario;
-      localStorage.setItem('token', token);
-
-      setIsAuthenticated(true);
-      return true;
-      
-    } catch (error) {
-      console.log(error);
-      return false;
-    }
-
-
-    /*
-    if (username === 'admin' && password === 'admin') {
-      setIsAuthenticated(true);
-      return true;
-    }
-    */
+  const login = (email: string, password: string, token: string) => {
+    const mockUser = {
+      id: '1',
+      email,
+      name: email.split('@')[0],
+    };
+    setUser(mockUser);
+    localStorage.setItem('token', token);
   };
 
   const logout = () => {
-    setIsAuthenticated(false);
+    setUser(null);
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-export const useAuth = () => {
+export function useAuth() {
   const context = useContext(AuthContext);
-  if (!context) {
+  if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
-};
+}

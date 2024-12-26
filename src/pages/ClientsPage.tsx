@@ -1,45 +1,26 @@
-import { useEffect, useState } from 'react';
 import { UserPlus } from 'lucide-react';
 import { ClientCard } from '../components/ClientCard';
 import { Pagination } from '../components/Pagination';
 //import { clients } from '../data/clients';
 import { Users } from 'lucide-react';
 import { SearchBar } from '../components/SearchBar';
-import { gql, useQuery } from "@apollo/client";
+import { OBTENER_CLIENTES_USUARIO } from '../graphql/queries/clients';
+import { useQuery } from "@apollo/client";
 import { Cliente } from '../types/Cliente';
 import { useClientSearch } from '../hooks/useClientSearch';
 import { Link } from 'react-router-dom';
+import LoadingSpinner from '../components/common/LoadingSpinner';
 
-const OBTENER_CLIENTES_USUARIO = gql`
-  query obtenerClientesVendedor {
-    obtenerClientesVendedor {
-      id
-      nombre
-      apellido
-      avatar
-      empresa
-      email
-      telefono
-      estado
-    }
-  }
-`;
 
 const ClientsPage = () => {
   //Consulta de Apollo
   const { data, loading, error } = useQuery(OBTENER_CLIENTES_USUARIO);
-  const [clients, setClients] = useState<Cliente[]>([]);
-
+  const clients: Cliente[] = data?.obtenerClientesVendedor ?? [];
+  
   console.log('DATA ', data);
   console.log(loading);
   console.log(error);
-
-  useEffect(() => {
-    if (data) {
-      setClients(data.obtenerClientesVendedor);
-    }
-  }, [data]);
-
+  
   const {
     searchTerm,
     currentPage,
@@ -50,7 +31,10 @@ const ClientsPage = () => {
   } = useClientSearch(clients);
   //console.log('Paginated ', paginatedClients);
 
-  if (loading) return <p>Cargando...</p>;
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
   if (error) return <p>Error: {error.message}</p>;
 
   return (
