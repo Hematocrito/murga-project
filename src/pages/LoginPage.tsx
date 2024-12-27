@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { gql, useMutation } from "@apollo/client";
 
@@ -51,7 +51,7 @@ export const LoginPage = () => {
     <div className="min-h-screen bg-gray-600 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
         <div className="flex flex-col items-center mb-8">
-          <img src='/images/logo.jpg' className="h-12 w-14" />
+          <img src='/images/logo.jpg' className="h-12 w-14" alt='murga estudio juridico' />
           <h1 className="text-2xl font-bold text-gray-900">Estudio Jurídico</h1>
           <p className="text-gray-600">Acceso al Sistema</p>
         </div>
@@ -98,6 +98,12 @@ export const LoginPage = () => {
             Iniciar Sesión
           </button>
         </form>
+
+        <div className="mt-6 text-center">
+          <Link to="/" className="text-sm text-blue-600 hover:text-blue-700">
+            Volver a la Pagina Principal
+          </Link>
+        </div>
       </div>
     </div>
   );

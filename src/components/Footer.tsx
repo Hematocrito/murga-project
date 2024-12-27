@@ -27,9 +27,10 @@ export default function Footer() {
                 <Phone className="h-5 w-5 text-sky-500" />
                 <span className="ml-3 text-gray-300">+54 351 754-7452</span>
               </div>
+              <span className="ml-8 text-gray-300">+54 351 766-0672</span>
               <div className="flex items-center">
                 <MapPin className="h-5 w-5 text-sky-500" />
-                <span className="ml-3 text-gray-300">Urquiza 174, Cba</span>
+                <span className="ml-3 text-gray-300">Justo José de Urquiza 174, Cba</span>
               </div>
             </div>
           </div>
@@ -38,7 +39,7 @@ export default function Footer() {
             <h3 className="text-sm font-semibold text-gray-400 tracking-wider uppercase">Horario</h3>
             <div className="mt-4 space-y-2">
               <p className="text-gray-300">Lunes a Viernes</p>
-              <p className="text-gray-400">9:00 - 18:00</p>
+              <p className="text-gray-400">8:00 - 17:00</p>
             </div>
           </div>
         </div>
