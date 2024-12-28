@@ -1,6 +1,6 @@
-import React from 'react';
+//import React from 'react';
 import { LogOut, User } from 'lucide-react';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const UserMenu = () => {

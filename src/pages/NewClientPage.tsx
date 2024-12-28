@@ -4,10 +4,23 @@ import FormField from '../components/forms/FormField';
 import FormActions from '../components/forms/FormActions';
 import AvatarUpload from '../components/forms/AvatarUpload';
 import useClientForm from '../hooks/useClientForm';
+import { useCreateClient } from '../hooks/useCreateClient';
+import { CLIENT_STATUS_LABELS } from '../constants/clientStatus';
 
 const NewClientPage = () => {
   const navigate = useNavigate();
-  const { formData, errors, handleChange, handleAvatarChange, handleSubmit } = useClientForm();
+  const { formData, errors, handleChange, handleAvatarChange } = useClientForm();
+  const { createClient, loading, error } = useCreateClient();
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await createClient(formData);
+      navigate('/clientes');
+    } catch (err) {
+      console.error('Error creating client:', err);
+    }
+  };
 
   return (
     <div>
@@ -21,21 +34,28 @@ const NewClientPage = () => {
 
       <div className="bg-white rounded-lg shadow p-6">
         <h2 className="text-2xl font-bold mb-6">Nuevo Cliente</h2>
-        <form onSubmit={handleSubmit} className="space-y-6">
+
+        {error && (
+          <div className="mb-4 p-4 bg-red-50 text-red-600 rounded-lg">
+            Error creando cliente. Por favor, intente nuevamente.
+          </div>
+        )}
+
+        <form onSubmit={onSubmit} className="space-y-6">
           <AvatarUpload onChange={handleAvatarChange} />
           
           {/* Grid container with responsive columns */}
           <div className="grid md:grid-cols-2 gap-x-6 gap-y-4">
             {/* Left Column */}
             <div className="space-y-4">
-              <FormField
+            <FormField
                 label="Nombre"
                 required
               >
                 <input
                   type="text"
                   name="firstName"
-                  value={formData.nombre}
+                  value={formData.firstName}
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300"
@@ -43,8 +63,8 @@ const NewClientPage = () => {
               </FormField>
 
               <FormField
-                label="Email"
-                required
+              label="Email"
+              required
               >
                 <input
                   type="email"
@@ -52,8 +72,14 @@ const NewClientPage = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300"
+                  placeholder="example@email.com"
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300 ${
+                    errors.email ? 'border-red-500' : ''
+                  }`}
                 />
+                {errors.email && (
+                  <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+                )}
               </FormField>
 
               <FormField
@@ -63,28 +89,26 @@ const NewClientPage = () => {
                 <input
                   type="text"
                   name="company"
-                  value={formData.empresa}
+                  value={formData.company}
                   onChange={handleChange}
-                  required
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300"
                 />
               </FormField>
 
-              <FormField
-                label="Estado"
-                required
-              >
+              <FormField label="Estado" required>
                 <select
                   name="state"
-                  value={formData.estado}
+                  value={formData.state}
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300"
                 >
-                  <option value="">Seleccionar un estado</option>
-                  <option value="active">Activo</option>
-                  <option value="inactive">Inactivo</option>
-                  <option value="pending">Pendiente</option>
+                  <option value="">Seleccionar estado</option>
+                  {Object.entries(CLIENT_STATUS_LABELS).map(([value, label]) => (
+                    <option key={value} value={value}>
+                      {label}
+                    </option>
+                  ))}
                 </select>
               </FormField>
             </div>
@@ -98,7 +122,7 @@ const NewClientPage = () => {
                 <input
                   type="text"
                   name="lastName"
-                  value={formData.apellido}
+                  value={formData.lastName}
                   onChange={handleChange}
                   required
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300"
@@ -111,7 +135,7 @@ const NewClientPage = () => {
                 <input
                   type="tel"
                   name="phone"
-                  value={formData.telefono}
+                  value={formData.phone}
                   onChange={handleChange}
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300"
                 />
@@ -143,16 +167,16 @@ const NewClientPage = () => {
           <FormField label="Notas">
             <textarea
               name="notes"
-              value={formData.notas}
+              value={formData.notes}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300"
               rows={4}
             />
           </FormField>
 
-          <FormActions
-            cancelPath="/clientes"
-            submitText="Crear Cliente"
+          <FormActions 
+            cancelPath="/clientes" 
+            submitText={loading ? 'Creando...' : 'Crear Cliente'} 
           />
         </form>
       </div>

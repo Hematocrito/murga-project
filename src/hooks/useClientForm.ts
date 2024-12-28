@@ -1,26 +1,27 @@
 import { useState } from 'react';
-import { Cliente } from '../types/Cliente';
-import { formatDNI, isValidDNI } from '../utils/validation';
+import { ClientFormData } from '../types/Cliente';
+import { formatDNI, isValidDNI, isValidEmail } from '../utils/validation';
 
-const initialFormData: Cliente = {
-  id: 0,
-  nombre: '',
-  apellido: '',
+const initialFormData: ClientFormData = {
+  firstName: '',
+  lastName: '',
   email: '',
-  telefono: '',
-  empresa: '',
-  estado: '',
+  phone: '',
+  company: '',
+  position: '',
+  state: '',
+  notes: '',
   avatar: null,
-  notas: '',
-  dni: ''
+  dni: '',
 };
 
-export const useClientForm = () => {
-  const [formData, setFormData] = useState<Cliente>(initialFormData);
-  const [errors, setErrors] = useState<Partial<Record<keyof Cliente, string>>>({});
+const useClientForm = () => {
+  const [formData, setFormData] = useState<ClientFormData>(initialFormData);
+  const [errors, setErrors] = useState<Partial<Record<keyof ClientFormData, string>>>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
+    
     if (name === 'dni') {
       const formattedDNI = formatDNI(value);
       setFormData(prev => ({ ...prev, [name]: formattedDNI }));
@@ -29,6 +30,14 @@ export const useClientForm = () => {
         setErrors(prev => ({ ...prev, dni: 'DNI debe tener 8 digitos' }));
       } else {
         setErrors(prev => ({ ...prev, dni: undefined }));
+      }
+    } else if (name === 'email') {
+      setFormData(prev => ({ ...prev, [name]: value }));
+      
+      if (value && !isValidEmail(value)) {
+        setErrors(prev => ({ ...prev, email: 'Ingrese una dirección de correo electrónico válida' }));
+      } else {
+        setErrors(prev => ({ ...prev, email: undefined }));
       }
     } else {
       setFormData(prev => ({ ...prev, [name]: value }));
@@ -44,19 +53,18 @@ export const useClientForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the data to your backend
-    console.log('Form submitted:', formData);
     
-    // Create FormData for multipart/form-data submission (for file upload)
-    const submitData = new FormData();
-    Object.entries(formData).forEach(([key, value]) => {
-      if (value !== null) {
-        submitData.append(key, value);
-      }
-    });
+    if (!isValidDNI(formData.dni)) {
+      setErrors(prev => ({ ...prev, dni: 'DNI debe tener 8 digitos' }));
+      return;
+    }
+
+    if (!isValidEmail(formData.email)) {
+      setErrors(prev => ({ ...prev, email: 'Ingrese una dirección de correo electrónico válida' }));
+      return;
+    }
     
-    // Add your API call here
-    // await api.createClient(submitData);
+    console.log('Form submitted@@@@@@@@@@@:', formData);
   };
 
   return {

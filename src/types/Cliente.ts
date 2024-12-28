@@ -1,22 +1,23 @@
 export interface Cliente {
-  id: number;
+  id: string;
   nombre: string;
   apellido: string;
+  avatar: string;
   empresa: string;
   email: string;
   telefono: string;
   estado: string;
-  dni: string;
-  notas: string;
+}
+
+export interface ClientFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  company: string;
+  position: string;
+  state: string;
+  notes: string;
   avatar: File | null;
-  //Datos a revisar
-  address: string;
-  city: string;
-  country: string;
-  //status: 'active' | 'inactive';
-  joinDate: string;
-  industry: string;
-  revenue: string;
-  employees: number;
-  website: string;
+  dni: string;
 }
