@@ -18,6 +18,6 @@ export interface ClientFormData {
   position: string;
   state: string;
   notes: string;
-  avatar: File | null;
+  avatar: string;
   dni: string;
 }

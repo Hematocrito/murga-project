@@ -4,22 +4,14 @@ import { Pagination } from '../components/Pagination';
 //import { clients } from '../data/clients';
 import { Users } from 'lucide-react';
 import { SearchBar } from '../components/SearchBar';
-import { OBTENER_CLIENTES_USUARIO } from '../graphql/queries/clients';
-import { useQuery } from "@apollo/client";
-import { Cliente } from '../types/Cliente';
 import { useClientSearch } from '../hooks/useClientSearch';
 import { Link } from 'react-router-dom';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import { useClients } from '../hooks/useClients';
 
 
 const ClientsPage = () => {
-  //Consulta de Apollo
-  const { data, loading, error } = useQuery(OBTENER_CLIENTES_USUARIO);
-  const clients: Cliente[] = data?.obtenerClientesVendedor ?? [];
-  
-  console.log('DATA ', data);
-  console.log(loading);
-  console.log(error);
+  const { clients, loading, error } = useClients();
   
   const {
     searchTerm,

@@ -12,16 +12,27 @@ export const useCreateClient = () => {
   });
 
   const handleCreateClient = async (clientData: any) => {
-    
+      // Convert avatar file to base64 if it exists
+      let avatarBase64 = '';
+      if (clientData.avatar) {
+        avatarBase64 = await new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result as string);
+          reader.readAsDataURL(clientData.avatar);
+        });
+      }
+
       const { data } = await createClient({
         variables: {
           input: {
             nombre: clientData.firstName,
             apellido: clientData.lastName,
-            email: clientData.email,
-            telefono: clientData.phone,
             empresa: clientData.company,
-            estado: clientData.state
+            email: clientData.email,
+            telefono: clientData.phone,            
+            avatar: avatarBase64 || '',
+            dni: clientData.dni,
+            estado: clientData.state,
           }
         }
       });
