@@ -21,7 +21,7 @@ const ClientsPage = () => {
     handleSearchChange,
     handlePageChange,
   } = useClientSearch(clients);
-  //console.log('Paginated ', paginatedClients);
+  console.log('Clientes ####### ', clients);
 
   if (loading) {
     return <LoadingSpinner />;

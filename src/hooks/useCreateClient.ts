@@ -12,7 +12,7 @@ export const useCreateClient = () => {
   });
 
   const handleCreateClient = async (clientData: any) => {
-      // Convert avatar file to base64 if it exists
+      /* Convert avatar file to base64 if it exists
       let avatarBase64 = '';
       if (clientData.avatar) {
         avatarBase64 = await new Promise((resolve) => {
@@ -20,7 +20,7 @@ export const useCreateClient = () => {
           reader.onloadend = () => resolve(reader.result as string);
           reader.readAsDataURL(clientData.avatar);
         });
-      }
+      }*/
 
       const { data } = await createClient({
         variables: {
@@ -30,9 +30,10 @@ export const useCreateClient = () => {
             empresa: clientData.company,
             email: clientData.email,
             telefono: clientData.phone,            
-            avatar: avatarBase64 || '',
+            avatar: clientData.avatar,//avatarBase64 || '',
             dni: clientData.dni,
             estado: clientData.state,
+            notas: clientData.notes
           }
         }
       });

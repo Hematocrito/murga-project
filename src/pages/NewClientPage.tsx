@@ -6,14 +6,17 @@ import AvatarUpload from '../components/forms/AvatarUpload';
 import useClientForm from '../hooks/useClientForm';
 import { useCreateClient } from '../hooks/useCreateClient';
 import { CLIENT_STATUS_LABELS } from '../constants/clientStatus';
+import RichTextEditor from '../components/forms/RichTextEditor';
+
 
 const NewClientPage = () => {
   const navigate = useNavigate();
-  const { formData, errors, handleChange, handleAvatarChange } = useClientForm();
+  const { formData, errors, handleChange, handleNotesChange, handleAvatarChange } = useClientForm();
   const { createClient, loading, error } = useCreateClient();
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    //console.log('DATOS!!!!!!!! ', formData);
     try {
       await createClient(formData);
       navigate('/clientes');
@@ -165,12 +168,18 @@ const NewClientPage = () => {
 
           {/* Notes field spans full width */}
           <FormField label="Notas">
+            {/*
             <textarea
               name="notes"
               value={formData.notes}
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300"
               rows={4}
+            /> */ }
+             <RichTextEditor
+              value={formData.notes}
+              onChange={handleNotesChange}
+              placeholder="Add notes about the client..."
             />
           </FormField>
 

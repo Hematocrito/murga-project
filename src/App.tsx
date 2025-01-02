@@ -7,7 +7,6 @@ import Layout from './components/Layout';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import NewClientPage from './pages/NewClientPage';
 import ClientsPage from './pages/ClientsPage';
-import { ClientDetail } from './components/ClientDetail';
 
 
 function App() {
@@ -25,7 +24,7 @@ function App() {
             }
           >
             <Route path="/clientes" element={<ClientsPage />} />
-            <Route path="/clientes/:id" element={<ClientDetail />} />
+            
             <Route path="/clientes/nuevo" element={<NewClientPage />} /> 
           </Route>
         </Routes>

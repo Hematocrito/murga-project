@@ -11,7 +11,7 @@ const initialFormData: ClientFormData = {
   position: '',
   state: '',
   notes: '',
-  avatar: null,
+  avatar: '',
   dni: '',
 };
 
@@ -44,10 +44,17 @@ const useClientForm = () => {
     }
   };
 
-  const handleAvatarChange = (file: File | null) => {
+  const handleAvatarChange = (avatarUrl: string) => {
     setFormData(prev => ({
       ...prev,
-      avatar: file,
+      avatar: avatarUrl,
+    }));
+  };
+
+  const handleNotesChange = (value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      notes: value,
     }));
   };
 
@@ -72,6 +79,7 @@ const useClientForm = () => {
     errors,
     handleChange,
     handleAvatarChange,
+    handleNotesChange,
     handleSubmit,
   };
 };

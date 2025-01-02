@@ -6,11 +6,13 @@ export const OBTENER_CLIENTES_USUARIO = gql`
       id
       nombre
       apellido
-      avatar
       empresa
       email
       telefono
+      avatar
+      dni
       estado
+      notas
     }
   }
 `;

@@ -2,11 +2,13 @@ export interface Cliente {
   id: string;
   nombre: string;
   apellido: string;
-  avatar: string;
   empresa: string;
   email: string;
   telefono: string;
+  avatar: string;
+  dni: string;  
   estado: string;
+  notas: string;
 }
 
 export interface ClientFormData {

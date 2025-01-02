@@ -2,29 +2,30 @@ import React, { useState, useRef } from 'react';
 import { Upload, X } from 'lucide-react';
 
 interface AvatarUploadProps {
-  onChange: (file: File | null) => void;
+  onChange: (avatarUrl: string) => void;
+  initialValue?: string;
 }
 
-const AvatarUpload: React.FC<AvatarUploadProps> = ({ onChange }) => {
-  const [preview, setPreview] = useState<string | null>(null);
+const AvatarUpload: React.FC<AvatarUploadProps> = ({ onChange, initialValue = '' }) => {
+  const [preview, setPreview] = useState<string>(initialValue);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    console.log('ARCHIVE ', file);
     if (file) {
-      onChange(file);
       const reader = new FileReader();
       reader.onloadend = () => {
-        setPreview(reader.result as string);
+        const result = reader.result as string;
+        setPreview(result);
+        onChange(result);
       };
       reader.readAsDataURL(file);
     }
   };
 
   const handleRemove = () => {
-    setPreview(null);
-    onChange(null);
+    setPreview('');
+    onChange('');
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -70,7 +71,7 @@ const AvatarUpload: React.FC<AvatarUploadProps> = ({ onChange }) => {
           htmlFor="avatar-upload"
           className="mt-2 cursor-pointer text-sm text-blue-600 hover:text-blue-700"
         >
-          Subir Foto
+          Upload Photo
         </label>
       )}
     </div>
