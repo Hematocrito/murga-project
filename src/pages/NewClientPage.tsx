@@ -179,7 +179,7 @@ const NewClientPage = () => {
              <RichTextEditor
               value={formData.notes}
               onChange={handleNotesChange}
-              placeholder="Add notes about the client..."
+              placeholder="Agregar notas acerca del cliente..."
             />
           </FormField>
 

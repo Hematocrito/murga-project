@@ -16,3 +16,19 @@ export const OBTENER_CLIENTES_USUARIO = gql`
     }
   }
 `;
+
+export const OBTENER_CLIENTE = gql`
+  query obtenerCliente($id: ID!) {
+    obtenerCliente(id: $id) {
+      nombre
+      apellido
+      empresa
+      email
+      telefono
+      avatar
+      dni
+      estado
+      notas
+    }
+  }
+`;

@@ -12,7 +12,7 @@ export default function Footer() {
               <span className="ml-2 text-xl font-semibold text-white">Murga & Asociados</span>
             </div>
             <p className="mt-4 text-gray-400">
-              Comprometidos con la excelencia legal y la satisfacción de nuestros clientes desde 1995.
+              Comprometidos con la excelencia legal y la satisfacción de nuestros clientes.
             </p>
           </div>
           
