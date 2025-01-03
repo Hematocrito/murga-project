@@ -16,7 +16,7 @@ export const ClientCard: React.FC<ClientCardProps> = ({ client }) => {
       to={`/clientes/${client.id}`}
       className="block bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
     >
-      <div className="p-4 md:p-6">
+      <div className="p-2 md:p-6">
         <div className="flex items-center space-x-2 md:space-x-4">
           {client.avatar ? (
             <img
@@ -33,7 +33,7 @@ export const ClientCard: React.FC<ClientCardProps> = ({ client }) => {
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold text-gray-900">{client.nombre} {client.apellido}</h3>
               {client.estado && 
-              <ClientStatusBadge status={client.estado} />
+                <ClientStatusBadge status={client.estado} />
               }
             </div>
             <div className="mt-2 space-y-2">
