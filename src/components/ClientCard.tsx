@@ -17,7 +17,7 @@ export const ClientCard: React.FC<ClientCardProps> = ({ client }) => {
       className="block bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
     >
       <div className="p-2 md:p-6">
-        <div className="flex items-center space-x-0 md:space-x-4">
+        <div className="flex items-center space-x-1 md:space-x-4">
           {client.avatar ? (
             <img
               src={client.avatar?.toString()}
