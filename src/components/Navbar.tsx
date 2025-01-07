@@ -46,7 +46,7 @@ export default function Navbar() {
             </div>
           </div>
         </div>
-        <p className='text-xs md:text-sm italic ml-4 mb-2 -mt-1 md:ml-16'>Especialistas en defender tus derechos</p> 
+        <p className='text-sm md:base italic ml-4 mb-2 -mt-1 md:ml-16 xl:ml-16 2xl:ml32'>Especialistas en defender tus derechos</p> 
       </nav>
 
       <RegisterModal

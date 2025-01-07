@@ -8,6 +8,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import NewClientPage from './pages/NewClientPage';
 import ClientsPage from './pages/ClientsPage';
 import ClientDetailsPage from './pages/ClientDetailsPage';
+import Expedientes from './pages/Expedientes';
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
             <Route path="/clientes" element={<ClientsPage />} />
             <Route path="/clientes/:id" element={<ClientDetailsPage />} />
             <Route path="/clientes/nuevo" element={<NewClientPage />} /> 
+            <Route path="expedientes" element={<Expedientes />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

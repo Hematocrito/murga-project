@@ -130,10 +130,10 @@ const ClientDetailsPage = () => {
 
         {/* Notes Section */}
         {client.notas && (
-          <div className="p-6">
+          <div className="p-0 md:p-6">
             <h2 className="text-lg font-semibold mb-4">Notas</h2>
             <div 
-              className="prose max-w-none bg-gray-50 p-4 rounded-lg"
+              className="prose max-w-none bg-gray-50 p-4 rounded-lg text-justify"
               dangerouslySetInnerHTML={{ __html: client.notas }}
             />
           </div>

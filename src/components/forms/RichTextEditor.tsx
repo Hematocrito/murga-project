@@ -35,7 +35,7 @@ const RichTextEditor = forwardRef<ReactQuill, RichTextEditorProps>(
           modules={modules}
           formats={formats}
           placeholder={placeholder}
-          className="h-48 mb-12"
+          className="h-32 md:h-48 mb-20 md:mb-12"
         />
       </div>
     );

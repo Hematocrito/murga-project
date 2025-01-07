@@ -1,4 +1,4 @@
-import React from 'react';
+//import React from 'react';
 import { FilePlus, Search } from 'lucide-react';
 
 const Expedientes = () => {

@@ -11,7 +11,8 @@ export function useClientSearch(clients: Cliente[], itemsPerPage: number = 6) {
     return clients.filter(
       (client) =>
         client.nombre.toLowerCase().includes(searchLower) ||
-        client.apellido.toLowerCase().includes(searchLower)
+        client.apellido.toLowerCase().includes(searchLower) ||
+        (client.dni?.toLowerCase().includes(searchLower) || false)
     );
   }, [clients, searchTerm]);
 
