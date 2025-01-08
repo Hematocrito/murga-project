@@ -26,10 +26,11 @@ export default function Footer() {
               <div className="flex items-center">
                 <Phone className="h-5 w-5 text-sky-500" />
                 <a className="ml-3 text-gray-300" href="tel:+543517547452">+54 351 754-7452</a>
-
+                <br />
+                <br />
                 <span className="ml-3 text-gray-300"></span>
               </div>
-              <span className="ml-8 text-gray-300">+54 351 766-0672</span>
+                <a className="ml-8 text-gray-300" href="tel:+543517660672">+54 351 766-0672</a>
               <div className="flex items-center">
                 <MapPin className="h-5 w-5 text-sky-500" />
                 <span className="ml-3 text-gray-300">Justo José de Urquiza 174, Cba</span>
