@@ -1,7 +1,11 @@
 User-agent: *
+Allow: /
+Disallow: /login
+Disallow: /clientes
 Disallow: /.bolt/
 Disallow: /dist/
 Disallow: /node_modules/
 Disallow: /src/
 Allow: /public/
 
+Sitemap: https://www.murgaestudiojuridico.com.ar/sitemap.xml

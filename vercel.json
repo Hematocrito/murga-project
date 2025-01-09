@@ -1,6 +1,8 @@
 {
     "version": 2,
     "routes": [
+        { "src": "/sitemap.xml", "dest": "/sitemap.xml" },
+        { "src": "/robots.txt", "dest": "/robots.txt" },
         { "src": "/", "dest": "/" },
         { "src": "/clientes", "dest": "/" },
         { "src": "/login", "dest": "/" }
