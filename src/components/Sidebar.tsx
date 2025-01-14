@@ -7,7 +7,7 @@ interface SidebarProps {
   onClose?: () => void;
 }
 
-export function Sidebar({ onClose }: SidebarProps) {
+function Sidebar({ onClose }: SidebarProps) {
   //const { logout } = useAuth();
 
   return (
@@ -57,3 +57,5 @@ export function Sidebar({ onClose }: SidebarProps) {
     </div>
   );
 };
+
+export default Sidebar;

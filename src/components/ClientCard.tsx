@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { lazy } from 'react';
 //import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Building2, Mail, Phone, User } from 'lucide-react';
 import { Cliente } from '../types/Cliente';
-import ClientStatusBadge from './clients/ClientStatusBadge';
 
 interface ClientCardProps {
   client: Cliente;
 }
+
+const ClientStatusBadge = lazy(() => import('./clients/ClientStatusBadge'));
 
 export const ClientCard: React.FC<ClientCardProps> = ({ client }) => {
 

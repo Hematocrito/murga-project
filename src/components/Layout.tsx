@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, lazy } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Sidebar } from '../components/Sidebar';
 import { Menu } from 'lucide-react';
+
+const Sidebar = lazy(() => import('../components/Sidebar'));
 
 const Layout = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
