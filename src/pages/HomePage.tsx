@@ -1,12 +1,11 @@
-import React, { lazy } from 'react';
+import React from 'react';
+import Navbar from '../components/Navbar';
+import Hero from '../components/Hero';
+import Features from '../components/Features';
+import Team from '../components/Team';
+import Footer from '../components/Footer';
 //import { Navigate } from 'react-router-dom';
 //import { useAuth } from '../contexts/AuthContext';
-
-const Navbar = lazy(() => import('../components/Navbar'));
-const Hero = lazy(() => import('../components/Hero'));
-const Features = lazy(() => import('../components/Features'));
-const Team = lazy(() => import('../components/Team'));
-const Footer = lazy(() => import('../components/Footer'));
 
 export const HomePage: React.FC = () => {
   

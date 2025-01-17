@@ -1,8 +1,8 @@
-import { useState, lazy } from 'react';
+import { useState } from 'react';
 import { LogIn, UserPlus } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import RegisterModal from './RegisterModal';
 
-const RegisterModal = lazy(() => import('./RegisterModal'));
 
 export default function Navbar() {
 
