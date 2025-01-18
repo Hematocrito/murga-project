@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 interface User {
   id: string;
@@ -8,6 +8,7 @@ interface User {
 
 interface AuthContextType {
   user: User | null;
+  token: string | null; 
   login: (email: string, password: string, token: string) => void;
   logout: () => void;
   isAuthenticated: boolean;
@@ -21,39 +22,39 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return savedUser ? JSON.parse(savedUser) : null;
   });
 
-  const isAuthenticated = !!user;
+  const [token, setToken] = useState<string | null>(() => {
+    return localStorage.getItem('token');
+  });
 
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem('user', JSON.stringify(user));
-    } else {
-      localStorage.removeItem('user');
-    }
-  }, [user]);
+  const isAuthenticated = !!user && !!token;
 
-  const login = (email: string, password: string, token: string) => {
+  const login = (email: string, password: string, newToken: string) => {
     const mockUser = {
       id: '1',
       email,
       name: email.split('@')[0],
     };
     setUser(mockUser);
-    localStorage.setItem('token', token);
+    setToken(newToken);
+    localStorage.setItem('token', newToken);
+    localStorage.setItem('user', JSON.stringify(mockUser));
   };
 
   const logout = () => {
     setUser(null);
+    setToken(null);
     localStorage.removeItem('token');
     localStorage.removeItem('user');
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isAuthenticated }}>
+    <AuthContext.Provider value={{ user, token, login, logout, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {

@@ -8,10 +8,15 @@ import { useClientSearch } from '../hooks/useClientSearch';
 import { Link } from 'react-router-dom';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import { useClients } from '../hooks/useClients';
+import { useEffect } from 'react';
 
 
 const ClientsPage = () => {
   const { clients, loading, error } = useClients();
+
+  useEffect(() => {
+    console.log('Clients:', clients); // Para debug
+  }, [clients]);
   
   const {
     searchTerm,
@@ -21,7 +26,6 @@ const ClientsPage = () => {
     handleSearchChange,
     handlePageChange,
   } = useClientSearch(clients);
-  console.log('Clientes ####### ', clients);
 
   if (loading) {
     return <LoadingSpinner />;
