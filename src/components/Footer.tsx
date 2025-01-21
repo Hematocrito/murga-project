@@ -33,7 +33,7 @@ export default function Footer() {
                 <a className="ml-8 text-gray-300" href="tel:+543517660672">+54 351 766-0672</a>
               <div className="flex items-center">
                 <MapPin className="h-5 w-5 text-sky-500" />
-                <span className="ml-3 text-gray-300">Justo José de Urquiza 174, Cba</span>
+                <span className="ml-3 text-gray-300">Justo José de Urquiza 174, Cordoba capital</span>
               </div>
             </div>
           </div>
