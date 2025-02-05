@@ -16,7 +16,7 @@ const FormActions: React.FC<FormActionsProps> = ({ cancelPath, submitText }) => 
         onClick={() => navigate(cancelPath)}
         className="px-4 py-2 border rounded-lg hover:bg-gray-50"
       >
-        Cancel
+        Cancelar
       </button>
       <button
         type="submit"

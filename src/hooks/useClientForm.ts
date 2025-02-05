@@ -8,7 +8,6 @@ const initialFormData: ClientFormData = {
   email: '',
   phone: '',
   company: '',
-  position: '',
   state: '',
   notes: '',
   avatar: '',
@@ -81,6 +80,7 @@ const useClientForm = () => {
     handleAvatarChange,
     handleNotesChange,
     handleSubmit,
+    setFormData,
   };
 };
 

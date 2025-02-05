@@ -9,7 +9,7 @@ const ClientStatusBadge: React.FC<ClientStatusBadgeProps> = ({ status }) => {
   const { bg, text, label } = getStatusStyle(status);
 
   return (
-    <span className={`px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full ${bg} ${text}`}>
+    <span className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${bg} ${text}`}>
       {label}
     </span>
   );

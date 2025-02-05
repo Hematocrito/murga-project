@@ -17,7 +17,6 @@ export interface ClientFormData {
   email: string;
   phone: string;
   company: string;
-  position: string;
   state: string;
   notes: string;
   avatar: string;

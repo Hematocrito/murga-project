@@ -8,7 +8,8 @@ import {
   User,
   Globe,
   AlertCircle,
-  CreditCard
+  CreditCard,
+  Pencil
 } from 'lucide-react';
 import { useClientDetails } from '../hooks/useClientDetails';
 import LoadingSpinner from '../components/common/LoadingSpinner';
@@ -34,13 +35,22 @@ const ClientDetailsPage = () => {
 
   return (
     <div>
-      <button
-        onClick={() => navigate('/clientes')}
-        className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-6"
-      >
-        <ArrowLeft className="w-5 h-5 mr-2" />
-        Volver a Clientes
-      </button>
+      <div className="flex justify-between items-center mb-6">
+        <button
+          onClick={() => navigate('/clientes')}
+          className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-6"
+        >
+          <ArrowLeft className="w-5 h-5 mr-2" />
+          Volver a Clientes
+        </button>
+        <button
+          onClick={() => navigate(`/clientes/${id}/editar`)}
+          className="inline-flex items-center px-4 py-2 bg-blue-800 text-white rounded-lg hover:bg-blue-700 transition-colors"
+        >
+          <Pencil className="w-5 h-5 mr-2" />
+          Editar Cliente
+        </button>
+      </div>
 
       <div className="bg-white rounded-lg shadow">
         {/* Header Section */}
@@ -65,7 +75,7 @@ const ClientDetailsPage = () => {
                 {client.estado &&
                   <ClientStatusBadge status={client.estado} />
                 }  
-                <span className="text-gray-500">{client.empresa}</span>
+                <span className="text-black">{client.empresa}</span>
               </div>
             </div>
           </div>
@@ -104,7 +114,7 @@ const ClientDetailsPage = () => {
                 <CreditCard className="w-5 h-5 mr-3" />
                 <div>
                   <div className="text-sm text-gray-500">DNI</div>
-                  <div>{client.dni || 'Dato inexistente'}</div>
+                  <div className='text-black'>{client.dni || 'Dato inexistente'}</div>
                 </div>
               </div>
             </div>
@@ -114,14 +124,14 @@ const ClientDetailsPage = () => {
                 <Building2 className="w-5 h-5 mr-3" />
                 <div>
                   <div className="text-sm text-gray-500">Empresa</div>
-                  <div>{client.empresa}</div>
+                  <div className='text-black'>{client.empresa}</div>
                 </div>
               </div>
               <div className="flex items-center text-gray-600">
                 <Globe className="w-5 h-5 mr-3" />
                 <div>
                   <div className="text-sm text-gray-500">Estado</div>
-                  <div>{client.estado}</div>
+                  <div className='text-black'>{client.estado}</div>
                 </div>
               </div>
             </div>

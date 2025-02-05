@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Upload, X } from 'lucide-react';
 
 interface AvatarUploadProps {
@@ -9,12 +9,6 @@ interface AvatarUploadProps {
 const AvatarUpload: React.FC<AvatarUploadProps> = ({ onChange, initialValue = '' }) => {
   const [preview, setPreview] = useState<string>(initialValue);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (initialValue) {
-      setPreview(initialValue);
-    }
-  }, [initialValue]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

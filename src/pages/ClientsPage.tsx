@@ -1,5 +1,4 @@
 import { UserPlus } from 'lucide-react';
-import { ClientCard } from '../components/ClientCard';
 import { Pagination } from '../components/Pagination';
 //import { clients } from '../data/clients';
 import { Users } from 'lucide-react';
@@ -9,6 +8,7 @@ import { Link } from 'react-router-dom';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import { useClients } from '../hooks/useClients';
 import { useEffect } from 'react';
+import ClientList from '../components/clients/ClientList';
 
 
 const ClientsPage = () => {
@@ -55,12 +55,19 @@ const ClientsPage = () => {
           onSearchChange={handleSearchChange}
         />
       </div>
-
+      {/*
       <div className="grid gap-6 md:grid-cols-2">
         {paginatedClients.map((client) => (
           <ClientCard key={client.id} client={client} />
         ))}
-      </div>
+      </div> */ }
+      {error ? (
+          <div className="p-4 text-red-600">Error cargando clientes</div>
+        ) : (
+          <div className="overflow-x-auto">
+            <ClientList clients={paginatedClients} loading={loading} />
+          </div>
+        )}
       <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
