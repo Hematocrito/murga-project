@@ -28,19 +28,19 @@ const ClientList: React.FC<ClientListProps> = ({ clients, loading }) => {
       <thead className="bg-gray-50">
         <tr>
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Name
+            Nombre
           </th>
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Email
           </th>
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Company
+            Empresa
           </th>
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Status
+            Estado
           </th>
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Actions
+            Acciones
           </th>
         </tr>
       </thead>
@@ -97,7 +97,7 @@ const ClientList: React.FC<ClientListProps> = ({ clients, loading }) => {
                 className="text-blue-600 hover:text-blue-800 transition-colors"
                 title="Editar"
               >
-                <Pencil className="w-4 h-4" />
+                <Pencil className="w-4 h-4 text-blue-800" />
               </button>
             </td>
           </tr>
