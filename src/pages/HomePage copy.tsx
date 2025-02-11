@@ -13,8 +13,8 @@ export const HomePage: React.FC = () => {
   const handleWhatsAppClick = () => {
     // Replace with your actual WhatsApp number
     const phoneNumber = '+5493517660672';
-    //const message = 'hola, quiero hacer una consulta';
-    const whatsappUrl = `https://wa.me/${phoneNumber}`;
+    const message = 'hola, quiero hacer una consulta';
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     //const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
