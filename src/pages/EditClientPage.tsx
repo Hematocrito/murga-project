@@ -96,7 +96,7 @@ const EditClientPage = () => {
                 value={formData.firstName}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-2 border rounded-lg focus:ring-1 focus:ring-slate-300 focus:border-slate-300"
               />
             </FormField>
 
@@ -107,7 +107,7 @@ const EditClientPage = () => {
                 value={formData.lastName}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-2 border rounded-lg focus:ring-1 focus:ring-slate-300 focus:border-slate-300"
               />
             </FormField>
 
@@ -118,7 +118,7 @@ const EditClientPage = () => {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-1 focus:ring-slate-300 focus:border-slate-300 ${
                   errors.email ? 'border-red-500' : ''
                 }`}
               />
@@ -133,7 +133,7 @@ const EditClientPage = () => {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-2 border rounded-lg focus:ring-1 focus:ring-slate-300 focus:border-slate-300"
               />
             </FormField>
 
@@ -143,7 +143,7 @@ const EditClientPage = () => {
                 name="dni"
                 value={formData.dni}
                 onChange={handleChange}
-                className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
+                className={`w-full px-4 py-2 border rounded-lg focus:ring-1 focus:ring-slate-300 focus:border-slate-300 ${
                   errors.dni ? 'border-red-500' : ''
                 }`}
               />
@@ -158,7 +158,7 @@ const EditClientPage = () => {
                 name="company"
                 value={formData.company}
                 onChange={handleChange}
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-2 border rounded-lg focus:ring-1 focus:ring-slate-300 focus:border-slate-300"
               />
             </FormField>
 
@@ -168,7 +168,7 @@ const EditClientPage = () => {
                 value={formData.state}
                 onChange={handleChange}
                 required
-                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-2 border rounded-lg focus:ring-1 focus:ring-slate-300 focus:border-slate-300"
               >
                 <option value="">Select status</option>
                 {Object.entries(CLIENT_STATUS_LABELS).map(([value, label]) => (

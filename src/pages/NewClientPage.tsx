@@ -61,7 +61,7 @@ const NewClientPage = () => {
                   value={formData.firstName}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300"
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-1 focus:ring-slate-300 focus:border-slate-300"
                 />
               </FormField>
 
@@ -76,7 +76,7 @@ const NewClientPage = () => {
                   onChange={handleChange}
                   required
                   placeholder="example@email.com"
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300 ${
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-1 focus:ring-slate-300 focus:border-slate-300 ${
                     errors.email ? 'border-red-500' : ''
                   }`}
                 />
@@ -94,7 +94,7 @@ const NewClientPage = () => {
                   name="company"
                   value={formData.company}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300"
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-1 focus:ring-slate-300 focus:border-slate-300"
                 />
               </FormField>
 
@@ -104,7 +104,7 @@ const NewClientPage = () => {
                   value={formData.state}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300"
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-1 focus:ring-slate-300 focus:border-slate-300"
                 >
                   <option value="">Seleccionar estado</option>
                   {Object.entries(CLIENT_STATUS_LABELS).map(([value, label]) => (
@@ -128,7 +128,7 @@ const NewClientPage = () => {
                   value={formData.lastName}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300"
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-1 focus:ring-slate-300 focus:border-slate-300"
                 />
               </FormField>
 
@@ -140,7 +140,7 @@ const NewClientPage = () => {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300"
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-1 focus:ring-slate-300 focus:border-slate-300"
                 />
               </FormField>
 
@@ -155,7 +155,7 @@ const NewClientPage = () => {
                   onChange={handleChange}
                   required
                   maxLength={8}
-                  className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300 ${
+                  className={`w-full px-4 py-2 border rounded-lg focus:ring-1 focus:ring-slate-300 focus:border-slate-300 ${
                     errors.dni ? 'border-red-500' : ''
                   }`}
                 />
@@ -173,7 +173,7 @@ const NewClientPage = () => {
               name="notes"
               value={formData.notes}
               onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-slate-300 focus:border-slate-300"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-1 focus:ring-slate-300 focus:border-slate-300"
               rows={4}
             /> */ }
              <RichTextEditor
