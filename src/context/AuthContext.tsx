@@ -4,6 +4,7 @@ interface User {
   id: string;
   email: string;
   name: string;
+  rol: string;
 }
 
 interface AuthContextType {
@@ -33,6 +34,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       id: '1',
       email,
       name: email.split('@')[0],
+      rol: 'ABOGADO',
     };
     setUser(mockUser);
     setToken(newToken);
