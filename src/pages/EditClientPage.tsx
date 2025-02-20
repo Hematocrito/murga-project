@@ -89,7 +89,7 @@ const EditClientPage = () => {
           />
           
           <div className="grid md:grid-cols-2 gap-x-6 gap-y-4">
-            <FormField label="Nombre" required>
+          <FormField label={<>Nombre <span className="text-red-500">*</span></>} required>
               <input
                 type="text"
                 name="firstName"
@@ -100,7 +100,7 @@ const EditClientPage = () => {
               />
             </FormField>
 
-            <FormField label="Apellido" required>
+            <FormField label={<>Apellido <span className="text-red-500">*</span></>} required>
               <input
                 type="text"
                 name="lastName"
@@ -111,13 +111,12 @@ const EditClientPage = () => {
               />
             </FormField>
 
-            <FormField label="Email" required>
+            <FormField label="Email">
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                required
                 className={`w-full px-4 py-2 border rounded-lg focus:ring-1 focus:ring-slate-300 focus:border-slate-300 ${
                   errors.email ? 'border-red-500' : ''
                 }`}
@@ -162,7 +161,7 @@ const EditClientPage = () => {
               />
             </FormField>
 
-            <FormField label="Estado" required>
+            <FormField label={<>Estado <span className="text-red-500">*</span></>} required>
               <select
                 name="state"
                 value={formData.state}
