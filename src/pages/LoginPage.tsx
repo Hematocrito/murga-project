@@ -14,6 +14,7 @@ const AUTENTICAR_USUARIO = gql`
 export const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -34,11 +35,13 @@ export const LoginPage = () => {
             }
         }
       });
-      console.log(data);
+      console.log('DATOS !!!! ', data);
 
       const { token } = data.autenticarUsuario;
-      await login(username, password, token);
-      navigate('/clientes', { replace: true });
+      const rol = isAdmin ? 'admin' : 'user';
+      await login(username, password, token, rol);
+      navigate(rol === 'admin' ? '/admin' : '/clientes', { replace: true });
+      //navigate('/clientes', { replace: true });
       
     } catch (error) {
       console.log(error);

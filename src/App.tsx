@@ -5,11 +5,13 @@ import { LoginPage } from './pages/LoginPage';
 import { HomePage } from './pages/HomePage';
 import Layout from './components/Layout';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import AdminRoute from './components/auth/AdminRoute';
 import NewClientPage from './pages/NewClientPage';
 import ClientsPage from './pages/ClientsPage';
 import ClientDetailsPage from './pages/ClientDetailsPage';
 import Expedientes from './pages/Expedientes';
 import EditClientPage from './pages/EditClientPage';
+import AdminDashboardPage from './pages/AdminDashboardPage';
 
 
 function App() {
@@ -26,6 +28,14 @@ function App() {
               </ProtectedRoute>
             }
           >
+            <Route
+              path="/admin"
+              element={
+                <AdminRoute>
+                  <AdminDashboardPage />
+                </AdminRoute>
+              }
+            />
             <Route path="/clientes" element={<ClientsPage />} />
             <Route path="/clientes/:id" element={<ClientDetailsPage />} />
             <Route path="/clientes/nuevo" element={<NewClientPage />} /> 

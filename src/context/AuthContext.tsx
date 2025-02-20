@@ -10,7 +10,7 @@ interface User {
 interface AuthContextType {
   user: User | null;
   token: string | null; 
-  login: (email: string, password: string, token: string) => void;
+  login: (email: string, password: string, token: string, rol: string) => void;
   logout: () => void;
   isAuthenticated: boolean;
 }

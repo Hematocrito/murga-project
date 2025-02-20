@@ -12,15 +12,7 @@ export const useCreateClient = () => {
   });
 
   const handleCreateClient = async (clientData: any) => {
-      /* Convert avatar file to base64 if it exists
-      let avatarBase64 = '';
-      if (clientData.avatar) {
-        avatarBase64 = await new Promise((resolve) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result as string);
-          reader.readAsDataURL(clientData.avatar);
-        });
-      }*/
+      //console.log('clientData!!!!!!!!!!!!!', clientData);
 
       const { data } = await createClient({
         variables: {

@@ -51,10 +51,7 @@ const NewClientPage = () => {
           <div className="grid md:grid-cols-2 gap-x-6 gap-y-4">
             {/* Left Column */}
             <div className="space-y-4">
-            <FormField
-                label="Nombre"
-                required
-              >
+            <FormField label={<>Nombre <span className="text-red-500">*</span></>} required>
                 <input
                   type="text"
                   name="firstName"
@@ -67,14 +64,12 @@ const NewClientPage = () => {
 
               <FormField
               label="Email"
-              required
               >
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  required
                   placeholder="example@email.com"
                   className={`w-full px-4 py-2 border rounded-lg focus:ring-1 focus:ring-slate-300 focus:border-slate-300 ${
                     errors.email ? 'border-red-500' : ''
@@ -98,7 +93,7 @@ const NewClientPage = () => {
                 />
               </FormField>
 
-              <FormField label="Estado" required>
+              <FormField label={<>Estado <span className="text-red-500">*</span></>} required>
                 <select
                   name="state"
                   value={formData.state}
@@ -118,10 +113,7 @@ const NewClientPage = () => {
 
             {/* Right Column */}
             <div className="space-y-4">
-              <FormField
-                label="Apellido"
-                required
-              >
+            <FormField label={<>Apellido <span className="text-red-500">*</span></>} required>
                 <input
                   type="text"
                   name="lastName"
@@ -146,14 +138,12 @@ const NewClientPage = () => {
 
               <FormField
                 label="DNI"
-                required
               >
                 <input
                   type="text"
                   name="dni"
                   value={formData.dni}
                   onChange={handleChange}
-                  required
                   maxLength={8}
                   className={`w-full px-4 py-2 border rounded-lg focus:ring-1 focus:ring-slate-300 focus:border-slate-300 ${
                     errors.dni ? 'border-red-500' : ''
