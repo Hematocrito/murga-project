@@ -36,6 +36,7 @@ export default function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
     e.preventDefault();
     // Handle registration logic here
     console.log('Evento ', e.target);
+    const user = 'usuario';
 
     try {
       const { data } = await nuevoUsuario({
@@ -44,7 +45,8 @@ export default function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
                 nombre: firstName,
                 apellido: lastName,
                 email,
-                password
+                password,
+                rol: user
             }
         }
     });

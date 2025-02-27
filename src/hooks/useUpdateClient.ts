@@ -18,11 +18,13 @@ export const useUpdateClient = () => {
           input: {
             nombre: clientData.firstName,
             apellido: clientData.lastName,
-            email: clientData.email,
-            telefono: clientData.phone,
             empresa: clientData.company,
+            email: clientData.email,
+            telefono: clientData.phone,            
+            avatar: clientData.avatar,//avatarBase64 || '',
+            dni: clientData.dni,
             estado: clientData.state,
-            avatar: clientData.avatar
+            notas: clientData.notes
           }
         }
       });

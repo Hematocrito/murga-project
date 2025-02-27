@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
+import { useApolloClient } from '@apollo/client';
+import { OBTENER_USUARIO } from '../graphql/queries/user';
 
 interface User {
   id: string;
@@ -10,9 +12,11 @@ interface User {
 interface AuthContextType {
   user: User | null;
   token: string | null; 
-  login: (email: string, password: string, token: string, rol: string) => void;
+  login: (token: string) => void;
   logout: () => void;
   isAuthenticated: boolean;
+  isAdmin: boolean;
+  isUser: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -28,8 +32,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   });
 
   const isAuthenticated = !!user && !!token;
+  const isAdmin = user?.rol === 'admin';
+  const isUser = user?.rol === 'user';
+  const client = useApolloClient();
 
-  const login = (email: string, password: string, newToken: string) => {
+  const login = async (newToken: string): Promise<User> => {
+    /*
     const mockUser = {
       id: '1',
       email,
@@ -39,7 +47,33 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(mockUser);
     setToken(newToken);
     localStorage.setItem('token', newToken);
-    localStorage.setItem('user', JSON.stringify(mockUser));
+    localStorage.setItem('user', JSON.stringify(mockUser));*/
+
+    try {
+      // Set the token in localStorage
+      localStorage.setItem('token', newToken);
+      setToken(newToken);
+
+      // Fetch user information
+      const { data } = await client.query({
+        query: OBTENER_USUARIO,
+      });
+
+      const { nombre, apellido, email: userEmail, rol } = data.obtenerUsuario;
+      const loggedUser: User = {
+        id: '1',
+        email: userEmail,
+        name: `${nombre} ${apellido}`,
+        rol,
+      };
+
+      setUser(loggedUser);
+      localStorage.setItem('user', JSON.stringify(user));
+      return loggedUser;
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      throw new Error('Failed to fetch user data');
+    }
   };
 
   const logout = () => {
@@ -50,7 +84,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, isAuthenticated }}>
+    <AuthContext.Provider value={{ user, token, login, logout, isAuthenticated, isAdmin, isUser }}>
       {children}
     </AuthContext.Provider>
   );

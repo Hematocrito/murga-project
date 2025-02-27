@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { gql, useMutation } from "@apollo/client";
@@ -14,13 +14,22 @@ const AUTENTICAR_USUARIO = gql`
 export const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [isAdmin, setIsAdmin] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { login } = useAuth();
   //Mutation para crear nuevos usuarios en apollo
-  const [ autenticarUsuario ] = useMutation(AUTENTICAR_USUARIO);
+  //const [ autenticarUsuario ] = useMutation(AUTENTICAR_USUARIO);
+  const [autenticarUsuario, { loading }] = useMutation(AUTENTICAR_USUARIO, {
+    onError: (error) => {
+      console.error('Authentication error:', error);
+      setError('Invalid credentials. Please try again.');
+    }
+  });
 
+  useEffect(() => {
+    
+    
+  }, []);  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,9 +47,10 @@ export const LoginPage = () => {
       console.log('DATOS !!!! ', data);
 
       const { token } = data.autenticarUsuario;
-      const rol = isAdmin ? 'admin' : 'user';
-      await login(username, password, token, rol);
-      navigate(rol === 'admin' ? '/admin' : '/clientes', { replace: true });
+
+      const usuario:any = await login(token);
+            
+      navigate(usuario.rol === 'admin' ? '/admin' : '/clientes', { replace: true });
       //navigate('/clientes', { replace: true });
       
     } catch (error) {
@@ -96,9 +106,11 @@ export const LoginPage = () => {
 
           <button
             type="submit"
+            disabled={loading}
             className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-900 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
-            Iniciar Sesión
+            {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+            
           </button>
         </form>
 

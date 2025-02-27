@@ -9,7 +9,7 @@ const UserMenu = () => {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate('/'); // Redirect to the home page
   };
 
   return (
@@ -28,7 +28,7 @@ const UserMenu = () => {
         className="w-full flex items-center space-x-2 px-3 py-2 text-gray-300 hover:bg-gray-700 rounded-lg transition-colors"
       >
         <LogOut className="w-4 h-4" />
-        <span>Sign Out</span>
+        <span>Cerrar sesión</span>
       </button>
     </div>
   );
