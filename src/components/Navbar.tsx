@@ -22,7 +22,7 @@ export default function Navbar() {
             <div className="flex items-center">
               <div className="flex flex-col">
               <div className="flex items-center">
-                  <img src='/images/logo.jpg' className="h-10 w-12  " alt='abogado penalista' />
+                  <img src='/images/logo.jpg' className="h-10 w-11  " alt='abogado penalista' />
                   <span className="ml-2 text-sm md:text-xl font-semibold text-gray-900">Murga & Asociados</span>
                 </div>
                 <span className="text-sm text-gray-600 italic ml-2 mt-1 mb-2">Especialistas en defender tus derechos</span>
