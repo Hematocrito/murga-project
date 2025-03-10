@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate, Link, useParams } from 'react-router-dom';
 import { KeyRound, AlertCircle, CheckCircle, ArrowLeft } from 'lucide-react';
 import { useMutation, gql } from '@apollo/client';
 
@@ -10,23 +10,12 @@ const CONFIRMAR_RESET_PASSWORD = gql`
 `;
 
 const PasswordResetConfirmPage = () => {
+  const { token } = useParams<{ token: string }>();
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
-  const [token, setToken] = useState('');
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const url = new URL(window.location.href);
-    const tokenParam = url.pathname.split('/').pop();
-    console.log('TOKEN ', tokenParam);
-    if (tokenParam) {
-      setToken(tokenParam);
-    } else {
-      setError('El token de restablecimiento no es válido o falta. Solicite un nuevo enlace para restablecer la contraseña.');
-    }
-  }, []);
 
   const [confirmReset, { loading }] = useMutation(CONFIRMAR_RESET_PASSWORD, {
     onError: (error) => {
@@ -38,7 +27,7 @@ const PasswordResetConfirmPage = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    
+
     if (password !== confirmPassword) {
       setError('Las contraseñas no coinciden');
       return;
@@ -48,7 +37,7 @@ const PasswordResetConfirmPage = () => {
       setError('La contraseña debe tener al menos 6 caracteres');
       return;
     }
-    
+
     try {
       const { data } = await confirmReset({
         variables: {
