@@ -7,10 +7,5 @@
         { "src": "/clientes", "dest": "/" },
         { "src": "/login", "dest": "/" }
     ],
-    "rewrites": [
-        {
-        "source": "/nuevo-password/:token",
-        "destination": "/nuevo-password"
-        }
-    ]
+    "rewrites": [{ "source": "/nuevo-password/:token", "destination": "/nuevo-password" }]
   }
