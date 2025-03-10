@@ -12,6 +12,8 @@ import ClientDetailsPage from './pages/ClientDetailsPage';
 import Expedientes from './pages/Expedientes';
 import EditClientPage from './pages/EditClientPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
+import PasswordResetConfirmPage from './pages/PasswordResetConfirmPage';
 
 
 function App() {
@@ -21,6 +23,8 @@ function App() {
         <Routes>          
           <Route path="/login" element={<LoginPage />} />
           <Route path='/' element={<HomePage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
+          <Route path="/nuevo-password/:token" element={<PasswordResetConfirmPage />} />
           <Route
             element={
               <ProtectedRoute>

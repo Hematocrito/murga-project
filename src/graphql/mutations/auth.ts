@@ -7,3 +7,9 @@ export const AUTENTICAR_USUARIO = gql`
     }
   }
 `;
+
+export const RESET_PASSWORD = gql`
+  mutation resetPassword($input: EmailInput) {
+    resetPassword(input: $input)
+  }
+`;

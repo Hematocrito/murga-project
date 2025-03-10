@@ -102,6 +102,14 @@ export const LoginPage = () => {
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
               required
             />
+            <div className="mt-2 text-right">
+              <Link
+                to="/reset-password"
+                className="text-sm text-blue-600 hover:text-blue-700"
+              >
+                Olvidaste la contraseña?
+              </Link>
+            </div>
           </div>
 
           <button
