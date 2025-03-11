@@ -102,7 +102,7 @@ const ResetPasswordPage = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-800 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
+            className="w-full bg-blue-900 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
           >
             {loading ? 'Enviando...' : 'Enviar instrucciones'}
           </button>

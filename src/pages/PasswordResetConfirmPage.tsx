@@ -71,7 +71,7 @@ const PasswordResetConfirmPage = () => {
             </p>
             <Link
               to="/login"
-              className="inline-block bg-blue-800 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+              className="inline-block bg-blue-900 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
             >
               Ir a Iniciar Sesión
             </Link>

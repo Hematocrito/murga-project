@@ -53,7 +53,7 @@ export default function Features() {
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-600 to-blue-600 rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200" />
                 <div className="relative px-6 py-8 bg-white ring-1 ring-gray-900/5 rounded-lg leading-none flex items-top justify-start space-x-6">
                   <div className={`space-y-5 ${feature.featured ? 'lg:space-y-6' : ''}`}>
-                    <feature.icon className={`${feature.featured ? 'h-9 w-9 lg:h-10 lg:w-10' : 'h-8 w-8'} text-indigo-600`} />
+                    <feature.icon className={`${feature.featured ? 'h-9 w-9 lg:h-10 lg:w-10' : 'h-8 w-8'} text-blue-800`} />
                     <h3 className={`${feature.featured ? 'text-lg lg:text-xl' : 'text-lg'} font-semibold text-gray-900`}>
                       {feature.name}
                     </h3>
