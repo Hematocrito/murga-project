@@ -9,6 +9,7 @@ export const OBTENER_CLIENTES_X_USUARIO = gql`
         dni
         nombre
         apellido
+        estado
       }
     }
   }
