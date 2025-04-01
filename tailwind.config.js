@@ -2,7 +2,12 @@
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'degular': ['"degular"', 'sans-serif'],
+        'calder': ['"calder-dark"', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 };
