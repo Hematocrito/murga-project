@@ -30,7 +30,7 @@ export function useClientSearch(clients: Cliente[], itemsPerPage: number = 10) {
     setSearchTerm(value);
     setCurrentPage(1);
   };
-
+  console.log('UseClientSearch paginatedClients: ', paginatedClients);
   return {
     searchTerm,
     currentPage,

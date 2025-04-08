@@ -22,20 +22,20 @@ const Pagination: React.FC<PaginationProps> = ({
           disabled={currentPage === 1}
           className="relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-md text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Previous
+          Anterior
         </button>
         <button
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
           className="relative ml-3 inline-flex items-center px-4 py-2 text-sm font-medium rounded-md text-gray-700 bg-white border border-gray-300 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Next
+          Siguiente
         </button>
       </div>
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
           <p className="text-sm text-gray-700">
-            Showing page <span className="font-medium">{currentPage}</span> of{' '}
+            Mostrando pagina <span className="font-medium">{currentPage}</span> of{' '}
             <span className="font-medium">{totalPages}</span>
           </p>
         </div>
@@ -46,7 +46,7 @@ const Pagination: React.FC<PaginationProps> = ({
               disabled={currentPage === 1}
               className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <span className="sr-only">Previous</span>
+              <span className="sr-only">Anterior</span>
               <ChevronLeft className="h-5 w-5" aria-hidden="true" />
             </button>
             {pages.map((page) => (
@@ -67,7 +67,7 @@ const Pagination: React.FC<PaginationProps> = ({
               disabled={currentPage === totalPages}
               className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <span className="sr-only">Next</span>
+              <span className="sr-only">Siguiente</span>
               <ChevronRight className="h-5 w-5" aria-hidden="true" />
             </button>
           </nav>

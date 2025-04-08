@@ -1,12 +1,15 @@
 export interface AdminClient {
-    dni: string;
-    nombre: string;
-    apellido: string;
-    estado: string;
-  }
+  id: string;
+  dni: string;
+  nombre: string;
+  apellido: string;
+  estado?: string;
+  lawyer?: string;
+  avatar?: string;
+}
   
-  export interface UserWithClients {
-    nombre: string;
-    apellido: string;
-    clientes: AdminClient[];
-  }
+export interface UserWithClients {
+  nombre: string;
+  apellido: string;
+  clientes: AdminClient[];
+}

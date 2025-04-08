@@ -6,10 +6,16 @@ export const OBTENER_CLIENTES_X_USUARIO = gql`
       nombre
       apellido
       clientes {
-        dni
+        id
         nombre
         apellido
+        empresa
+        email
+        telefono
+        avatar
+        dni
         estado
+        notas
       }
     }
   }

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MoreVertical } from 'lucide-react';
+import DeleteConfirmationModal from './DeleteConfirmationModal';
 
 interface ThreeDotsMenuProps {
   onEdit?: () => void;
@@ -8,6 +9,7 @@ interface ThreeDotsMenuProps {
 
 const ThreeDotsMenu: React.FC<ThreeDotsMenuProps> = ({ onEdit, onDelete }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -21,7 +23,13 @@ const ThreeDotsMenu: React.FC<ThreeDotsMenuProps> = ({ onEdit, onDelete }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const handleDelete = () => {
+    setIsOpen(false);
+    setShowDeleteModal(true);
+  };
+
   return (
+    <>
     <div className="relative" ref={menuRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -49,20 +57,25 @@ const ThreeDotsMenu: React.FC<ThreeDotsMenuProps> = ({ onEdit, onDelete }) => {
             {onDelete && (
               <li>
                 <button
-                  onClick={() => {
-                    onDelete();
-                    setIsOpen(false);
-                  }}
-                  className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 transition-colors"
-                >
-                  Delete
-                </button>
+                    onClick={handleDelete}
+                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 transition-colors"
+                  >
+                    Delete
+                  </button>
               </li>
             )}
           </ul>
         </div>
       )}
     </div>
+    <DeleteConfirmationModal
+      isOpen={showDeleteModal}
+      onClose={() => setShowDeleteModal(false)}
+      onConfirm={onDelete || (() => {})}
+      title="Delete Client"
+      message="Are you sure you want to delete this client? This action cannot be undone."
+    />
+  </>
   );
 };
 

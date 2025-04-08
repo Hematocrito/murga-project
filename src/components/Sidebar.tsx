@@ -15,7 +15,7 @@ function Sidebar({ onClose }: SidebarProps) {
   return (
     <div className="flex flex-col h-full bg-gray-800 text-white w-64">
       <div className="flex items-center justify-between p-4">
-        <h1 className="text-xl font-bold">Estudio Jurídico</h1>
+        <h1 className="text-lg font-bold">Estudio Jurídico</h1>
         {onClose && (
           <button
             onClick={onClose}
