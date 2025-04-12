@@ -23,12 +23,13 @@ export const useAdminClients = () => {
         id: client.id,
         nombre: client.nombre || '',
         apellido: client.apellido || '',
-        email: '',
-        telefono: '',
-        empresa: '',
-        estado: client.estado || '',
+        email: client.email || '',
+        telefono: client.telefono || '',
+        empresa: client.empresa || '',
+        estado: client.estado || 'pending',
         avatar: client.avatar || '',
         dni: client.dni || '',
+        notas: client.notas || '',
         lawyer: `${user.nombre || ''} ${user.apellido || ''}`.trim()
       }))
     ),
@@ -44,8 +45,7 @@ export const useAdminClients = () => {
       const searchableFields = [
         client.nombre,
         client.apellido,
-        client.dni,
-        (client as any).lawyer
+        client.dni
       ].map(field => (field || '').toLowerCase());
 
       return searchableFields.some(field => field.includes(query));
@@ -74,6 +74,7 @@ export const useAdminClients = () => {
     totalPages,
     handlePageChange,
     handleSearch,
-    searchQuery
+    searchQuery,
+    totalClients: allClients.length
   };
 };

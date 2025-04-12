@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Cliente } from '../../types/Cliente';
 import ClientStatusBadge from '../clients/ClientStatusBadge';
 import ThreeDotsMenu from '../common/ThreeDotsMenu';
+import { useDeleteClient } from '../../hooks/useDeleteClient';
 import { User } from 'lucide-react';
 
 interface AdminClientListProps {
@@ -12,6 +13,7 @@ interface AdminClientListProps {
 
 const AdminClientList: React.FC<AdminClientListProps> = ({ clients, loading }) => {
   const navigate = useNavigate();
+  const { deleteClient } = useDeleteClient();
   //console.log('Clientes %%%%%%%% ', clients);
   if (loading) {
     return (
@@ -97,7 +99,7 @@ const AdminClientList: React.FC<AdminClientListProps> = ({ clients, loading }) =
             <td className="px-6 py-4 whitespace-nowrap flex justify-center">
               <ThreeDotsMenu
                 onEdit={() => navigate(`/clientes/${client.id}/editar`)}
-                onDelete={() => console.log('Delete client:', client.id)}
+                onDelete={() => deleteClient(client.id)}
               />
             </td>
           </tr>

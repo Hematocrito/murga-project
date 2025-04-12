@@ -1,10 +1,10 @@
-//import React, { useState, useMemo } from 'react';
+//import React from 'react';
+import { Users } from 'lucide-react';
 import { useAdminClients } from '../hooks/useAdminClients';
-import { Users, Search } from 'lucide-react';
+import AdminClientList from '../components/admin/AdminClientList';
+import ClientSearch from '../components/clients/ClientSearch';
 import Pagination from '../components/common/Pagination';
 import LoadingSpinner from '../components/common/LoadingSpinner';
-import AdminClientList from '../components/admin/AdminClientList';
-
 
 const AdminDashboardPage = () => {  
   const {
@@ -15,9 +15,9 @@ const AdminDashboardPage = () => {
     totalPages,
     handlePageChange,
     handleSearch,
-    searchQuery
+    totalClients
   } = useAdminClients();
-
+  
   if (loading) return <LoadingSpinner />;
   
   if (error) {
@@ -41,24 +41,19 @@ const AdminDashboardPage = () => {
 
       <div className="bg-white rounded-lg shadow">
         <div className="p-6">
-          <div className="flex items-center justify-between gap-2 mb-6">
+          <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <Users className="w-5 h-5 text-blue-600" />
-              <h2 className="text-xs md:text-sm font-semibold">Todos los Clientes</h2>
+              <h2 className="text-lg font-semibold">Todos los Clientes</h2>
             </div>
-            {/* Search Box */}
-            <div className="relative w-96">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
-              <input
-                type="text"
-                placeholder="Buscar por nombre o documento..."
-                value={searchQuery}
-                onChange={(e) => handleSearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-0.5 focus:ring-black focus:border-black focus:outline-none text-xs md:text-sm"
-              />
+            <div className="bg-blue-50 text-blue-800 px-4 py-2 rounded-lg font-semibold">
+              Total Clientes: {totalClients}
             </div>
           </div>
 
+          <div className="mb-6">
+            <ClientSearch onSearch={handleSearch} />
+          </div>
           <div className="overflow-x-auto">
             <AdminClientList clients={clients} loading={loading} />
           </div>

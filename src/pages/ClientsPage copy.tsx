@@ -34,47 +34,44 @@ const ClientsPage = () => {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
-        <div>
-          <h1 className="text-2xl font-bold">Clientes</h1>
-          <p className="text-gray-600 mt-1">
-            <span>Total clients: <strong>{clients.length}</strong></span>
-          </p>
-        </div>
-          
-        <Link
-          to="/clientes/nuevo"
-          className="flex items-center space-x-2 bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
-        >
-          <UserPlus className="w-5 h-5 mr-2" />
-          Nuevo Cliente
-        </Link>
-        <div className="w-full md:w-96 mb-2">
-          <SearchBar
-            searchTerm={searchTerm}
-            onSearchChange={handleSearchChange}
-          />
-        </div>
-      </div>  
-       {/*
-      <div className="grid gap-6 md:grid-cols-2">
-        {paginatedClients.map((client) => (
-          <ClientCard key={client.id} client={client} />
-        ))}
-      </div> */ }
+    <div className="flex justify-between items-center mb-6">
+      <div>
+        <h1 className="text-2xl font-bold">Clientes</h1>
+        <p className="text-gray-600 mt-1">
+        <span>Total de clientes: <strong>{clients.length}</strong></span>
+        </p>
+      </div>
+      <Link
+        to="/clientes/nuevo"
+        className="flex items-center space-x-2 bg-blue-800 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+      >
+        <UserPlus className="w-5 h-5 mr-2" />
+        Nuevo Cliente
+      </Link>
+    </div>
+
+    <div className="bg-white rounded-lg shadow">
+      <div className="p-4 border-b">
+        <SearchBar
+          searchTerm={searchTerm}
+          onSearchChange={handleSearchChange}
+        />
+      </div>
+
       {error ? (
-          <div className="p-4 text-red-600">Error cargando clientes</div>
-        ) : (
-          <div className="overflow-x-auto">
-            <ClientList clients={paginatedClients} loading={loading} />
-          </div>
-        )}
-      <Pagination
+        <div className="p-4 text-red-600">Error cargando clientes</div>
+      ) : (
+        <div className="overflow-x-auto">
+          <ClientList clients={paginatedClients} loading={loading} />
+        </div>
+      )}
+    </div>
+    <Pagination
         currentPage={currentPage}
         totalPages={totalPages}
         onPageChange={handlePageChange}
       />    
-    </div>
+  </div>
   );
 };
 

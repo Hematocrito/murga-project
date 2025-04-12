@@ -46,7 +46,7 @@ function App() {
             <Route path="/clientes/:id/editar" element={<EditClientPage />} />
             <Route path="expedientes" element={<Expedientes />} />
           </Route>
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} /> 
         </Routes>
       </BrowserRouter>
     </AuthProvider>
