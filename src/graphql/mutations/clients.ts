@@ -5,10 +5,7 @@ export const NUEVO_CLIENTE = gql`
     nuevoCliente(input: $input) {
       id
       nombre
-      apellido
-      empresa
       email
-      telefono
     }
   }
 `;
@@ -18,8 +15,13 @@ export const ACTUALIZAR_CLIENTE = gql`
     actualizarCliente(id: $id, input: $input) {
       nombre
       apellido
+      avatar
+      empresa
       email
+      telefono
       estado
+      dni
+      notas
     }
   }
 `;

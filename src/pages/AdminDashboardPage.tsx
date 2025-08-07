@@ -1,5 +1,6 @@
 //import React from 'react';
-import { Users } from 'lucide-react';
+import { UserPlus } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useAdminClients } from '../hooks/useAdminClients';
 import AdminClientList from '../components/admin/AdminClientList';
 import ClientSearch from '../components/clients/ClientSearch';
@@ -32,40 +33,44 @@ const AdminDashboardPage = () => {
     <div>
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-lg font-bold">Panel de administración</h1>
-          <p className="text-gray-600 mt-1">
-            Gestionar todos los clientes y sus abogados asignados
+          <h1 className="text-base font-bold">Panel de administración</h1>
+          <p className="text-base text-gray-600 mt-1">
+            <span>Total de clientes: <strong>{totalClients}</strong></span>
           </p>
         </div>
+        <Link
+          to="/clientes/nuevo"
+          className="inline-flex items-center px-4 py-2 bg-blue-800 text-white rounded-lg hover:bg-blue-700 transition-colors"
+        >
+          <UserPlus className="w-5 h-5 mr-2" />
+          Nuevo Cliente
+        </Link>
       </div>
 
       <div className="bg-white rounded-lg shadow">
-        <div className="p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <Users className="w-5 h-5 text-blue-600" />
-              <h2 className="text-lg font-semibold">Todos los Clientes</h2>
-            </div>
-            <div className="bg-blue-50 text-blue-800 px-4 py-2 rounded-lg font-semibold">
-              Total Clientes: {totalClients}
-            </div>
-          </div>
-
-          <div className="mb-6">
-            <ClientSearch onSearch={handleSearch} />
-          </div>
-          <div className="overflow-x-auto">
-            <AdminClientList clients={clients} loading={loading} />
-          </div>
-
-          <div className="mt-6">
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-            />
-          </div>
+        <div className="p-4 border-b">
+          <ClientSearch onSearch={handleSearch} />
         </div>
+
+
+        {error ? (
+          <div className="p-4 text-red-600">
+            Error loading clients. Please try again later.
+          </div>
+        ) : (
+          <>
+            <div className="overflow-x-auto">
+              <AdminClientList clients={clients} loading={loading} />
+            </div>
+            <div className="border-t">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
