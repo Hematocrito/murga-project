@@ -11,6 +11,14 @@ export interface Cliente {
   notas?: string;
 }
 
+export interface FileAttachment {
+  id: string;
+  name: string;
+  size: number;
+  type: string;
+  data: string; // base64
+}
+
 export interface ClientFormData {
   firstName: string;
   lastName: string;
@@ -21,4 +29,5 @@ export interface ClientFormData {
   notes: string;
   avatar: string;
   dni: string;
+  attachments: FileAttachment[];
 }

@@ -4,6 +4,7 @@ import { ArrowLeft, CheckCircle } from 'lucide-react';
 import FormField from '../components/forms/FormField';
 import FormActions from '../components/forms/FormActions';
 import AvatarUpload from '../components/forms/AvatarUpload';
+import FileUpload from '../components/forms/FileUpload';
 import RichTextEditor from '../components/forms/RichTextEditor';
 import useClientForm from '../hooks/useClientForm';
 import { useClientDetails } from '../hooks/useClientDetails';
@@ -25,7 +26,9 @@ const EditClientPage = () => {
     handleChange, 
     handleAvatarChange, 
     handleNotesChange, 
-    setFormData 
+    setFormData,
+    attachments,
+    handleAttachmentsChange
   } = useClientForm();
 
   useEffect(() => {
@@ -40,13 +43,26 @@ const EditClientPage = () => {
         notes: client.notas || '',
         avatar: client.avatar || '',
         dni: client.dni || '',
+        attachments: attachments || [],
       });
     }
-  }, [client, setFormData]);
-
+  }, [client, setFormData, attachments]);
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
     try {
+      const archivosPayload = formData.attachments.length
+        ? formData.attachments.map((file) =>
+            JSON.stringify({
+              name: file.name,
+              type: file.type,
+              data: file.data
+            })
+          )
+        : null;
+      console.log('Archivos Payload:', formData.attachments, archivosPayload);    
+      // 1) Actualiza los datos basicos del cliente mediante GraphQL
       await updateClient(id!, {
         nombre: formData.firstName,
         apellido: formData.lastName,
@@ -56,11 +72,12 @@ const EditClientPage = () => {
         estado: formData.state,
         avatar: formData.avatar,
         dni: formData.dni,
+        ...(archivosPayload ? { archivos: archivosPayload } : {}),
         notas: formData.notes
       });
       setShowSuccess(true);
       setTimeout(() => {
-        navigate(isAdmin ? '/admin' : `/clients/${id}`);
+        navigate(isAdmin ? '/admin' : `/clientes/${id}`);
       }, 2000);
     } catch (err) {
       console.error('Error updating client:', err);
@@ -210,6 +227,15 @@ const EditClientPage = () => {
                 ))}
               </select>
             </FormField>
+
+            <FormField label={<>Adjuntos ({attachments.length}/3)</>} className="md:col-span-1">
+              <FileUpload
+                files={attachments}
+                onChange={handleAttachmentsChange}
+                maxFiles={3}
+                showHeader={false}
+              />
+            </FormField>
           </div>
 
           <FormField label="Notas">
@@ -231,3 +257,4 @@ const EditClientPage = () => {
 };
 
 export default EditClientPage;
+
