@@ -22,7 +22,6 @@ export const ACTUALIZAR_CLIENTE = gql`
       estado
       dni
       notas
-      archivos
     }
   }
 `;

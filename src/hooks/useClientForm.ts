@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ClientFormData, FileAttachment } from '../types/Cliente';
+import { ClientFormData } from '../types/Cliente';
 import { formatDNI, isValidDNI, isValidEmail } from '../utils/validation';
 
 const initialFormData: ClientFormData = {
@@ -12,7 +12,6 @@ const initialFormData: ClientFormData = {
   notes: '',
   avatar: '',
   dni: '',
-  attachments: [],
 };
 
 const useClientForm = () => {
@@ -58,13 +57,6 @@ const useClientForm = () => {
     }));
   };
 
-  const handleAttachmentsChange = (files: FileAttachment[]) => {
-    setFormData(prev => ({
-      ...prev,
-      attachments: files,
-    }));
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -77,8 +69,8 @@ const useClientForm = () => {
       setErrors(prev => ({ ...prev, email: 'Ingrese una dirección de correo electrónico válida' }));
       return;
     }
-
-    console.log('Form submitted:', formData);
+    
+    console.log('Form submitted@@@@@@@@@@@:', formData);
   };
 
   return {
@@ -89,8 +81,6 @@ const useClientForm = () => {
     handleNotesChange,
     handleSubmit,
     setFormData,
-    attachments: formData.attachments,
-    handleAttachmentsChange,
   };
 };
 
