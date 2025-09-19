@@ -5,6 +5,7 @@ import FormField from '../components/forms/FormField';
 import FormActions from '../components/forms/FormActions';
 import AvatarUpload from '../components/forms/AvatarUpload';
 import RichTextEditor from '../components/forms/RichTextEditor';
+import FileUpload from '../components/forms/FileUpload';
 import useClientForm from '../hooks/useClientForm';
 import { useClientDetails } from '../hooks/useClientDetails';
 import { useUpdateClient } from '../hooks/useUpdateClient';
@@ -25,7 +26,9 @@ const EditClientPage = () => {
     handleChange, 
     handleAvatarChange, 
     handleNotesChange, 
-    setFormData 
+    setFormData,
+    attachments,
+    handleAttachmentsChange
   } = useClientForm();
 
   useEffect(() => {
@@ -210,6 +213,14 @@ const EditClientPage = () => {
                 ))}
               </select>
             </FormField>
+
+            <div className="md:col-span-1">
+              <FileUpload
+                files={attachments}
+                onChange={handleAttachmentsChange}
+                maxFiles={3}
+              />
+            </div>
           </div>
 
           <FormField label="Notas">

@@ -2,6 +2,14 @@ import { useState } from 'react';
 import { ClientFormData } from '../types/Cliente';
 import { formatDNI, isValidDNI, isValidEmail } from '../utils/validation';
 
+interface FileAttachment {
+  id: string;
+  name: string;
+  size: number;
+  type: string;
+  data: string;
+}
+
 const initialFormData: ClientFormData = {
   firstName: '',
   lastName: '',
@@ -17,6 +25,7 @@ const initialFormData: ClientFormData = {
 const useClientForm = () => {
   const [formData, setFormData] = useState<ClientFormData>(initialFormData);
   const [errors, setErrors] = useState<Partial<Record<keyof ClientFormData, string>>>({});
+  const [attachments, setAttachments] = useState<FileAttachment[]>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -57,6 +66,10 @@ const useClientForm = () => {
     }));
   };
 
+  const handleAttachmentsChange = (files: FileAttachment[]) => {
+    setAttachments(files);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -81,6 +94,9 @@ const useClientForm = () => {
     handleNotesChange,
     handleSubmit,
     setFormData,
+    attachments,
+    handleAttachmentsChange,
+    setAttachments,
   };
 };
 
