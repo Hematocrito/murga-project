@@ -14,6 +14,7 @@ import EditClientPage from './pages/EditClientPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import ResetPasswordPage from './pages/ResetPasswordPage';
 import PasswordResetConfirmPage from './pages/PasswordResetConfirmPage';
+import AgendaPage from './pages/AgendaPage';
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
             <Route path="/clientes/nuevo" element={<NewClientPage />} /> 
             <Route path="/clientes/:id/editar" element={<EditClientPage />} />
             <Route path="expedientes" element={<Expedientes />} />
+            <Route path="/agenda" element={<AgendaPage />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} /> 
         </Routes>

@@ -1,6 +1,6 @@
 //import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Users, FileText, X, LayoutDashboard } from 'lucide-react';
+import { Users, FileText, X, LayoutDashboard, Calendar } from 'lucide-react';
 import UserMenu from './auth/UserMenu';
 import { useAuth } from '../context/AuthContext';
 
@@ -66,6 +66,18 @@ function Sidebar({ onClose }: SidebarProps) {
           <FileText size={20} className='mr-3' />
           Expedientes
         </NavLink>
+
+        <NavLink
+            to="/agenda"
+            className={({ isActive }) =>
+              `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                isActive ? 'bg-gray-700' : 'hover:bg-gray-700'
+              }`
+            }
+          >
+            <Calendar className="w-5 h-5" />
+            <span>Agenda</span>
+          </NavLink>
       </div>
       )}    
       </nav>

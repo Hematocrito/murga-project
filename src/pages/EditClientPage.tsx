@@ -63,7 +63,7 @@ const EditClientPage = () => {
       });
       setShowSuccess(true);
       setTimeout(() => {
-        navigate(isAdmin ? '/admin' : `/clients/${id}`);
+        navigate(isAdmin ? '/admin' : `/clientes/${id}`);
       }, 2000);
     } catch (err) {
       console.error('Error updating client:', err);
