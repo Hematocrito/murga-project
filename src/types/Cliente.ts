@@ -9,6 +9,7 @@ export interface Cliente {
   estado: string;
   dni?: string;
   notas?: string;
+  archivos?: string[];
 }
 
 export interface ClientFormData {

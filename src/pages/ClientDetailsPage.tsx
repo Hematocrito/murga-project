@@ -28,7 +28,7 @@ const ClientDetailsPage = () => {
     loading,
     error
   } = isAdmin ? useAdminClientDetails(id!) : useClientDetails(id!);
-
+  console.log('Client Details:', client);
   if (loading) {
     return <LoadingSpinner />;
   }

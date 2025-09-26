@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+﻿import React, { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ArrowLeft, CheckCircle } from 'lucide-react';
 import FormField from '../components/forms/FormField';
@@ -20,6 +20,7 @@ const EditClientPage = () => {
   const [showSuccess, setShowSuccess] = React.useState(false);
   const { client, loading: loadingClient } = useClientDetails(id!);
   const { updateClient, loading: updating, error: updateError } = useUpdateClient();
+  const [existingAttachments, setExistingAttachments] = React.useState<string[]>([]);
   const { 
     formData, 
     errors, 
@@ -30,6 +31,17 @@ const EditClientPage = () => {
     attachments,
     handleAttachmentsChange
   } = useClientForm();
+  const handleRemoveExistingAttachment = (fileUrl: string) => {
+    setExistingAttachments(prev => {
+      const index = prev.indexOf(fileUrl);
+      if (index === -1) {
+        return prev;
+      }
+      const next = [...prev];
+      next.splice(index, 1);
+      return next;
+    });
+  };
 
   useEffect(() => {
     if (client) {
@@ -44,12 +56,18 @@ const EditClientPage = () => {
         avatar: client.avatar || '',
         dni: client.dni || '',
       });
+      setExistingAttachments(Array.isArray(client.archivos) ? [...client.archivos] : []);
+    } else {
+      setExistingAttachments([]);
     }
   }, [client, setFormData]);
 
   const handleSubmit = async (e: React.FormEvent) => {
+//    console.log('Submitting form with data:', formData, 'and attachments:', attachments);
     e.preventDefault();
     try {
+      const archivosPayload = [...existingAttachments, ...attachments];
+
       await updateClient(id!, {
         nombre: formData.firstName,
         apellido: formData.lastName,
@@ -59,7 +77,8 @@ const EditClientPage = () => {
         estado: formData.state,
         avatar: formData.avatar,
         dni: formData.dni,
-        notas: formData.notes
+        notas: formData.notes,
+        archivos: archivosPayload,
       });
       setShowSuccess(true);
       setTimeout(() => {
@@ -77,7 +96,7 @@ const EditClientPage = () => {
           <CheckCircle className="w-10 h-10 text-green-500 mx-auto mb-4" />
           <h2 className="text-base font-bold mb-4">Actualización completada con éxito</h2>
           <p className="text-gray-600">
-            ¡Perfecto! Ya está actualizada la información.
+            Perfecto! Ya esto actualizada la información.
           </p>
           <p className="text-gray-500 text-sm">
             Ya casi...
@@ -106,7 +125,7 @@ const EditClientPage = () => {
         className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-6"
       >
         <ArrowLeft className="w-5 h-5 mr-2" />
-        Volver a {isAdmin ? 'Panel de Administración' : 'Detalles del Cliente'}
+        Volver a {isAdmin ? 'Panel de Administraci??n' : 'Detalles del Cliente'}
       </button>
 
       <div className="bg-white rounded-lg shadow p-6">
@@ -162,7 +181,7 @@ const EditClientPage = () => {
               )}
             </FormField>
 
-            <FormField label="Teléfono">
+            <FormField label="Tel?fono">
               <input
                 type="tel"
                 name="phone"
@@ -219,6 +238,8 @@ const EditClientPage = () => {
                 files={attachments}
                 onChange={handleAttachmentsChange}
                 maxFiles={3}
+                archs={existingAttachments}
+                onRemoveExisting={handleRemoveExistingAttachment}
               />
             </div>
           </div>

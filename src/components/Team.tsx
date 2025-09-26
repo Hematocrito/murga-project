@@ -62,20 +62,6 @@ export default function Team() {
                     Derecho Laboral
                   </li>
                 </ul>
-                <ul className="space-y-2 text-gray-600">
-                  <li className="flex items-center">
-                    <span className="w-2 h-2 bg-blue-900 rounded-full mr-3"></span>
-                    Derecho de Familia
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-2 h-2 bg-blue-900 rounded-full mr-3"></span>
-                    Derecho Civil
-                  </li>
-                  <li className="flex items-center">
-                    <span className="w-2 h-2 bg-blue-900 rounded-full mr-3"></span>
-                    Accidentes de Tránsito
-                  </li>
-                </ul>
               </div>
             </div>
           </div>

@@ -11,6 +11,7 @@ interface ClientDetails {
   dni: string;
   estado: string;
   notas: string;
+  archivos: Array<string>;
 }
 
 export const useClientDetails = (id: string) => {

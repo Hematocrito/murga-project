@@ -10,7 +10,7 @@ interface ClientListProps {
 }
 
 const ClientList: React.FC<ClientListProps> = ({ clients, loading }) => {
-  console.log('Clientes en lista de clientes:', clients); // Para debug
+  //console.log('Clientes en lista de clientes:', clients); // Para debug
   const navigate = useNavigate();
 
   if (loading) {

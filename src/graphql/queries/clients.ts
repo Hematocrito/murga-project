@@ -29,6 +29,7 @@ export const OBTENER_CLIENTE = gql`
       dni
       estado
       notas
+      archivos
     }
   }
 `;
