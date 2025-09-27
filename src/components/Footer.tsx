@@ -1,5 +1,5 @@
 //import React from 'react';
-import { Scale, Mail, Phone, MapPin, Facebook, Twitter, Instagram, Linkedin } from 'lucide-react';
+import { Scale, Mail, Phone, MapPin, Facebook, Linkedin } from 'lucide-react';
 
 export default function Footer() {
   return (
@@ -24,17 +24,17 @@ export default function Footer() {
               </a>
               <a
                 href="#"
-                className="text-gray-400 hover:text-indigo-500 transition-colors duration-200"
+                className="text-gray-400 hover:text-indigo-500 transition-colors duration-200 mt-1"
                 aria-label="Twitter"
               >
-                <Twitter className="h-6 w-6" />
+                <img src="/images/x-social-media.png" alt="Twitter" className="h-5 w-5"/>
               </a>
               <a
                 href="https://www.instagram.com/murga.estudio.juridico?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
-                className="text-gray-400 hover:text-indigo-500 transition-colors duration-200"
+                className="text-gray-400 hover:text-indigo-500 transition-colors duration-200 mt-1"
                 aria-label="Instagram"
               >
-                <Instagram className="h-6 w-6" />
+                <img src="/images/instagram.png" alt="Instagram" className="h-5 w-5"/>
               </a>
               <a
                 href="#"
