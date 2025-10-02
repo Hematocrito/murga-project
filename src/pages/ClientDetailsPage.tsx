@@ -1,21 +1,100 @@
-//import React from 'react';
+﻿//import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { 
-  ArrowLeft, 
-  Building2, 
-  Mail, 
-  Phone, 
+import {
+  ArrowLeft,
+  Building2,
+  Mail,
+  Phone,
   User,
   Globe,
   AlertCircle,
   CreditCard,
-  Pencil
+  Pencil,
+  Download,
+  FileText,
+  Image as ImageIcon
 } from 'lucide-react';
 import { useClientDetails } from '../hooks/useClientDetails';
 import { useAdminClientDetails } from '../hooks/useAdminClientDetails';
 import { useAuth } from '../context/AuthContext';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import ClientStatusBadge from '../components/clients/ClientStatusBadge';
+
+interface AttachmentItem {
+  id: string;
+  name: string;
+  type: string;
+  url: string;
+}
+
+const getNameFromSource = (source: string, index: number): string => {
+  try {
+    const sanitized = decodeURIComponent(source);
+    const segment = sanitized.split('/').pop() || '';
+    const cleanSegment = segment.split('?')[0];
+    return cleanSegment || `Archivo ${index + 1}`;
+  } catch {
+    return `Archivo ${index + 1}`;
+  }
+};
+
+const getMimeFromName = (name: string): string => {
+  const extension = name.split('.').pop()?.toLowerCase();
+  if (extension === 'pdf') {
+    return 'application/pdf';
+  }
+  if (extension === 'doc') {
+    return 'application/msword';
+  }
+  if (extension === 'docx') {
+    return 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+  }
+  if (extension === 'jpg' || extension === 'jpeg') {
+    return 'image/jpeg';
+  }
+  if (extension === 'png') {
+    return 'image/png';
+  }
+  return 'application/octet-stream';
+};
+
+const getAttachmentLabel = (type: string): string => {
+  if (type === 'application/pdf') {
+    return 'Documento PDF';
+  }
+  if (type === 'application/msword' || type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+    return 'Documento Word';
+  }
+  if (type.startsWith('image/')) {
+    return 'Imagen';
+  }
+  return 'Archivo';
+};
+
+const getFileIcon = (type: string) => {
+  if (type === 'application/pdf') {
+    return <FileText className="w-8 h-8 text-red-500" />;
+  }
+  if (type.startsWith('image/')) {
+    return <ImageIcon className="w-8 h-8 text-green-500" />;
+  }
+  return <FileText className="w-8 h-8 text-blue-500" />;
+};
+
+const createAttachmentItems = (sources?: Array<string>): AttachmentItem[] =>
+  Array.isArray(sources)
+    ? sources
+        .filter((value): value is string => typeof value === 'string' && value.trim().length > 0)
+        .map((value, index) => {
+          const name = getNameFromSource(value, index);
+          return {
+            id: `attachment-${index}`,
+            name,
+            type: getMimeFromName(name),
+            url: value
+          };
+        })
+    : [];
 
 const ClientDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -28,7 +107,7 @@ const ClientDetailsPage = () => {
     loading,
     error
   } = isAdmin ? useAdminClientDetails(id!) : useClientDetails(id!);
-  console.log('Client Details:', client);
+
   if (loading) {
     return <LoadingSpinner />;
   }
@@ -37,10 +116,23 @@ const ClientDetailsPage = () => {
     return (
       <div className="bg-red-50 text-red-500 p-4 rounded-lg flex items-center">
         <AlertCircle className="w-5 h-5 mr-2" />
-        {error?.message || 'Client not found'}
+        {error?.message || 'Cliente no encontrado'}
       </div>
     );
   }
+
+  const attachments = createAttachmentItems(client.archivos);
+
+  const handleDownloadFile = (attachment: AttachmentItem) => {
+    const link = document.createElement('a');
+    link.href = attachment.url;
+    link.download = attachment.name;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <div>
@@ -50,7 +142,7 @@ const ClientDetailsPage = () => {
           className="inline-flex items-center text-gray-600 hover:text-gray-900"
         >
           <ArrowLeft className="w-5 h-5 mr-2" />
-          Volver a {isAdmin ? 'Panel de Administración' : 'Clientes'}
+          Volver a {isAdmin ? 'Panel de Administraci��n' : 'Clientes'}
         </button>
         <button
           onClick={() => navigate(`/clientes/${id}/editar`)}
@@ -83,7 +175,7 @@ const ClientDetailsPage = () => {
               <div className="flex items-center mt-2 space-x-3">
                 {client.estado &&
                   <ClientStatusBadge status={client.estado} />
-                }  
+                }
                 <span className="text-black">{client.empresa}</span>
               </div>
             </div>
@@ -99,7 +191,7 @@ const ClientDetailsPage = () => {
                 <Mail className="w-5 h-5 mr-3" />
                 <div>
                   <div className="text-sm text-gray-500">Email</div>
-                  <a 
+                  <a
                     href={`mailto:${client.email}`}
                     className="text-blue-600 hover:text-blue-700"
                   >
@@ -111,7 +203,7 @@ const ClientDetailsPage = () => {
                 <Phone className="w-5 h-5 mr-3" />
                 <div>
                   <div className="text-sm text-gray-500">Teléfono</div>
-                  <a 
+                  <a
                     href={`tel:${client.telefono}`}
                     className="text-blue-600 hover:text-blue-700"
                   >
@@ -127,7 +219,7 @@ const ClientDetailsPage = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="space-y-4">
               <div className="flex items-center text-gray-600">
                 <Building2 className="w-5 h-5 mr-3" />
@@ -147,11 +239,49 @@ const ClientDetailsPage = () => {
           </div>
         </div>
 
+        {/* Attachments Section */}
+        <div className="p-6 border-t">
+          <h2 className="text-lg font-semibold mb-4">Adjuntos</h2>
+
+          {attachments.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {attachments.map((attachment) => (
+                <div key={attachment.id} className="flex h-full flex-col justify-between p-1 bg-gray-50 rounded-lg border">
+                  <div className="flex items-center space-x-3">
+                    <div className="flex-shrink-0">
+                      {getFileIcon(attachment.type)}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium text-gray-900 truncate" title={attachment.name}>
+                        {attachment.name}
+                      </p>
+                      <p className="text-xs text-gray-500">{getAttachmentLabel(attachment.type)}</p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleDownloadFile(attachment)}
+                    className="mt-3 inline-flex items-center text-sm font-medium text-blue-600 hover:text-blue-700 self-start"
+                  >
+                    <Download className="w-4 h-4 mr-2" />
+                    Descargar
+                  </button>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-6 text-gray-500">
+              <FileText className="w-12 h-12 mx-auto mb-4 text-gray-300" />
+              <p>No hay archivos adjuntos</p>
+            </div>
+          )}
+        </div>
+
         {/* Notes Section */}
         {client.notas && (
-          <div className="p-0 md:p-6">
+          <div className="p-6 border-t">
             <h2 className="text-lg font-semibold mb-4">Notas</h2>
-            <div 
+            <div
               className="prose max-w-none bg-gray-50 p-4 rounded-lg text-justify"
               dangerouslySetInnerHTML={{ __html: client.notas }}
             />
