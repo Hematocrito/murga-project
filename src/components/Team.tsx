@@ -19,7 +19,7 @@ export default function Team() {
               <img
                 className="w-full h-[600px] object-cover object-center"
                 src="/images/abogado.jpeg"
-                alt="Marco Antonio Murga"
+                alt="abogado penalista cordoba"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 opacity-30" />
             </div>

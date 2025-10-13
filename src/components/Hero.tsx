@@ -8,7 +8,7 @@ export default function Hero() {
           className="w-full h-full object-cover"
           //src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80"
           src="/images/hero.jpg"
-          alt="estudio juridico"
+          alt="estudio juridico cordoba"
         />
         <div className="absolute inset-0 bg-gray-900/70 mix-blend-multiply" />
       </div>
