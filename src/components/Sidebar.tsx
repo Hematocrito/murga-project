@@ -28,57 +28,84 @@ function Sidebar({ onClose }: SidebarProps) {
       
       <nav className="flex-1">
       {isAdmin ? (
-        <NavLink
-        to="/admin"
-        className={({ isActive }) =>
-          `flex items-center gap-2 p-3 rounded-lg transition-colors ${
-            isActive ? 'bg-gray-700' : 'hover:bg-gray-700'
-          }`
-        }
-        >
-          <LayoutDashboard className="w-5 h-5" />
-          <span>Administración</span>
-        </NavLink>
-      ) : (
         <div>
-        <NavLink
-          to="/clientes"
+          <NavLink
+          to="/admin"
           className={({ isActive }) =>
-            `flex items-center px-4 py-3 hover:bg-gray-700 ${
-              isActive ? 'bg-gray-700' : ''
+            `flex items-center gap-2 px-4 py-3 rounded-lg transition-colors ${
+              isActive ? 'bg-gray-700' : 'hover:bg-gray-700'
             }`
           }
-          onClick={onClose}
-        >
-          <Users className="h-5 w-5 mr-3" />
-          Clientes
-        </NavLink>
-
-        <NavLink
-          to="/expedientes"
-          className={({ isActive }) =>
-            `flex items-center px-4 py-3 hover:bg-gray-700 ${
-              isActive ? 'bg-gray-700' : ''
-            }`
-          }
-          onClick={onClose}
-        >
-          <FileText size={20} className='mr-3' />
-          Expedientes
-        </NavLink>
-
-        <NavLink
-            to="/agenda"
+          >
+            <LayoutDashboard className="w-5 h-5" />
+            <span>Administración</span>
+          </NavLink>
+      
+          <NavLink
+            to="/expedientes"
             className={({ isActive }) =>
-              `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                isActive ? 'bg-gray-700' : 'hover:bg-gray-700'
+              `flex items-center px-4 py-3 hover:bg-gray-700 ${
+                isActive ? 'bg-gray-700' : ''
               }`
             }
+            onClick={onClose}
           >
-            <Calendar className="w-5 h-5" />
-            <span>Agenda</span>
+            <FileText size={20} className='mr-3' />
+            Expedientes
           </NavLink>
-      </div>
+
+          <NavLink
+              to="/agenda"
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                  isActive ? 'bg-gray-700' : 'hover:bg-gray-700'
+                }`
+              }
+            >
+              <Calendar className="w-5 h-5" />
+              <span>Agenda</span>
+          </NavLink>
+        </div>
+      ) : (
+        <div>
+          <NavLink
+            to="/clientes"
+            className={({ isActive }) =>
+              `flex items-center px-4 py-3 hover:bg-gray-700 ${
+                isActive ? 'bg-gray-700' : ''
+              }`
+            }
+            onClick={onClose}
+          >
+            <Users className="h-5 w-5 mr-3" />
+            Clientes
+          </NavLink>
+
+          <NavLink
+            to="/expedientes"
+            className={({ isActive }) =>
+              `flex items-center px-4 py-3 hover:bg-gray-700 ${
+                isActive ? 'bg-gray-700' : ''
+              }`
+            }
+            onClick={onClose}
+          >
+            <FileText size={20} className='mr-3' />
+            Expedientes
+          </NavLink>
+
+          <NavLink
+              to="/agenda"
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                  isActive ? 'bg-gray-700' : 'hover:bg-gray-700'
+                }`
+              }
+            >
+              <Calendar className="w-5 h-5" />
+              <span>Agenda</span>
+          </NavLink>
+        </div>
       )}    
       </nav>
 
