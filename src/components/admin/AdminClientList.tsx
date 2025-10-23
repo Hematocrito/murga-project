@@ -14,7 +14,7 @@ interface AdminClientListProps {
 const AdminClientList: React.FC<AdminClientListProps> = ({ clients, loading }) => {
   const navigate = useNavigate();
   const { deleteClient } = useDeleteClient();
-  //console.log('Clientes %%%%%%%% ', clients);
+  console.log('Clientes %%%%%%%% ', clients);
   if (loading) {
     return (
       <div className="animate-pulse">
