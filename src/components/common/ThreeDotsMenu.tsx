@@ -75,7 +75,7 @@ const ThreeDotsMenu: React.FC<ThreeDotsMenuProps> = ({ onEdit, onDelete }) => {
                   }}
                   className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 transition-colors"
                 >
-                  Edit
+                  Editar
                 </button>
               </li>
             )}
@@ -85,7 +85,7 @@ const ThreeDotsMenu: React.FC<ThreeDotsMenuProps> = ({ onEdit, onDelete }) => {
                     onClick={handleDelete}
                     className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 transition-colors"
                   >
-                    Delete
+                    Eliminar
                   </button>
               </li>
             )}

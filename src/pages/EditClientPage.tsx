@@ -181,7 +181,7 @@ const EditClientPage = () => {
               )}
             </FormField>
 
-            <FormField label="Tel?fono">
+            <FormField label="Teléfono">
               <input
                 type="tel"
                 name="phone"

@@ -59,16 +59,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         query: OBTENER_USUARIO,
       });
 
-      const { nombre, apellido, email: userEmail, rol } = data.obtenerUsuario;
+      const { id, nombre, apellido, email: userEmail, rol } = data.obtenerUsuario;
       const loggedUser: User = {
-        id: '1',
+        id,
         email: userEmail,
         name: `${nombre} ${apellido}`,
         rol,
       };
 
       setUser(loggedUser);
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('user', JSON.stringify(loggedUser));
       return loggedUser;
     } catch (error) {
       console.error('Error fetching user data:', error);
