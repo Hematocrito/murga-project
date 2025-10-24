@@ -1,20 +1,18 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Cliente } from '../../types/Cliente';
-import ClientStatusBadge from '../clients/ClientStatusBadge';
-//import ThreeDotsMenu from '../common/ThreeDotsMenu';
-//import { useDeleteClient } from '../../hooks/useDeleteClient';
 import { Pencil, User } from 'lucide-react';
+import { Cliente } from '../../types/Cliente';
+import ClientStatusBadge from './ClientStatusBadge';
 
 interface ClientListProps {
-  clients: (Cliente & { lawyer?: string })[];
+  clients: Cliente[];
   loading: boolean;
 }
 
 const ClientList: React.FC<ClientListProps> = ({ clients, loading }) => {
+  //console.log('Clientes en lista de clientes:', clients); // Para debug
   const navigate = useNavigate();
-  //const { deleteClient } = useDeleteClient();
-  //console.log('Clientes %%%%%%%% ', clients);
+
   if (loading) {
     return (
       <div className="animate-pulse">
@@ -25,76 +23,73 @@ const ClientList: React.FC<ClientListProps> = ({ clients, loading }) => {
     );
   }
 
-  if (clients.length === 0) {
-    return (
-      <div className="text-center py-8 text-gray-500">
-        No clients found.
-      </div>
-    );
-  }
-
   return (
     <table className="w-full">
       <thead className="bg-gray-50">
         <tr>
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Nombre del cliente
+            Nombre
           </th>
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            DNI
+            Email
+          </th>
+          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Empresa
           </th>
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Estado
           </th>
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Abogado Asignado
-          </th>
-          <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
             Acciones
           </th>
         </tr>
       </thead>
       <tbody className="bg-white divide-y divide-gray-200">
         {clients.map((client) => (
-          <tr key={client.id} className="hover:bg-gray-50">
+          <tr
+            key={client.id}
+            className="hover:bg-gray-50 transition-colors"
+          >
             <td 
               className="px-6 py-4 whitespace-nowrap cursor-pointer"
               onClick={() => navigate(`/clientes/${client.id}`)}
             >
               <div className="flex items-center">
-              {client.avatar ? (
+                {client.avatar ? (
                   <img
                     src={client.avatar}
                     alt={`${client.nombre} ${client.apellido}`}
-                    className="h-8 w-8 rounded-full mr-3 object-cover"
+                    className="h-8 w-8 rounded-full mr-3"
                   />
                 ) : (
-                  <div className="h-8 w-8 rounded-full mr-3 bg-gray-200 flex items-center justify-center">
-                    <User className="w-4 h-4 text-gray-500" />
+                  <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center mr-3">
+                    <User className="w-6 h-6 text-gray-400" />
                   </div>
                 )}
-                <div>
+                <div className='text-sm font-medium text-gray-900'>
                   {client.nombre} {client.apellido}
                 </div>
               </div>
             </td>
             <td 
-              className="px-6 py-4 whitespace-nowrap cursor-pointer"
+              className="px-6 py-4 whitespace-nowrap cursor-pointer text-sm text-gray-500"
               onClick={() => navigate(`/clientes/${client.id}`)}
             >
-              {client.dni || '-'}
-            </td>
-            <td 
-              className="px-6 py-4 whitespace-nowrap cursor-pointer"
-              onClick={() => navigate(`/clientes/${client.id}`)}
-            >
-              <ClientStatusBadge status={client.estado} />
+              {client.email}
             </td>
             <td 
               className="px-6 py-4 whitespace-nowrap cursor-pointer text-sm text-gray-500"
               onClick={() => navigate(`/clientes/${client.id}`)}
             >
-              {client.lawyer || 'Unassigned'}
+              {client.empresa}
+            </td>
+            <td 
+              className="px-6 py-4 whitespace-nowrap cursor-pointer"
+              onClick={() => navigate(`/clientes/${client.id}`)}
+            >
+              {client.estado && 
+                <ClientStatusBadge status={client.estado} />
+              }
             </td>
             <td className="px-6 py-4 whitespace-nowrap">
               <button

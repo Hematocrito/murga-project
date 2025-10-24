@@ -1,38 +1,42 @@
-import { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+//import React from 'react';
 import { UserPlus } from 'lucide-react';
-import ClientList from '../components/clients/ClientList';
+import { Link } from 'react-router-dom';
+import { useAdminClients } from '../hooks/useAdminClients';
 import ClientSearch from '../components/clients/ClientSearch';
 import Pagination from '../components/common/Pagination';
-import { useClients } from '../hooks/useClients';
 import LoadingSpinner from '../components/common/LoadingSpinner';
+import ClientList from '../components/clients/ClientList';
 
-const ClientsPage = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const { clients, loading, error, page, totalPages, handlePageChange } = useClients();
-
-  const filteredClients = useMemo(() => 
-    clients.filter(client => 
-      `${client.nombre} ${client.apellido} ${client.email} ${client.empresa}`
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase())
-    ),
-    [clients, searchQuery]
-  );
-
-  if (loading) {
-    return <LoadingSpinner />;
+const ClientsPage = () => {  
+  const {
+    clients,
+    loading,
+    error,
+    currentPage,
+    totalPages,
+    handlePageChange,
+    handleSearch,
+    totalClients
+  } = useAdminClients();
+  
+  if (loading) return <LoadingSpinner />;
+  
+  if (error) {
+    return (
+      <div className="p-4 text-red-600 bg-red-50 rounded-lg">
+        Error cargando datos. Por favor, intente mas tarde.
+      </div>
+    );
   }
 
-  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-2xl font-bold">Clientes</h1>
-          <p className="text-gray-600 mt-1">
-          <span>Total de clientes: <strong>{clients.length}</strong></span>
+          <p className="text-base text-gray-600 mt-1">
+            <span>Total de clientes: <strong>{totalClients}</strong></span>
           </p>
         </div>
         <Link
@@ -46,7 +50,7 @@ const ClientsPage = () => {
 
       <div className="bg-white rounded-lg shadow">
         <div className="p-4 border-b">
-          <ClientSearch onSearch={setSearchQuery} />
+          <ClientSearch onSearch={handleSearch} />
         </div>
 
 
@@ -57,11 +61,11 @@ const ClientsPage = () => {
         ) : (
           <>
             <div className="overflow-x-auto">
-              <ClientList clients={filteredClients} loading={loading} />
+              <ClientList clients={clients} loading={loading} />
             </div>
             <div className="border-t">
               <Pagination
-                currentPage={page}
+                currentPage={currentPage}
                 totalPages={totalPages}
                 onPageChange={handlePageChange}
               />

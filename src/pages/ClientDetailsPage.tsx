@@ -19,6 +19,7 @@ import { useAdminClientDetails } from '../hooks/useAdminClientDetails';
 import { useAuth } from '../context/AuthContext';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import ClientStatusBadge from '../components/clients/ClientStatusBadge';
+import { CLIENT_STATUS, CLIENT_STATUS_LABELS } from '../constants/clientStatus';
 
 interface AttachmentItem {
   id: string;
@@ -96,6 +97,25 @@ const createAttachmentItems = (sources?: Array<string>): AttachmentItem[] =>
         })
     : [];
 
+const STATUS_LABEL_MAP = CLIENT_STATUS_LABELS as Record<string, string>;
+const STATUS_VALUES = Object.values(CLIENT_STATUS) as string[];
+const FALLBACK_STATUS = CLIENT_STATUS.PENDIENTE;
+
+const getStatusLabel = (status?: string): string => {
+  if (!status) {
+    return STATUS_LABEL_MAP[FALLBACK_STATUS];
+  }
+
+  const normalizedStatus = status.toLowerCase();
+  const matchedStatus = STATUS_VALUES.find((value) => value === normalizedStatus);
+
+  if (matchedStatus) {
+    return STATUS_LABEL_MAP[matchedStatus];
+  }
+
+  return status;
+};
+
 const ClientDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -122,6 +142,7 @@ const ClientDetailsPage = () => {
   }
 
   const attachments = createAttachmentItems(client.archivos);
+  const statusLabel = getStatusLabel(client.estado);
 
   const handleDownloadFile = (attachment: AttachmentItem) => {
     const link = document.createElement('a');
@@ -232,7 +253,7 @@ const ClientDetailsPage = () => {
                 <Globe className="w-5 h-5 mr-3" />
                 <div>
                   <div className="text-sm text-gray-500">Estado</div>
-                  <div className='text-black'>{client.estado}</div>
+                  <div className='text-black'>{statusLabel}</div>
                 </div>
               </div>
             </div>
