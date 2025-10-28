@@ -41,7 +41,7 @@ const NewClientPage = () => {
   return (
     <div>
       <button
-        onClick={() => navigate(isAdmin ? '/admin' : '/clients')}
+        onClick={() => navigate(isAdmin ? '/admin' : '/clientes')}
         className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-6"
       >
         <ArrowLeft className="w-5 h-5 mr-2" />
