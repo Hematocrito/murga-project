@@ -44,7 +44,7 @@ const ThreeDotsMenu: React.FC<ThreeDotsMenuProps> = ({ onEdit, onDelete }) => {
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
         <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full text-center">
           <CheckCircle className="w-10 h-10 text-green-500 mx-auto mb-4" />
-          <h2 className="text-base font-bold mb-4">Eliminación completada</h2>
+          <h2 className="text-base font-bold mb-4">Acción completada</h2>
           <p className="text-gray-600">
             El cliente ya no está en la base de datos. Todo listo!
           </p>

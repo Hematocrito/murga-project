@@ -108,12 +108,13 @@ const NewClientPage = () => {
               />
             </FormField>
 
-            <FormField label="DNI">
+            <FormField label={<>DNI <span className="text-red-500">*</span></>} required>
               <input
                 type="text"
                 name="dni"
                 value={formData.dni}
                 onChange={handleChange}
+                required
                 className={`w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 ${
                   errors.dni ? 'border-red-500' : ''
                 }`}
