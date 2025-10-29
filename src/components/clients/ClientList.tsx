@@ -40,16 +40,16 @@ const ClientList: React.FC<ClientListProps> = ({ clients, loading }) => {
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Nombre del cliente
           </th>
-          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-64">
             DNI
           </th>
           <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Estado
           </th>
-          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-80">
             Abogado Asignado
           </th>
-          <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider w-48">
             Acciones
           </th>
         </tr>
@@ -91,19 +91,21 @@ const ClientList: React.FC<ClientListProps> = ({ clients, loading }) => {
               <ClientStatusBadge status={client.estado} />
             </td>
             <td 
-              className="px-6 py-4 whitespace-nowrap cursor-pointer text-sm text-gray-500"
+              className="px-6 py-4 whitespace-nowrap cursor-pointer text-sm text-gray-500 w-48"
               onClick={() => navigate(`/clientes/${client.id}`)}
             >
               {client.lawyer || 'Unassigned'}
             </td>
-            <td className="px-6 py-4 whitespace-nowrap">
-              <button
-                onClick={() => navigate(`/clientes/${client.id}/editar`)}
-                className="text-blue-600 hover:text-blue-800 transition-colors"
-                title="Editar"
-              >
-                <Pencil className="w-4 h-4 text-blue-800" />
-              </button>
+            <td className="px-6 py-4 whitespace-nowrap w-20">
+              <div className="flex justify-center">
+                <button
+                  onClick={() => navigate(`/clientes/${client.id}/editar`)}
+                  className="text-blue-600 hover:text-blue-800 transition-colors"
+                  title="Editar"
+                >
+                  <Pencil className="w-4 h-4 text-blue-800" />
+                </button>
+              </div>
             </td>
           </tr>
         ))}
