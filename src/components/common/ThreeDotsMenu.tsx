@@ -4,7 +4,7 @@ import DeleteConfirmationModal from './DeleteConfirmationModal';
 
 interface ThreeDotsMenuProps {
   onEdit?: () => void;
-  onDelete?: () => void;
+  onDelete?: () => Promise<void> | void;
 }
 
 const ThreeDotsMenu: React.FC<ThreeDotsMenuProps> = ({ onEdit, onDelete }) => {

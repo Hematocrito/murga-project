@@ -99,7 +99,10 @@ const AdminClientList: React.FC<AdminClientListProps> = ({ clients, loading }) =
             <td className="px-6 py-4 whitespace-nowrap flex justify-center">
               <ThreeDotsMenu
                 onEdit={() => navigate(`/clientes/${client.id}/editar`)}
-                onDelete={() => deleteClient(client.id)}
+                onDelete={async () => {
+                  await deleteClient(client.id);
+                  navigate('/admin');
+                }}
               />
             </td>
           </tr>
