@@ -78,8 +78,8 @@ export default function Footer() {
         </div>
         
         <div className="mt-8 border-t border-gray-800 pt-8">
-          <p className="text-center text-gray-400">
-            © {new Date().getFullYear()} Murga & Asociados. Todos los derechos reservados.
+          <p className="text-center text-gray-400 text-sm">
+            © {new Date().getFullYear()} <a href="https://www.hemadev.com.ar/" className="text-gray-400 hover:text-gray-200 transition-colors ml-1" target="_blank" rel="noopener noreferrer">M. Hema Software</a>
           </p>
         </div>
       </div>
