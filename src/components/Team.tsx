@@ -16,11 +16,17 @@ export default function Team() {
         <div className="flex flex-col lg:flex-row items-center lg:items-start gap-12">
           <div className="w-full lg:w-1/2">
             <div className="relative overflow-hidden rounded-lg shadow-xl">
+              <picture>
+              <source srcSet="/images/abogado-1400.webp" media="(min-width: 1280px)" />
+              <source srcSet="/images/abogado-1000.webp" media="(min-width: 768px)" />
               <img
                 className="w-full h-[600px] object-cover object-center"
-                src="/images/abogado.jpeg"
+                src="/images/abogado-700.webp"
                 alt="abogado penalista cordoba"
+                loading="lazy"
               />
+              </picture>
+
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 opacity-30" />
             </div>
           </div>
