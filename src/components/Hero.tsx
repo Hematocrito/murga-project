@@ -4,12 +4,16 @@ export default function Hero() {
   return (
     <div className="relative bg-white pt-16">
       <div className="absolute inset-0">
-        <img
-          className="w-full h-full object-cover"
-          //src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&q=80"
-          src="/images/hero.jpg"
-          alt="estudio juridico cordoba"
-        />
+        <picture>
+          <source srcSet="/images/hero-1600.webp" media="(min-width: 1280px)" />
+          <source srcSet="/images/hero-1200.webp" media="(min-width: 768px)" />
+          <img
+            className="w-full h-full object-cover"
+            src="/images/hero-768.webp"
+            alt="estudio juridico cordoba"
+            loading="lazy"
+          />
+        </picture>
         <div className="absolute inset-0 bg-gray-900/70 mix-blend-multiply" />
       </div>
       
