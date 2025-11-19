@@ -64,7 +64,21 @@ export const LoginPage = () => {
     <div className="min-h-screen bg-gray-600 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
         <div className="flex flex-col items-center mb-8">
-          <img src='/images/logo.jpg' className="h-12 w-14" alt='murga estudio juridico' />
+          <picture>
+            <source
+              type="image/webp"
+              srcSet="/images/logo-70.webp 1x, /images/logo-140.webp 2x"
+            />
+            <img
+              src="/images/logo-70.webp"
+              width={70}
+              height={70}
+              className="h-12 w-14"
+              alt="murga estudio juridico"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
           <h1 className="text-2xl font-bold text-gray-900">Estudio Jurídico</h1>
           <p className="text-gray-600">Acceso al Sistema</p>
         </div>
