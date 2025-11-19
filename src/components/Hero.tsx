@@ -31,11 +31,15 @@ export default function Hero() {
       </div>
       {/* Logo in bottom right corner */}
       <div className="absolute bottom-8 right-6 md:right-16  z-10 bg-white/10 backdrop-blur-sm rounded-full p-2">
-        <img
-          src="/images/logo.png"
-          alt="abogados cordoba"
-          className="w-10 h-10 md:w-12 md:h-12 text-white drop-shadow-lg"
-        />
+        <picture>
+          <source srcSet="/images/logo-140.webp" media="(min-width: 768px)" />
+          <img
+            src="/images/logo-70.webp"
+            alt="abogados cordoba"
+            className="w-10 h-10 md:w-12 md:h-12 text-white drop-shadow-lg"
+            loading="lazy"
+          />
+        </picture>
       </div>
     </div>
   );

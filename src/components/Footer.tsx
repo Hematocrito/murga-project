@@ -27,14 +27,30 @@ export default function Footer() {
                 className="text-gray-400 hover:text-indigo-500 transition-colors duration-200 mt-1"
                 aria-label="Twitter"
               >
-                <img src="/images/x-social-media.png" alt="Twitter" className="h-5 w-5"/>
+                <picture>
+                  <source srcSet="/images/x-social-128.webp" media="(min-width: 768px)" />
+                  <img
+                    src="/images/x-social-64.webp"
+                    alt="Twitter"
+                    className="h-5 w-5"
+                    loading="lazy"
+                  />
+                </picture>
               </a>
               <a
                 href="https://www.instagram.com/murga.estudio.juridico?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
                 className="text-gray-400 hover:text-indigo-500 transition-colors duration-200 mt-1"
                 aria-label="Instagram"
               >
-                <img src="/images/instagram.png" alt="Instagram" className="h-5 w-5"/>
+                <picture>
+                  <source srcSet="/images/instagram-128.webp" media="(min-width: 768px)" />
+                  <img
+                    src="/images/instagram-64.webp"
+                    alt="Instagram"
+                    className="h-5 w-5"
+                    loading="lazy"
+                  />
+                </picture>
               </a>
               <a
                 href="#"

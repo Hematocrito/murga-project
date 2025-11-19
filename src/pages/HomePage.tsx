@@ -40,7 +40,16 @@ export const HomePage: React.FC = () => {
         aria-label="Contact us on WhatsApp"
       >
         { /* <MessageCircle className="w-8 h-8 text-white" /> */}
-        <img src='/images/whatsapp.png' alt='whatsapp' />
+        <picture>
+          <source srcSet="/images/whatsapp-128.webp" media="(min-width: 768px)" />
+          <img
+            src="/images/whatsapp-64.webp"
+            alt="whatsapp"
+            className="w-[56px] h-[56px]" // o las clases que ya tengas
+            loading="lazy"
+          />
+        </picture>
+
         <span className="absolute right-full mr-4 bg-black text-white px-4 py-2 rounded-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           Enviar mensaje
         </span>
