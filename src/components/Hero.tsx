@@ -11,9 +11,7 @@ export default function Hero() {
             className="w-full h-full object-cover"
             src="/images/hero-768.webp"
             alt="estudio juridico cordoba"
-            loading="eager"
             fetchPriority="high"
-            decoding="async"
           />
         </picture>
         <div className="absolute inset-0 bg-gray-900/70 mix-blend-multiply" />
