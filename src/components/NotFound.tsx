@@ -1,28 +1,28 @@
-//import React from 'react';
 import { Home, Phone } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
+import Footer from './Footer';
 
 export default function NotFound() {
   const navigate = useNavigate();
 
   return (
     <div className="min-h-screen bg-white flex flex-col">
-      {/* Header with logo */}
-      <div className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center">
-            <img src='/images/logo.jpg' className="h-10 w-11  " alt='abogado penalista' />
-            <span className="ml-2 text-sm md:text-xl font-semibold text-gray-900">Murga & Asociados</span>
-          </div>
-        </div>
-      </div>
+      <Navbar />
 
-      {/* 404 Content */}
-      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 lg:pb-36 lg:pt-48 pt-32 pb-16">
         <div className="max-w-lg w-full text-center">
           <div className="mb-8">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-zinc-100 rounded-full mb-6">
-              <img src='/images/logo.png' className="h-10 w-11  " alt='abogado penalista' />
+              <picture>
+                <source srcSet="/images/logo-140.webp" media="(min-width: 768px)" />
+                <img
+                  src="/images/logo-70.webp"
+                  alt="abogado penalista"
+                  className="w-10 h-10 md:w-12 md:h-12 text-white drop-shadow-lg"
+                  loading="lazy"
+                />
+              </picture>
             </div>
             <h1 className="text-6xl font-bold text-gray-900 mb-4">404</h1>
             <h2 className="text-2xl font-semibold text-gray-700 mb-4">
@@ -41,7 +41,7 @@ export default function NotFound() {
               <Home className="h-5 w-5 mr-2" />
               Volver al Inicio
             </button>
-            
+
             <div className="text-center">
               <p className="text-sm text-gray-500 mb-2">¿Necesita ayuda legal?</p>
               <button
@@ -54,7 +54,6 @@ export default function NotFound() {
             </div>
           </div>
 
-          {/* Helpful links */}
           <div className="mt-12 pt-8 border-t border-gray-200">
             <p className="text-sm text-gray-500 mb-4">Páginas más visitadas:</p>
             <div className="flex flex-wrap justify-center gap-4 text-sm">
@@ -81,14 +80,7 @@ export default function NotFound() {
         </div>
       </div>
 
-      {/* Footer */}
-      <div className="bg-gray-50 border-t border-gray-200">
-        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <p className="text-center text-sm text-gray-500">
-            © {new Date().getFullYear()} Lexium & Asociados. Todos los derechos reservados.
-          </p>
-        </div>
-      </div>
+      <Footer />
     </div>
   );
 }

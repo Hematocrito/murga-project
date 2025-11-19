@@ -35,7 +35,7 @@ export default function Hero() {
           <source srcSet="/images/logo-140.webp" media="(min-width: 768px)" />
           <img
             src="/images/logo-70.webp"
-            alt="abogados cordoba"
+            alt='abogado penalista'
             className="w-10 h-10 md:w-12 md:h-12 text-white drop-shadow-lg"
             loading="lazy"
           />
