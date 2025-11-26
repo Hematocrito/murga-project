@@ -4,7 +4,7 @@ import { Scale, Shield, Users, Briefcase, Car, Heart, Users2, Gavel } from 'luci
 export default function Features() {
   const features = [
     {
-      name: 'ART - Riesgos de Trabajo',
+      name: 'ART - Riesgos del Trabajo',
       description: 'Asesoramiento especializado en casos de accidentes laborales y enfermedades profesionales.',
       icon: Briefcase,
     },
