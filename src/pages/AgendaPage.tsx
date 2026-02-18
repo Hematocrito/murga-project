@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useMutation, useQuery } from '@apollo/client';
 import { Calendar, Plus, Clock, MapPin, User, Edit, Trash2 } from 'lucide-react';
 import Modal from '../components/common/Modal';
 import DeleteConfirmationModal from '../components/common/DeleteConfirmationModal';
+import { CREAR_EVENTO_AGENDA } from '../graphql/mutations/agenda';
+import { OBTENER_EVENTOS_AGENDA } from '../graphql/queries/agenda';
 
 interface Event {
   id: string;
@@ -15,38 +18,36 @@ interface Event {
 }
 
 const AgendaPage = () => {
-  const [events, setEvents] = useState<Event[]>([
-    {
-      id: '1',
-      title: 'Client Meeting',
-      description: 'Discuss contract details',
-      date: '2025-01-15',
-      time: '10:00',
-      location: 'Office Conference Room',
-      client: 'John Doe',
-      type: 'meeting'
-    },
-    {
-      id: '2',
-      title: 'Document Review',
-      description: 'Review legal documents for Sarah Johnson',
-      date: '2025-01-16',
-      time: '14:30',
-      location: 'Remote',
-      client: 'Sarah Johnson',
-      type: 'deadline'
-    }
-  ]);
+  const [events, setEvents] = useState<Event[]>([]);
 
   const [showEventModal, setShowEventModal] = useState(false);
   const [editingEvent, setEditingEvent] = useState<Event | null>(null);
   const [deleteEventId, setDeleteEventId] = useState<string | null>(null);
-  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+  const getLocalDateString = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
+  const [selectedDate, setSelectedDate] = useState(getLocalDateString());
+  const [crearEventoAgenda] = useMutation(CREAR_EVENTO_AGENDA);
+  const { data, refetch } = useQuery(OBTENER_EVENTOS_AGENDA, {
+    variables: { fecha: selectedDate },
+    fetchPolicy: 'network-only'
+  });
+
+  useEffect(() => {
+    if (data?.obtenerEventosAgenda) {
+      setEvents(data.obtenerEventosAgenda);
+    }
+  }, [data]);
 
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    date: new Date().toISOString().split('T')[0],
+    date: getLocalDateString(),
     time: '',
     location: '',
     client: '',
@@ -54,10 +55,10 @@ const AgendaPage = () => {
   });
 
   const eventTypes = {
-    meeting: { label: 'Meeting', color: 'bg-blue-100 text-blue-800' },
-    call: { label: 'Call', color: 'bg-green-100 text-green-800' },
-    deadline: { label: 'Deadline', color: 'bg-red-100 text-red-800' },
-    other: { label: 'Other', color: 'bg-gray-100 text-gray-800' }
+    meeting: { label: 'Reunión', color: 'bg-blue-100 text-blue-800' },
+    call: { label: 'Llamada', color: 'bg-green-100 text-green-800' },
+    deadline: { label: 'Vencimiento', color: 'bg-red-100 text-red-800' },
+    other: { label: 'Otro', color: 'bg-gray-100 text-gray-800' }
   };
 
   const handleOpenModal = (event?: Event) => {
@@ -93,7 +94,7 @@ const AgendaPage = () => {
     setFormData({
       title: '',
       description: '',
-      date: new Date().toISOString().split('T')[0],
+      date: getLocalDateString(),
       time: '',
       location: '',
       client: '',
@@ -101,7 +102,7 @@ const AgendaPage = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (editingEvent) {
@@ -111,12 +112,27 @@ const AgendaPage = () => {
           : event
       ));
     } else {
-      const newEvent: Event = {
-        ...formData,
-        id: Date.now().toString(),
-        client: formData.client || undefined
-      };
-      setEvents([...events, newEvent]);
+      try {
+        await crearEventoAgenda({
+          variables: {
+            input: {
+              ...formData,
+              client: formData.client || undefined
+            }
+          }
+        });
+
+        const newEvent: Event = {
+          ...formData,
+          id: Date.now().toString(),
+          client: formData.client || undefined
+        };
+        setEvents([...events, newEvent]);
+        await refetch({ fecha: selectedDate });
+      } catch (error) {
+        console.error('Error creando evento:', error);
+        return;
+      }
     }
     
     handleCloseModal();
@@ -131,8 +147,9 @@ const AgendaPage = () => {
   const sortedEvents = filteredEvents.sort((a, b) => a.time.localeCompare(b.time));
 
   const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
+    const [year, month, day] = dateString.split('-').map(Number);
+    const date = new Date(year, (month || 1) - 1, day || 1);
+    return date.toLocaleDateString('es-AR', { 
       weekday: 'long', 
       year: 'numeric', 
       month: 'long', 
@@ -144,10 +161,10 @@ const AgendaPage = () => {
     const [hours, minutes] = timeString.split(':');
     const date = new Date();
     date.setHours(parseInt(hours), parseInt(minutes));
-    return date.toLocaleTimeString('en-US', { 
-      hour: 'numeric', 
+    return date.toLocaleTimeString('es-AR', { 
+      hour: '2-digit', 
       minute: '2-digit',
-      hour12: true 
+      hour12: false 
     });
   };
 
@@ -156,14 +173,14 @@ const AgendaPage = () => {
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-2xl font-bold">Agenda</h1>
-          <p className="text-gray-600 mt-1">Manage your events and appointments</p>
+          <p className="text-gray-600 mt-1">Gestioná tus eventos y turnos</p>
         </div>
         <button
           onClick={() => handleOpenModal()}
           className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
         >
           <Plus className="w-5 h-5 mr-2" />
-          New Event
+          Nuevo evento
         </button>
       </div>
 
@@ -173,7 +190,7 @@ const AgendaPage = () => {
           <div className="bg-white rounded-lg shadow p-6">
             <h2 className="text-lg font-semibold mb-4 flex items-center">
               <Calendar className="w-5 h-5 mr-2" />
-              Calendar
+              Calendario
             </h2>
             <input
               type="date"
@@ -182,7 +199,7 @@ const AgendaPage = () => {
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
             <div className="mt-4">
-              <h3 className="font-medium text-gray-700 mb-2">Event Types</h3>
+              <h3 className="font-medium text-gray-700 mb-2">Tipos de evento</h3>
               <div className="space-y-2">
                 {Object.entries(eventTypes).map(([type, config]) => (
                   <div key={type} className="flex items-center">
@@ -201,7 +218,7 @@ const AgendaPage = () => {
           <div className="bg-white rounded-lg shadow">
             <div className="p-6 border-b">
               <h2 className="text-lg font-semibold">
-                Events for {formatDate(selectedDate)}
+                Eventos del {formatDate(selectedDate)}
               </h2>
             </div>
             
@@ -209,12 +226,12 @@ const AgendaPage = () => {
               {sortedEvents.length === 0 ? (
                 <div className="text-center py-8 text-gray-500">
                   <Calendar className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-                  <p>No events scheduled for this date</p>
+                  <p>No hay eventos para esta fecha</p>
                   <button
                     onClick={() => handleOpenModal()}
                     className="mt-2 text-blue-600 hover:text-blue-700"
                   >
-                    Schedule an event
+                    Agendar un evento
                   </button>
                 </div>
               ) : (
@@ -285,13 +302,13 @@ const AgendaPage = () => {
       <Modal isOpen={showEventModal} onClose={handleCloseModal}>
         <div className="p-6">
           <h2 className="text-xl font-bold mb-6">
-            {editingEvent ? 'Edit Event' : 'New Event'}
+            {editingEvent ? 'Editar evento' : 'Nuevo evento'}
           </h2>
           
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Title *
+                Título *
               </label>
               <input
                 type="text"
@@ -305,7 +322,7 @@ const AgendaPage = () => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Date *
+                  Fecha *
                 </label>
                 <input
                   type="date"
@@ -317,7 +334,7 @@ const AgendaPage = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Time *
+                  Hora *
                 </label>
                 <input
                   type="time"
@@ -332,7 +349,7 @@ const AgendaPage = () => {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Type
+                  Tipo
                 </label>
                 <select
                   value={formData.type}
@@ -348,13 +365,13 @@ const AgendaPage = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Client
+                  Cliente
                 </label>
                 <input
                   type="text"
                   value={formData.client}
                   onChange={(e) => setFormData({ ...formData, client: e.target.value })}
-                  placeholder="Optional"
+                  placeholder="Opcional"
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 />
               </div>
@@ -362,7 +379,7 @@ const AgendaPage = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Location
+                Ubicación
               </label>
               <input
                 type="text"
@@ -374,7 +391,7 @@ const AgendaPage = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Description
+                Descripción
               </label>
               <textarea
                 value={formData.description}
@@ -390,13 +407,13 @@ const AgendaPage = () => {
                 onClick={handleCloseModal}
                 className="px-4 py-2 border rounded-lg hover:bg-gray-50"
               >
-                Cancel
+                Cancelar
               </button>
               <button
                 type="submit"
                 className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               >
-                {editingEvent ? 'Update Event' : 'Create Event'}
+                {editingEvent ? 'Actualizar evento' : 'Crear evento'}
               </button>
             </div>
           </form>
@@ -408,8 +425,8 @@ const AgendaPage = () => {
         isOpen={!!deleteEventId}
         onClose={() => setDeleteEventId(null)}
         onConfirm={() => deleteEventId && handleDeleteEvent(deleteEventId)}
-        title="Delete Event"
-        message="Are you sure you want to delete this event? This action cannot be undone."
+        title="Eliminar evento"
+        message="¿Seguro que querés eliminar este evento? Esta acción no se puede deshacer."
       />
     </div>
   );
