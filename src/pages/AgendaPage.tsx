@@ -3,7 +3,7 @@ import { useMutation, useQuery } from '@apollo/client';
 import { Calendar, Plus, Clock, MapPin, User, Edit, Trash2 } from 'lucide-react';
 import Modal from '../components/common/Modal';
 import DeleteConfirmationModal from '../components/common/DeleteConfirmationModal';
-import { CREAR_EVENTO_AGENDA } from '../graphql/mutations/agenda';
+import { CREAR_EVENTO_AGENDA, EDITAR_EVENTO_AGENDA, ELIMINAR_EVENTO_AGENDA } from '../graphql/mutations/agenda';
 import { OBTENER_EVENTOS_AGENDA } from '../graphql/queries/agenda';
 
 interface Event {
@@ -32,7 +32,9 @@ const AgendaPage = () => {
   };
 
   const [selectedDate, setSelectedDate] = useState(getLocalDateString());
-  const [crearEventoAgenda] = useMutation(CREAR_EVENTO_AGENDA);
+  const [crearEventoAgenda, { loading: creandoEvento }] = useMutation(CREAR_EVENTO_AGENDA);
+  const [editarEventoAgenda, { loading: editandoEvento }] = useMutation(EDITAR_EVENTO_AGENDA);
+  const [eliminarEventoAgenda] = useMutation(ELIMINAR_EVENTO_AGENDA);
   const { data, refetch } = useQuery(OBTENER_EVENTOS_AGENDA, {
     variables: { fecha: selectedDate },
     fetchPolicy: 'network-only'
@@ -104,15 +106,23 @@ const AgendaPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (creandoEvento || editandoEvento) {
+      return;
+    }
     
-    if (editingEvent) {
-      setEvents(events.map(event => 
-        event.id === editingEvent.id 
-          ? { ...formData, id: editingEvent.id, client: formData.client || undefined }
-          : event
-      ));
-    } else {
-      try {
+    try {
+      if (editingEvent) {
+        await editarEventoAgenda({
+          variables: {
+            id: editingEvent.id,
+            input: {
+              ...formData,
+              client: formData.client || undefined
+            }
+          }
+        });
+      } else {
         await crearEventoAgenda({
           variables: {
             input: {
@@ -121,30 +131,35 @@ const AgendaPage = () => {
             }
           }
         });
-
-        const newEvent: Event = {
-          ...formData,
-          id: Date.now().toString(),
-          client: formData.client || undefined
-        };
-        setEvents([...events, newEvent]);
-        await refetch({ fecha: selectedDate });
-      } catch (error) {
-        console.error('Error creando evento:', error);
-        return;
       }
+
+      await refetch({ fecha: selectedDate });
+    } catch (error) {
+      console.error(
+        editingEvent ? 'Error editando evento:' : 'Error creando evento:',
+        error
+      );
+      return;
     }
-    
+
     handleCloseModal();
   };
 
-  const handleDeleteEvent = (eventId: string) => {
-    setEvents(events.filter(event => event.id !== eventId));
-    setDeleteEventId(null);
+  const handleDeleteEvent = async (eventId: string) => {
+    try {
+      await eliminarEventoAgenda({
+        variables: { id: eventId }
+      });
+      await refetch({ fecha: selectedDate });
+      setDeleteEventId(null);
+    } catch (error) {
+      console.error('Error eliminando evento:', error);
+    }
   };
 
   const filteredEvents = events.filter(event => event.date === selectedDate);
   const sortedEvents = filteredEvents.sort((a, b) => a.time.localeCompare(b.time));
+  const isSubmittingEvent = creandoEvento || editandoEvento;
 
   const formatDate = (dateString: string) => {
     const [year, month, day] = dateString.split('-').map(Number);
@@ -177,7 +192,7 @@ const AgendaPage = () => {
         </div>
         <button
           onClick={() => handleOpenModal()}
-          className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          className="inline-flex items-center px-4 py-2 bg-blue-800 text-white rounded-lg hover:bg-blue-700 transition-colors"
         >
           <Plus className="w-5 h-5 mr-2" />
           Nuevo evento
@@ -411,9 +426,14 @@ const AgendaPage = () => {
               </button>
               <button
                 type="submit"
+                disabled={isSubmittingEvent}
                 className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
               >
-                {editingEvent ? 'Actualizar evento' : 'Crear evento'}
+                {isSubmittingEvent
+                  ? 'Guardando...'
+                  : editingEvent
+                    ? 'Actualizar evento'
+                    : 'Crear evento'}
               </button>
             </div>
           </form>
@@ -424,7 +444,11 @@ const AgendaPage = () => {
       <DeleteConfirmationModal
         isOpen={!!deleteEventId}
         onClose={() => setDeleteEventId(null)}
-        onConfirm={() => deleteEventId && handleDeleteEvent(deleteEventId)}
+        onConfirm={() => {
+          if (deleteEventId) {
+            void handleDeleteEvent(deleteEventId);
+          }
+        }}
         title="Eliminar evento"
         message="¿Seguro que querés eliminar este evento? Esta acción no se puede deshacer."
       />
