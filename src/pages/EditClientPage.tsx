@@ -13,6 +13,19 @@ import LoadingSpinner from '../components/common/LoadingSpinner';
 import { CLIENT_STATUS, CLIENT_STATUS_LABELS } from '../constants/clientStatus';
 import { useAuth } from '../context/AuthContext';
 
+const normalizeClientStatus = (status?: string | null) => {
+  if (!status) {
+    return '';
+  }
+
+  const normalized = status.trim().toLowerCase();
+  const statusByLabel = Object.entries(CLIENT_STATUS_LABELS).find(([, label]) => (
+    label.toLowerCase() === normalized
+  ));
+
+  return statusByLabel ? statusByLabel[0] : normalized;
+};
+
 const EditClientPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -51,7 +64,7 @@ const EditClientPage = () => {
         email: client.email || '',
         phone: client.telefono || '',
         company: client.empresa || '',
-        state: client.estado.toLowerCase() || '',
+        state: normalizeClientStatus(client.estado),
         notes: client.notas || '',
         avatar: client.avatar || '',
         dni: client.dni || '',

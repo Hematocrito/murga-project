@@ -1,6 +1,6 @@
-import { forwardRef } from 'react';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import { useEffect, useRef } from 'react';
+import Quill from 'quill';
+import 'quill/dist/quill.snow.css';
 
 interface RichTextEditorProps {
   value: string;
@@ -23,25 +23,63 @@ const formats = [
   'list', 'bullet'
 ];
 
-const RichTextEditor = forwardRef<ReactQuill, RichTextEditorProps>(
-  ({ value, onChange, placeholder }, ref) => {
-    return (
-      <div className="rich-text-editor">
-        <ReactQuill
-          ref={ref}
-          theme="snow"
-          value={value}
-          onChange={onChange}
-          modules={modules}
-          formats={formats}
-          placeholder={placeholder}
-          className="h-32 md:h-48 mb-20 md:mb-12"
-        />
-      </div>
-    );
-  }
-);
+const getEditorValue = (editor: Quill) => {
+  const html = editor.root.innerHTML;
+  return html === '<p><br></p>' ? '' : html;
+};
 
-RichTextEditor.displayName = 'RichTextEditor';
+const RichTextEditor = ({ value, onChange, placeholder }: RichTextEditorProps) => {
+  const editorContainerRef = useRef<HTMLDivElement | null>(null);
+  const editorRef = useRef<Quill | null>(null);
+  const onChangeRef = useRef(onChange);
+
+  useEffect(() => {
+    onChangeRef.current = onChange;
+  }, [onChange]);
+
+  useEffect(() => {
+    if (!editorContainerRef.current || editorRef.current) {
+      return;
+    }
+
+    const editor = new Quill(editorContainerRef.current, {
+      theme: 'snow',
+      modules,
+      formats,
+      placeholder
+    });
+
+    editorRef.current = editor;
+    if (value) {
+      editor.clipboard.dangerouslyPasteHTML(value);
+    }
+
+    editor.on('text-change', () => {
+      onChangeRef.current(getEditorValue(editor));
+    });
+  }, [placeholder, value]);
+
+  useEffect(() => {
+    const editor = editorRef.current;
+    if (!editor) {
+      return;
+    }
+
+    const nextValue = value || '';
+    if (getEditorValue(editor) !== nextValue) {
+      const selection = editor.getSelection();
+      editor.clipboard.dangerouslyPasteHTML(nextValue);
+      if (selection) {
+        editor.setSelection(selection);
+      }
+    }
+  }, [value]);
+
+  return (
+    <div className="rich-text-editor h-32 md:h-48 mb-20 md:mb-12">
+      <div ref={editorContainerRef} />
+    </div>
+  );
+};
 
 export default RichTextEditor;
