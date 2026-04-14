@@ -34,7 +34,7 @@ const AgendaPage = () => {
   const [selectedDate, setSelectedDate] = useState(getLocalDateString());
   const [crearEventoAgenda, { loading: creandoEvento }] = useMutation(CREAR_EVENTO_AGENDA);
   const [editarEventoAgenda, { loading: editandoEvento }] = useMutation(EDITAR_EVENTO_AGENDA);
-  const [eliminarEventoAgenda] = useMutation(ELIMINAR_EVENTO_AGENDA);
+  const [eliminarEventoAgenda, { loading: eliminandoEvento }] = useMutation(ELIMINAR_EVENTO_AGENDA);
   const { data, refetch } = useQuery(OBTENER_EVENTOS_AGENDA, {
     variables: { fecha: selectedDate },
     fetchPolicy: 'network-only'
@@ -146,14 +146,18 @@ const AgendaPage = () => {
   };
 
   const handleDeleteEvent = async (eventId: string) => {
+    if (eliminandoEvento) {
+      return;
+    }
+
     try {
       await eliminarEventoAgenda({
         variables: { id: eventId }
       });
       await refetch({ fecha: selectedDate });
-      setDeleteEventId(null);
     } catch (error) {
       console.error('Error eliminando evento:', error);
+      throw error;
     }
   };
 
@@ -444,11 +448,12 @@ const AgendaPage = () => {
       <DeleteConfirmationModal
         isOpen={!!deleteEventId}
         onClose={() => setDeleteEventId(null)}
-        onConfirm={() => {
+        onConfirm={async () => {
           if (deleteEventId) {
-            void handleDeleteEvent(deleteEventId);
+            await handleDeleteEvent(deleteEventId);
           }
         }}
+        isLoading={eliminandoEvento}
         title="Eliminar evento"
         message="¿Seguro que querés eliminar este evento? Esta acción no se puede deshacer."
       />
