@@ -8,8 +8,9 @@ import { setContext } from '@apollo/client/link/context';
 
 
 const httpLink = createHttpLink({
+  uri: 'https://api.murgaestudiojuridico.com.ar/',
   // uri: 'http://localhost:4000/',
-  uri: 'https://vast-hollows-51774-ff90a6c856e2.herokuapp.com/'
+  // uri: 'https://vast-hollows-51774-ff90a6c856e2.herokuapp.com/'
 });
 
 const authLink = setContext((_, { headers }) => {
