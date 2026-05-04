@@ -11,6 +11,16 @@ const AUTENTICAR_USUARIO = gql`
     }
 `;
 
+const getLoginErrorMessage = (error: unknown) => {
+  const message = error instanceof Error ? error.message : '';
+
+  if (message.includes('pendiente de autorizaci') || message.includes('pendiente de autorizacion')) {
+    return 'Tu usuario esta pendiente de autorizacion.';
+  }
+
+  return 'Credenciales invalidas';
+};
+
 export const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -22,7 +32,7 @@ export const LoginPage = () => {
   const [autenticarUsuario, { loading }] = useMutation(AUTENTICAR_USUARIO, {
     onError: (error) => {
       console.error('Authentication error:', error);
-      setError('Invalid credentials. Please try again.');
+      setError(getLoginErrorMessage(error));
     }
   });
 
@@ -55,7 +65,7 @@ export const LoginPage = () => {
       
     } catch (error) {
       console.log(error);
-      setError('Credenciales inválidas');
+      setError(getLoginErrorMessage(error));
     }    
     
   };

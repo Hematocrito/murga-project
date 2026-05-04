@@ -13,7 +13,11 @@ export interface AdminClient {
 }
   
 export interface UserWithClients {
+  id: string;
   nombre: string;
   apellido: string;
+  email: string;
+  rol: string;
+  autorizado?: boolean;
   clientes: AdminClient[];
 }

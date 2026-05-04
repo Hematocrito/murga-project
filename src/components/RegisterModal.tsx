@@ -9,6 +9,7 @@ const NUEVA_CUENTA = gql`
             nombre
             apellido
             email
+            autorizado
         }
     }
 `;
@@ -53,7 +54,7 @@ export default function RegisterModal({ isOpen, onClose }: RegisterModalProps) {
     console.log(data);
 
     //Usuario creado correctamente
-    guardarMensaje(`Se creó correctamente el Usuario: ${data.nuevoUsuario.nombre}`);
+    guardarMensaje(`Usuario registrado: ${data.nuevoUsuario.nombre}. Queda pendiente de autorizacion.`);
 
     setTimeout(() => {
       guardarMensaje('');

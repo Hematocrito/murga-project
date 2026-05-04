@@ -1,5 +1,5 @@
 //import React from 'react';
-import { UserPlus } from 'lucide-react';
+import { CheckCircle, UserPlus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAdminClients } from '../hooks/useAdminClients';
 import AdminClientList from '../components/admin/AdminClientList';
@@ -16,7 +16,10 @@ const AdminDashboardPage = () => {
     totalPages,
     handlePageChange,
     handleSearch,
-    totalClients
+    totalClients,
+    pendingUsers,
+    approveUser,
+    authorizingUser
   } = useAdminClients();
   
   if (loading) return <LoadingSpinner />;
@@ -46,6 +49,35 @@ const AdminDashboardPage = () => {
           Nuevo Cliente
         </Link>
       </div>
+
+      {pendingUsers.length > 0 && (
+        <div className="bg-white rounded-lg shadow mb-6">
+          <div className="p-4 border-b">
+            <h2 className="text-sm font-semibold text-gray-900">Usuarios pendientes de autorizacion</h2>
+          </div>
+          <div className="divide-y divide-gray-200">
+            {pendingUsers.map((user) => (
+              <div key={user.id} className="flex items-center justify-between gap-4 p-4">
+                <div>
+                  <p className="text-sm font-medium text-gray-900">
+                    {user.nombre} {user.apellido}
+                  </p>
+                  <p className="text-sm text-gray-500">{user.email}</p>
+                </div>
+                <button
+                  type="button"
+                  disabled={authorizingUser}
+                  onClick={() => approveUser(user.id)}
+                  className="inline-flex items-center px-3 py-2 bg-green-700 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-60"
+                >
+                  <CheckCircle className="w-4 h-4 mr-2" />
+                  Autorizar
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="bg-white rounded-lg shadow">
         <div className="p-4 border-b">

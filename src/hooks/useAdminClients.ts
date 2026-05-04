@@ -1,6 +1,6 @@
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { useState, useMemo } from 'react';
-import { OBTENER_CLIENTES_X_USUARIO } from '../graphql/queries/admin';
+import { AUTORIZAR_USUARIO, OBTENER_CLIENTES_X_USUARIO } from '../graphql/queries/admin';
 import { UserWithClients } from '../types/admin';
 import { CLIENT_STATUS, CLIENT_STATUS_LABELS } from '../constants/clientStatus';
 //import { Client } from '../types/client';
@@ -14,8 +14,16 @@ export const useAdminClients = () => {
   const { data, loading, error } = useQuery(OBTENER_CLIENTES_X_USUARIO, {
     fetchPolicy: 'network-only'
   });
+  const [autorizarUsuario, { loading: authorizingUser }] = useMutation(AUTORIZAR_USUARIO, {
+    refetchQueries: [{ query: OBTENER_CLIENTES_X_USUARIO }],
+    awaitRefetchQueries: true
+  });
 
   const users: UserWithClients[] = data?.obtenerClientesxUsuario || [];
+  const pendingUsers = useMemo(
+    () => users.filter(user => user.rol !== 'admin' && user.autorizado === false),
+    [users]
+  );
 
   const STATUS_LABEL_MAP = CLIENT_STATUS_LABELS as Record<string, string>;
   const STATUS_VALUES = Object.values(CLIENT_STATUS) as string[];
@@ -112,13 +120,16 @@ export const useAdminClients = () => {
 
   return {
     clients: currentClients,
+    pendingUsers,
     loading,
+    authorizingUser,
     error,
     currentPage,
     totalPages,
     handlePageChange,
     handleSearch,
     searchQuery,
-    totalClients: allClients.length
+    totalClients: allClients.length,
+    approveUser: (id: string) => autorizarUsuario({ variables: { id } })
   };
 };

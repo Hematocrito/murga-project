@@ -8,6 +8,7 @@ export const OBTENER_USUARIO = gql`
       apellido
       email
       rol
+      autorizado
     }
   }
 `;
