@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/client';
-import { AlertTriangle, Calendar, Plus, Clock, MapPin, User, Edit, Trash2 } from 'lucide-react';
+import { Calendar, Plus, Clock, MapPin, User, Edit, Trash2 } from 'lucide-react';
 import Modal from '../components/common/Modal';
 import DeleteConfirmationModal from '../components/common/DeleteConfirmationModal';
 import { CREAR_EVENTO_AGENDA, EDITAR_EVENTO_AGENDA, ELIMINAR_EVENTO_AGENDA } from '../graphql/mutations/agenda';
@@ -21,7 +21,6 @@ const AgendaPage = () => {
   const [events, setEvents] = useState<Event[]>([]);
 
   const [showEventModal, setShowEventModal] = useState(false);
-  const [showSubscriptionModal, setShowSubscriptionModal] = useState(false);
   const [editingEvent, setEditingEvent] = useState<Event | null>(null);
   const [deleteEventId, setDeleteEventId] = useState<string | null>(null);
   const getLocalDateString = () => {
@@ -77,8 +76,16 @@ const AgendaPage = () => {
         type: event.type
       });
     } else {
-      setShowSubscriptionModal(true);
-      return;
+      setEditingEvent(null);
+      setFormData({
+        title: '',
+        description: '',
+        date: selectedDate,
+        time: '',
+        location: '',
+        client: '',
+        type: 'meeting'
+      });
     }
     setShowEventModal(true);
   };
@@ -434,32 +441,6 @@ const AgendaPage = () => {
               </button>
             </div>
           </form>
-        </div>
-      </Modal>
-
-      {/* Subscription Notice Modal */}
-      <Modal isOpen={showSubscriptionModal} onClose={() => setShowSubscriptionModal(false)}>
-        <div className="p-6">
-          <div className="flex items-center mb-4">
-            <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-yellow-100">
-              <AlertTriangle className="h-6 w-6 text-yellow-600" />
-            </div>
-          </div>
-          <div className="text-center">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Aviso</h3>
-            <p className="text-sm text-gray-500">
-              Tu período de prueba ha finalizado. Suscríbete ahora para activar todas las funciones y mantener el acceso total a tu agenda.
-            </p>
-          </div>
-          <div className="mt-6 flex justify-center">
-            <button
-              type="button"
-              onClick={() => setShowSubscriptionModal(false)}
-              className="inline-flex justify-center rounded-md border border-transparent bg-blue-800 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-            >
-              Entendido
-            </button>
-          </div>
         </div>
       </Modal>
 
