@@ -12,7 +12,7 @@ import { useAuth } from '../context/AuthContext';
 
 const NewClientPage = () => {
   const navigate = useNavigate();
-  const { isAdmin } = useAuth();
+  const { isAdmin, user } = useAuth();
   const { formData, errors, handleChange, handleAvatarChange, handleNotesChange } = useClientForm();
   const { createClient, loading, error } = useCreateClient();
 
@@ -61,6 +61,15 @@ const NewClientPage = () => {
           <AvatarUpload onChange={handleAvatarChange} />
           
           <div className="grid md:grid-cols-2 gap-x-6 gap-y-4">
+            <FormField label="Usuario logueado">
+              <input
+                type="text"
+                value={user?.name || ''}
+                readOnly
+                className="w-full px-4 py-2 border rounded-lg bg-gray-50 text-gray-700"
+              />
+            </FormField>
+
             <FormField label={<>Nombre <span className="text-red-500">*</span></>} required>
               <input
                 type="text"

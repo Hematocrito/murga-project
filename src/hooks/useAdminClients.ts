@@ -14,7 +14,7 @@ export const useAdminClients = () => {
   const { data, loading, error } = useQuery(OBTENER_CLIENTES_X_USUARIO, {
     fetchPolicy: 'network-only'
   });
-  const [autorizarUsuario, { loading: authorizingUser }] = useMutation(AUTORIZAR_USUARIO, {
+  const [autorizarUsuario, { loading: authorizingUser, error: authorizeError }] = useMutation(AUTORIZAR_USUARIO, {
     refetchQueries: [{ query: OBTENER_CLIENTES_X_USUARIO }],
     awaitRefetchQueries: true
   });
@@ -123,6 +123,7 @@ export const useAdminClients = () => {
     pendingUsers,
     loading,
     authorizingUser,
+    authorizeError,
     error,
     currentPage,
     totalPages,
@@ -130,6 +131,12 @@ export const useAdminClients = () => {
     handleSearch,
     searchQuery,
     totalClients: allClients.length,
-    approveUser: (id: string) => autorizarUsuario({ variables: { id } })
+    approveUser: async (id: string) => {
+      if (!id) {
+        throw new Error('No se pudo identificar el usuario a autorizar');
+      }
+
+      await autorizarUsuario({ variables: { id } });
+    }
   };
 };

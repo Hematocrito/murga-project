@@ -29,7 +29,7 @@ const normalizeClientStatus = (status?: string | null) => {
 const EditClientPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { isAdmin } = useAuth();
+  const { isAdmin, user } = useAuth();
   const [showSuccess, setShowSuccess] = React.useState(false);
   const { client, loading: loadingClient } = useClientDetails(id!);
   const { updateClient, loading: updating, error: updateError } = useUpdateClient();
@@ -157,6 +157,15 @@ const EditClientPage = () => {
           />
           
           <div className="grid md:grid-cols-2 gap-x-6 gap-y-4">
+            <FormField label="Usuario logueado">
+              <input
+                type="text"
+                value={user?.name || ''}
+                readOnly
+                className="w-full px-4 py-2 border rounded-lg bg-gray-50 text-gray-700"
+              />
+            </FormField>
+
             <FormField label={<>Nombre <span className="text-red-500">*</span></>} required>
               <input
                 type="text"

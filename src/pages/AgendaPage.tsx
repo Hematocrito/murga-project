@@ -4,7 +4,8 @@ import { Calendar, Plus, Clock, MapPin, User, Edit, Trash2 } from 'lucide-react'
 import Modal from '../components/common/Modal';
 import DeleteConfirmationModal from '../components/common/DeleteConfirmationModal';
 import { CREAR_EVENTO_AGENDA, EDITAR_EVENTO_AGENDA, ELIMINAR_EVENTO_AGENDA } from '../graphql/mutations/agenda';
-import { OBTENER_EVENTOS_AGENDA } from '../graphql/queries/agenda';
+import { OBTENER_EVENTOS_AGENDA, OBTENER_USUARIOS_AGENDA } from '../graphql/queries/agenda';
+import { useAuth } from '../context/AuthContext';
 
 interface Event {
   id: string;
@@ -14,15 +15,27 @@ interface Event {
   time: string;
   location: string;
   client?: string;
+  usuario?: string;
+  usuarioNombre?: string;
   type: 'meeting' | 'call' | 'deadline' | 'other';
 }
 
+interface AgendaUser {
+  id: string;
+  nombre: string;
+  apellido: string;
+  email: string;
+}
+
 const AgendaPage = () => {
+  const { user } = useAuth();
+  const isIntern = user?.rol === 'pasante';
   const [events, setEvents] = useState<Event[]>([]);
 
   const [showEventModal, setShowEventModal] = useState(false);
   const [editingEvent, setEditingEvent] = useState<Event | null>(null);
   const [deleteEventId, setDeleteEventId] = useState<string | null>(null);
+  const [selectedUserId, setSelectedUserId] = useState('');
   const getLocalDateString = () => {
     const now = new Date();
     const year = now.getFullYear();
@@ -39,6 +52,11 @@ const AgendaPage = () => {
     variables: { fecha: selectedDate },
     fetchPolicy: 'network-only'
   });
+  const { data: agendaUsersData } = useQuery(OBTENER_USUARIOS_AGENDA, {
+    skip: !isIntern,
+    fetchPolicy: 'network-only'
+  });
+  const agendaUsers: AgendaUser[] = agendaUsersData?.obtenerUsuariosAgenda || [];
 
   useEffect(() => {
     if (data?.obtenerEventosAgenda) {
@@ -75,6 +93,7 @@ const AgendaPage = () => {
         client: event.client || '',
         type: event.type
       });
+      setSelectedUserId(event.usuario || '');
     } else {
       setEditingEvent(null);
       setFormData({
@@ -86,6 +105,7 @@ const AgendaPage = () => {
         client: '',
         type: 'meeting'
       });
+      setSelectedUserId('');
     }
     setShowEventModal(true);
   };
@@ -102,7 +122,14 @@ const AgendaPage = () => {
       client: '',
       type: 'meeting'
     });
+    setSelectedUserId('');
   };
+
+  const buildEventInput = () => ({
+    ...formData,
+    client: formData.client || undefined,
+    ...(isIntern ? { usuario: selectedUserId } : {})
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -110,25 +137,25 @@ const AgendaPage = () => {
     if (creandoEvento || editandoEvento) {
       return;
     }
+
+    if (isIntern && !selectedUserId) {
+      return;
+    }
     
     try {
+      const input = buildEventInput();
+
       if (editingEvent) {
         await editarEventoAgenda({
           variables: {
             id: editingEvent.id,
-            input: {
-              ...formData,
-              client: formData.client || undefined
-            }
+            input
           }
         });
       } else {
         await crearEventoAgenda({
           variables: {
-            input: {
-              ...formData,
-              client: formData.client || undefined
-            }
+            input
           }
         });
       }
@@ -271,6 +298,10 @@ const AgendaPage = () => {
                           
                           <div className="space-y-1 text-sm text-gray-600">
                             <div className="flex items-center">
+                              <User className="w-4 h-4 mr-2" />
+                              {event.usuarioNombre || 'Sin usuario'}
+                            </div>
+                            <div className="flex items-center">
                               <Clock className="w-4 h-4 mr-2" />
                               {formatTime(event.time)}
                             </div>
@@ -325,6 +356,39 @@ const AgendaPage = () => {
           </h2>
           
           <form onSubmit={handleSubmit} className="space-y-4">
+            {isIntern ? (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Usuario *
+                </label>
+                <select
+                  value={selectedUserId}
+                  onChange={(e) => setSelectedUserId(e.target.value)}
+                  required
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option value="">Seleccionar usuario</option>
+                  {agendaUsers.map((agendaUser) => (
+                    <option key={agendaUser.id} value={agendaUser.id}>
+                      {`${agendaUser.nombre} ${agendaUser.apellido}`.trim() || agendaUser.email}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ) : (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Usuario logueado
+                </label>
+                <input
+                  type="text"
+                  value={user?.name || ''}
+                  readOnly
+                  className="w-full px-4 py-2 border rounded-lg bg-gray-50 text-gray-700"
+                />
+              </div>
+            )}
+
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Título *

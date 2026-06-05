@@ -19,7 +19,8 @@ const AdminDashboardPage = () => {
     totalClients,
     pendingUsers,
     approveUser,
-    authorizingUser
+    authorizingUser,
+    authorizeError
   } = useAdminClients();
   
   if (loading) return <LoadingSpinner />;
@@ -55,6 +56,11 @@ const AdminDashboardPage = () => {
           <div className="p-4 border-b">
             <h2 className="text-sm font-semibold text-gray-900">Usuarios pendientes de autorizacion</h2>
           </div>
+          {authorizeError && (
+            <div className="mx-4 mt-4 p-3 text-sm text-red-600 bg-red-50 rounded-lg">
+              No se pudo autorizar el usuario. Intente nuevamente.
+            </div>
+          )}
           <div className="divide-y divide-gray-200">
             {pendingUsers.map((user) => (
               <div key={user.id} className="flex items-center justify-between gap-4 p-4">
@@ -66,7 +72,7 @@ const AdminDashboardPage = () => {
                 </div>
                 <button
                   type="button"
-                  disabled={authorizingUser}
+                  disabled={authorizingUser || !user.id}
                   onClick={() => approveUser(user.id)}
                   className="inline-flex items-center px-3 py-2 bg-green-700 text-white rounded-lg hover:bg-green-600 transition-colors disabled:opacity-60"
                 >
