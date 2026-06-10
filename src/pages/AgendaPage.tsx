@@ -52,11 +52,19 @@ const AgendaPage = () => {
     variables: { fecha: selectedDate },
     fetchPolicy: 'network-only'
   });
-  const { data: agendaUsersData } = useQuery(OBTENER_USUARIOS_AGENDA, {
+  const {
+    data: agendaUsersData,
+    loading: loadingAgendaUsers,
+    error: agendaUsersError
+  } = useQuery(OBTENER_USUARIOS_AGENDA, {
     skip: !isIntern,
     fetchPolicy: 'network-only'
   });
   const agendaUsers: AgendaUser[] = agendaUsersData?.obtenerUsuariosAgenda || [];
+  const getAgendaUserLabel = (agendaUser: AgendaUser) => {
+    const fullName = `${agendaUser.nombre || ''} ${agendaUser.apellido || ''}`.trim();
+    return fullName || agendaUser.email;
+  };
 
   useEffect(() => {
     if (data?.obtenerEventosAgenda) {
@@ -138,7 +146,7 @@ const AgendaPage = () => {
       return;
     }
 
-    if (isIntern && !selectedUserId) {
+    if (isIntern && (!selectedUserId || loadingAgendaUsers || agendaUsersError)) {
       return;
     }
     
@@ -281,7 +289,7 @@ const AgendaPage = () => {
                   </button>
                 </div>
               ) : (
-                <div className="space-y-4">
+                <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
                   {sortedEvents.map((event) => (
                     <div
                       key={event.id}
@@ -289,11 +297,8 @@ const AgendaPage = () => {
                     >
                       <div className="flex justify-between items-start">
                         <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-2">
-                            <h3 className="font-semibold text-gray-900">{event.title}</h3>
-                            <span className={`px-2 py-1 text-xs rounded-full ${eventTypes[event.type].color}`}>
-                              {eventTypes[event.type].label}
-                            </span>
+                          <div className="flex items-center gap-3 mb-2 min-w-0">
+                            <h3 className="font-semibold text-gray-900 truncate">{event.title}</h3>
                           </div>
                           
                           <div className="space-y-1 text-sm text-gray-600">
@@ -311,17 +316,7 @@ const AgendaPage = () => {
                                 {event.location}
                               </div>
                             )}
-                            {event.client && (
-                              <div className="flex items-center">
-                                <User className="w-4 h-4 mr-2" />
-                                {event.client}
-                              </div>
-                            )}
                           </div>
-                          
-                          {event.description && (
-                            <p className="mt-2 text-sm text-gray-700">{event.description}</p>
-                          )}
                         </div>
                         
                         <div className="flex items-center space-x-2 ml-4">
@@ -365,15 +360,27 @@ const AgendaPage = () => {
                   value={selectedUserId}
                   onChange={(e) => setSelectedUserId(e.target.value)}
                   required
+                  disabled={loadingAgendaUsers || !!agendaUsersError}
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                 >
-                  <option value="">Seleccionar usuario</option>
+                  <option value="">
+                    {loadingAgendaUsers
+                      ? 'Cargando usuarios...'
+                      : agendaUsers.length === 0
+                        ? 'No hay usuarios disponibles'
+                        : 'Seleccionar usuario'}
+                  </option>
                   {agendaUsers.map((agendaUser) => (
                     <option key={agendaUser.id} value={agendaUser.id}>
-                      {`${agendaUser.nombre} ${agendaUser.apellido}`.trim() || agendaUser.email}
+                      {getAgendaUserLabel(agendaUser)}
                     </option>
                   ))}
                 </select>
+                {agendaUsersError && (
+                  <p className="mt-1 text-sm text-red-500">
+                    No se pudieron cargar los usuarios.
+                  </p>
+                )}
               </div>
             ) : (
               <div>
